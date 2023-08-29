@@ -4,14 +4,187 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.tiny</groupId>
+    <groupId>com.tiny</groupId>
     <artifactId>tiny-dependencies</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+
+    <description>统一依赖管理</description>
+    <name>${project.artifactId}</name>
 
     <properties>
+        <revision>1.0-SNAPSHOT</revision>
+        <java.version>1.8</java.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- 框架版本 -->
+        <spring.boot.starter.version>2.7.14</spring.boot.starter.version>
+        <spring.cloud.version>2021.0.5</spring.cloud.version>
+        <spring.cloud.alibaba.version>2021.0.5.0</spring.cloud.alibaba.version>
+
+        <!-- 数据库 -->
+        <mybatis.plus.version>3.5.3</mybatis.plus.version>
+        <druid.version>1.2.18</druid.version>
+        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
+
+        <!-- 工具版本 -->
+        <fastjson.version>2.0.20</fastjson.version>
+        <hutool.version>5.8.20</hutool.version>
+        <guava.version>31.1-jre</guava.version>
+        <xxljob.version>2.4.0</xxljob.version>
+        <easyexcel.verson>3.3.2</easyexcel.verson>
+        <!-- 解决loadbalancer缓存问题，jdk1.8版本最高2.9.3不建议升级 -->
+        <caffeine.verson>2.9.3</caffeine.verson>
+        <org.redisson.version>3.11.0</org.redisson.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 框架版本 start -->
+            <!-- springboot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.starter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- spring cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 框架版本 end -->
+
+            <!-- common组件 start -->
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-cloud</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-generator</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-tool</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- common件 start -->
+
+
+            <!-- 数据库 start -->
+            <!--阿里数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
+            <!-- 数据库 end -->
+
+            <!-- 工具 start-->
+            <!--xxl-job -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxljob.version}</version>
+            </dependency>
+
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- 新增糊涂工具类，当前工具类非常全面 API https://apidoc.gitee.com/loolly/hutool-all -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- google核心java库 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <!-- alibaba EasyExcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.verson}</version>
+            </dependency>
+
+            <!-- caffeine -->
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.verson}</version>
+            </dependency>
+
+            <!-- 工具 end-->
+
+        </dependencies>
+
+    </dependencyManagement>
 
 </project>

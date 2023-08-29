@@ -1,0 +1,31 @@
+spring:
+  # 应用名称
+  application:
+    name: @project.artifactId@
+  # 开发环境
+  config:
+    activate:
+      on-profile: local
+    import:
+      - optional:nacos:${spring.application.name}-${spring.config.activate.on-profile}.${spring.cloud.nacos.config.file-extension}
+  cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: localhost:8848
+        namespace: 94d36ad7-69df-46d8-b72f-04eed1942b24
+      # 配置中心
+      config:
+        server-addr: localhost:8848
+        namespace: 94d36ad7-69df-46d8-b72f-04eed1942b24
+        file-extension: yml
+        refresh-enabled: true
+        prefix: ${spring.application.name}
+        group: DEFAULT_GROUP
+
+
+# log路径
+log:
+#  path: /mnt/vdb/logs/tiny/${spring.application.name}
+  path: /Users/wangzehui/Documents/Logs/tiny/${spring.application.name}
+---

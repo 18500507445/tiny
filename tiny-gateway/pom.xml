@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.tiny</groupId>
+        <artifactId>tiny</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>tiny-gateway</artifactId>
+    <packaging>jar</packaging>
+    <description>网关服务</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.avic</groupId>
+            <artifactId>avic-common-web</artifactId>
+            <version>${project.version}</version>
+            <!-- 网关不需要boot-web排除掉 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-common-cloud</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- springCloud 网关 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+
+        <!-- 兼容mac m1芯片启动问题 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+
+    </dependencies>
+</project>
