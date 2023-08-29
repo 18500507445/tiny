@@ -25,10 +25,9 @@
     <properties>
         <revision>1.0-SNAPSHOT</revision>
         <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- 插件版本 -->
-        <maven.compile.source>>${java.version}</maven.compile.source>
-        <maven.compile.target>>${java.version}</maven.compile.target>
         <maven.plugin.version>3.11.0</maven.plugin.version>
         <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
@@ -55,10 +54,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.plugin.version}</version>
                 <configuration>
-                    <source>${maven.compile.source}</source>
-                    <target>${maven.compile.target}</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
+
             </plugin>
 
             <!-- 打包过滤测试类 -->

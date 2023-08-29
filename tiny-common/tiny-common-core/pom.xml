@@ -10,7 +10,12 @@
     </parent>
 
     <artifactId>tiny-common-core</artifactId>
+    <packaging>jar</packaging>
     <description>spring-boot核心依赖</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <!-- spring-toot Web容器，实现对 SpringMVC 的自动化配置 -->
@@ -72,7 +77,6 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
-
 
     </dependencies>
 </project>
