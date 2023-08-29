@@ -1,5 +1,7 @@
 package com.tiny.example;
 
+import org.springframework.boot.test.context.SpringBootTest;
+
 /**
  * @author: wzh
  * @description 样例测试类
