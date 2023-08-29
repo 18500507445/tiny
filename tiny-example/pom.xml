@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.tiny</groupId>
         <artifactId>tiny</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tiny-example</artifactId>
