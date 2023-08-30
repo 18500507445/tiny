@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>tiny-common-cloud</artifactId>
+    <packaging>pom</packaging>
     <description>spring-cloud依赖</description>
 
     <dependencies>
