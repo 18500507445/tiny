@@ -1,12 +1,15 @@
 package com.tiny.common.core.entity;
 
 
+import lombok.ToString;
+
 import java.util.HashMap;
 import java.util.Objects;
 
 /**
  * 返回实体类
  */
+@ToString
 public class RespResult extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
