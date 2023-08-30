@@ -12,7 +12,6 @@
     <artifactId>tiny-example</artifactId>
     <description>样例工程</description>
 
-
     <dependencies>
 
         <dependency>

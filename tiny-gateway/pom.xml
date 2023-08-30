@@ -11,14 +11,13 @@
     </parent>
 
     <artifactId>tiny-gateway</artifactId>
-    <packaging>jar</packaging>
     <description>网关服务</description>
 
     <dependencies>
 
         <dependency>
-            <groupId>com.avic</groupId>
-            <artifactId>avic-common-web</artifactId>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-common-web</artifactId>
             <version>${project.version}</version>
             <!-- 网关不需要boot-web排除掉 -->
             <exclusions>
