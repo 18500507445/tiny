@@ -20,22 +20,22 @@ public class ExampleGeneratorTest extends AbstractGenerator {
 
     @Override
     protected String getUrl() {
-        return "jdbc:mysql://39.106.255.29:3306/avicare201701?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8";
+        return "jdbc:mysql://x'x.xxx.xxx.xxx:3306/xxx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8";
     }
 
     @Override
     protected String getUserName() {
-        return "avicare";
+        return "root";
     }
 
     @Override
     protected String getPassword() {
-        return "avicare201802";
+        return "root";
     }
 
     @Override
     protected String[] getTableName() {
-        return new String[]{"merchandise_sku", "merchandise_sku_yx", "merchandise_sku_jd"};
+        return new String[]{"student", "tb_account", "user"};
     }
 
     @Override

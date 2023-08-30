@@ -42,4 +42,9 @@ public class Constants {
     public static final String SUCCESS = "SUCCESS";
 
     public static final String FAIL = "FAIL";
+
+    public static final String JSON = "application/json;charset=UTF-8";
+
+    public static final boolean IS_OPEN = true;
+
 }
