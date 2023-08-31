@@ -25,12 +25,6 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
 
-        <!-- 打包启动需要用 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
         <!-- 负载均衡loadbalancer -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
