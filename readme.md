@@ -40,5 +40,6 @@ tiny
 | example | 10000 | xx |
 
 ## 说明
-> 整体服务打包后，进去样例服务jar包目录，执行`java -jar -Dspring.profiles.active=local tiny-example-1.0-SNAPSHOT.jar`可以正常启动
-> aaa
+> （1）新添加model可以参考example工程  
+> （2）本地启动添加nacos，可以参照 <img height="400" width="800" src="./img/nacos.png"/>  
+> （3）主pom进行打包，进入样例服务jar包目录，执行`java -jar -Dspring.profiles.active=local tiny-example-1.0-SNAPSHOT.jar`可以正常启动   
