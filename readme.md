@@ -39,7 +39,11 @@ tiny
 | gateway | 8080  | xx |
 | example | 10000 | xx |
 
+## 环境准备
+> （1）本地添加nacos，[访问地址](http://localhost:8848/nacos/)，参照 <img height="400" width="800" src="./img/nacos.png"/>        
+> （2）本地添加sentinel，参照 <img height="400" width="800" src="./img/sentinel.png"/>   [访问地址](http://localhost:8858/#/login)       
+> （3）本地添加seata，参照 <img height="400" width="800" src="./img/seata.png"/> [访问地址](http://localhost:8858/#/login)       
+
 ## 说明
 > （1）新添加model可以参考example工程  
-> （2）本地启动添加nacos，可以参照 <img height="400" width="800" src="./img/nacos.png"/>  
 > （3）主pom进行打包，进入样例服务jar包目录，执行`java -jar -Dspring.profiles.active=local tiny-example-1.0-SNAPSHOT.jar`可以正常启动   
