@@ -25,7 +25,8 @@ spring:
 
 
 # log路径
-log:
-#  path: /mnt/vdb/logs/tiny/${spring.application.name}
-  path: /Users/wangzehui/Documents/Logs/tiny/${spring.application.name}
+logging:
+  file:
+#    path: /mnt/vdb/logs/tiny/${spring.application.name}
+    path: /Users/wangzehui/Documents/Logs/tiny/${spring.application.name}
 ---
