@@ -11,7 +11,7 @@
 
     <artifactId>tiny-common-core</artifactId>
     <packaging>jar</packaging>
-    <description>spring-boot核心依赖</description>
+    <description>spring-boot核心、工具包依赖</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -78,5 +78,30 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
+        <!-- 工具依赖 start -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

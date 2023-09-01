@@ -2,8 +2,8 @@ package com.tiny.common.web;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.tiny.common.tool.common.IpUtils;
-import com.tiny.common.tool.common.ServletUtils;
+import com.tiny.common.core.utils.common.IpUtils;
+import com.tiny.common.core.utils.common.ServletUtils;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import javax.servlet.http.HttpServletRequest;

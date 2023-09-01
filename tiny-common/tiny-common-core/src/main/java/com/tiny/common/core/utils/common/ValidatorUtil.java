@@ -1,4 +1,4 @@
-package com.tiny.common.tool.common;
+package com.tiny.common.core.utils.common;
 
 
 import com.tiny.common.core.exception.ParamException;

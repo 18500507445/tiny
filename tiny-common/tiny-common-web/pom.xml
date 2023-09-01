@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-tool</artifactId>
+            <artifactId>tiny-common-core</artifactId>
         </dependency>
 
         <dependency>

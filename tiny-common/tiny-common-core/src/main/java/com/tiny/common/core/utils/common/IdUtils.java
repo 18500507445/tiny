@@ -1,4 +1,4 @@
-package com.tiny.common.tool.common;
+package com.tiny.common.core.utils.common;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import cn.hutool.core.date.DateUtil;

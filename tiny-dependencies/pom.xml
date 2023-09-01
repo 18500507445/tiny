@@ -98,12 +98,6 @@
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-tool</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.tiny</groupId>
                 <artifactId>tiny-common-web</artifactId>
                 <version>${revision}</version>
             </dependency>

@@ -13,11 +13,11 @@ spring:
       # 注册中心
       discovery:
         server-addr: localhost:8848
-        namespace: 94d36ad7-69df-46d8-b72f-04eed1942b24
+        namespace: dc464a71-0f8a-48d6-90f3-6ec7b41e4f48
       # 配置中心
       config:
         server-addr: localhost:8848
-        namespace: 94d36ad7-69df-46d8-b72f-04eed1942b24
+        namespace: dc464a71-0f8a-48d6-90f3-6ec7b41e4f48
         file-extension: yml
         refresh-enabled: true
         prefix: ${spring.application.name}

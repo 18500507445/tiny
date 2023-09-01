@@ -1,4 +1,4 @@
-package com.tiny.common.tool.spring;
+package com.tiny.common.core.utils.spring;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;

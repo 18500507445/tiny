@@ -1,4 +1,4 @@
-package com.tiny.common.tool.json;
+package com.tiny.common.core.utils.json;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
