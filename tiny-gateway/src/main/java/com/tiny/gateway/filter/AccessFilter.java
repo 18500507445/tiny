@@ -83,7 +83,17 @@ public class AccessFilter implements GlobalFilter {
                 //todo 成功后放行
                 //写到header里 userContext
                 request.mutate().headers(httpHeaders -> httpHeaders.add("userContext", URLEncodeUtil.encode(userContext))).build();
-                return chain.filter(exchange);
+                //写入时间，打印耗时url
+                exchange.getAttributes().put(Constants.START_TIME, System.currentTimeMillis());
+                return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+                    Long startTime = exchange.getAttribute(Constants.START_TIME);
+                    if (startTime != null) {
+                        long executeTime = (System.currentTimeMillis() - startTime);
+                        if (executeTime > 1000) {
+                            log.info("\u001B[31m" + "慢接口url：{}，耗时：{} ms", url, executeTime);
+                        }
+                    }
+                }));
             }
         }
     }

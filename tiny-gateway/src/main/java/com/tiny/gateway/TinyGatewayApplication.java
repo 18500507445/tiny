@@ -12,8 +12,13 @@ import org.springframework.context.annotation.FilterType;
  * @date: 2023/08/29 14:19
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"com.tiny.common.starter.*", "com.avic.common.web.*"})})
+@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"com.tiny.common.starter.*", "com.tiny.common.web.*"})})
 public class TinyGatewayApplication {
+
+    /**
+     * 如果web路径下的模块有需要注册bean的，最好自动装配，否则排除掉
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(TinyGatewayApplication.class, args);
     }

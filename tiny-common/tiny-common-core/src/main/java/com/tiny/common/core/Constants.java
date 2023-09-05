@@ -47,4 +47,5 @@ public class Constants {
 
     public static final boolean IS_OPEN = true;
 
+    public static final String START_TIME = "startTime";
 }

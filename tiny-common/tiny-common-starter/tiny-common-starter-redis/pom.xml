@@ -5,25 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.tiny</groupId>
-        <artifactId>tiny-common</artifactId>
+        <artifactId>tiny-common-starter</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>tiny-common-starter</artifactId>
-    <packaging>pom</packaging>
-    <description>自定义starter</description>
-
-    <modules>
-        <module>tiny-common-starter-xxl</module>
-        <module>tiny-common-starter-redis</module>
-        <module>tiny-common-starter-mongo</module>
-    </modules>
+    <packaging>jar</packaging>
+    <artifactId>tiny-common-starter-redis</artifactId>
 
     <dependencies>
+        <!-- springboot 集成redis -->
         <dependency>
-            <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-
     </dependencies>
 </project>
