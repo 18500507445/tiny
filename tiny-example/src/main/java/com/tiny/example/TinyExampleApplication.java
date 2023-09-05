@@ -3,6 +3,7 @@ package com.tiny.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
@@ -17,7 +18,18 @@ import org.springframework.context.annotation.FilterType;
 public class TinyExampleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TinyExampleApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(TinyExampleApplication.class, args);
+        String redis = applicationContext.getEnvironment().getProperty("spring.redis.host");
+        String mongo = applicationContext.getEnvironment().getProperty("spring.data.mongodb.host");
+        String profile = applicationContext.getEnvironment().getProperty("spring.config.activate.on-profile");
+        String name = applicationContext.getEnvironment().getProperty("spring.application.name");
+        String serverAddr = applicationContext.getEnvironment().getProperty("spring.cloud.nacos.discovery.server-addr");
+
+        System.err.println("profile :" + profile);
+        System.err.println("name :" + name);
+        System.err.println("serverAddr :" + serverAddr);
+        System.err.println("redis :" + redis);
+        System.err.println("mongo :" + mongo);
     }
 
 }
