@@ -33,6 +33,7 @@
         <compiler.plugin.version>3.11.0</compiler.plugin.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
         <resources.plugin.version>3.3.1</resources.plugin.version>
+        <maven.flatten.plugin.version>1.5.0</maven.flatten.plugin.version>
 
     </properties>
 
@@ -82,6 +83,36 @@
                     <delimiters>@</delimiters>
                     <useDefaultDelimiters>false</useDefaultDelimiters>
                 </configuration>
+            </plugin>
+
+            <!-- 打包管理version 将revision版本打入包里-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${maven.flatten.plugin.version}</version>
+
+                <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
             </plugin>
 
         </plugins>
