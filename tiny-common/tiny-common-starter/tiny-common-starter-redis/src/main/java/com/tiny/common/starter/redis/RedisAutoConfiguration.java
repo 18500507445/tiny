@@ -51,7 +51,7 @@ public class RedisAutoConfiguration {
     /**
      * 第一数据源配置信息
      */
-    @Bean
+    @Bean(name = "primaryRedisProperties")
     @Primary
     @ConfigurationProperties(prefix = "spring.redis")
     public RedisProperties primaryRedisProperties() {
@@ -61,7 +61,7 @@ public class RedisAutoConfiguration {
     /**
      * 第二数据源配置信息
      */
-    @Bean
+    @Bean(name = "secondRedisProperties")
     @ConfigurationProperties(prefix = "spring.redis2")
     public RedisProperties secondRedisProperties() {
         return new RedisProperties();
@@ -91,7 +91,7 @@ public class RedisAutoConfiguration {
         String password = redisProperties.getPassword();
         int database = redisProperties.getDatabase();
 
-        Duration timeout = redisProperties.getTimeout();
+        Duration timeout = null == redisProperties.getTimeout() ? Duration.ZERO : redisProperties.getTimeout();
 
         int maxIdle = redisProperties.getLettuce().getPool().getMaxIdle();
         int minIdle = redisProperties.getLettuce().getPool().getMinIdle();
