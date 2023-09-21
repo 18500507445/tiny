@@ -1,5 +1,6 @@
-## mybatis-plus相关配置
+## mybatis-plus配置
 
+### mybatis-plus动态数据源
 ~~~yaml
 ##德鲁伊连接池
 spring:
@@ -34,6 +35,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
 ~~~
 
+### 代码
 ~~~java
 @Mapper
 @DS("second")

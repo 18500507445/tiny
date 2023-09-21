@@ -1,5 +1,6 @@
 ## redis多数据源
 
+### yml配置
 ~~~yml
 spring:
   redis:
@@ -28,6 +29,7 @@ spring:
     database: 1
 ~~~
 
+### 代码
 ~~~java
 //第二个数据源
 @Resource
