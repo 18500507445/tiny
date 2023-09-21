@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * 返回实体类
+ * @author: wzh
+ * @description 返回实体类
+ * @date: 2023/09/21 14:33
  */
 @ToString
 public class RespResult extends HashMap<String, Object> {

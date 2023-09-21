@@ -23,6 +23,9 @@ public class TinyExampleApplication {
      * @param args
      */
     public static void main(String[] args) {
+        //关闭 pageHelper启动banner
+        System.setProperty("pagehelper.banner", "false");
+
         ConfigurableApplicationContext applicationContext = SpringApplication.run(TinyExampleApplication.class, args);
         String redis = applicationContext.getEnvironment().getProperty("spring.redis.host");
         String mongo = applicationContext.getEnvironment().getProperty("spring.data.mongodb.host");
