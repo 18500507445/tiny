@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-web</artifactId>
+            <artifactId>tiny-common-cloud</artifactId>
             <version>${project.version}</version>
             <!-- 网关不需要boot-web排除掉 -->
             <exclusions>
@@ -26,12 +26,6 @@
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-cloud</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!-- springCloud 网关 -->

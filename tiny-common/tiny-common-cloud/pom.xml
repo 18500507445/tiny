@@ -10,10 +10,17 @@
     </parent>
 
     <artifactId>tiny-common-cloud</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <description>spring-cloud依赖</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-common-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- spring-cloud应用上下文 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

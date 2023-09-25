@@ -1,6 +1,8 @@
 package com.tiny.common.core.utils.common;
 
 import cn.hutool.core.util.ObjectUtil;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -20,27 +22,62 @@ public class IpUtils {
             return "unknown";
         }
         String ip = request.getHeader("client-ip");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("x-forwarded-for");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Forwarded-For");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
-
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+    }
+
+    /**
+     * 获取客户端ip
+     */
+    public static String getClientIp(ServerHttpRequest request) {
+        String unknown = "unknown";
+        char split = ',';
+        HttpHeaders headers = request.getHeaders();
+        String ip = headers.getFirst("x-forwarded-for");
+        if (ip != null && !ip.isEmpty() && !unknown.equalsIgnoreCase(ip)) {
+            // 多次反向代理后会有多个ip值，第一个ip才是真实ip
+            if (ip.indexOf(split) != -1) {
+                ip = ip.split(",")[0];
+            }
+        }
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("Proxy-Client-IP");
+        }
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("X-Real-IP");
+        }
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            if (request.getRemoteAddress() != null) {
+                ip = request.getRemoteAddress().getAddress().getHostAddress();
+            }
+        }
+        return "0:0:0:0:0:0:0:1%0".equals(ip) ? "127.0.0.1" : ip;
     }
 
     public static boolean internalIp(String ip) {

@@ -13,10 +13,9 @@
     <description>样例工程</description>
 
     <dependencies>
-
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-web</artifactId>
+            <artifactId>tiny-common-cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -44,11 +43,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-cloud</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
     </dependencies>
 

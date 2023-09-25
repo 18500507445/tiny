@@ -1,9 +1,7 @@
 package com.tiny.example.controller;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.TimeInterval;
-import com.tiny.common.core.entity.RespResult;
-import com.tiny.common.web.BaseController;
+import com.tiny.common.core.result.BaseController;
+import com.tiny.common.core.result.RespResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tiny-example/api")
 public class ExampleController extends BaseController {
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, name = "测试")
+    @RequestMapping(value = "/traceId", method = RequestMethod.GET, name = "测试traceId透传")
     @ResponseBody
-    public RespResult test() {
-        TimeInterval timer = DateUtil.timer();
+    public RespResult traceId() {
+        return RespResult.success("Hello tiny spring-cloud");
+    }
+
+    @RequestMapping(value = "/testLog", method = RequestMethod.GET, name = "测试异步log")
+    @ResponseBody
+    public RespResult testLog() {
         for (int i = 0; i < 500000; i++) {
             log.info("这是{}条日志！", i);
         }
-        log.info("当前耗时：{}ms", timer.interval());
-        return RespResult.success("Hello tiny spring-cloud");
+        return RespResult.success("测试异步log");
     }
 }

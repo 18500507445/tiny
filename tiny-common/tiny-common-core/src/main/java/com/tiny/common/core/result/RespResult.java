@@ -1,6 +1,10 @@
-package com.tiny.common.core.entity;
+package com.tiny.common.core.result;
 
 
+import com.tiny.common.core.trace.Trace;
+import com.tiny.common.core.trace.TraceHelper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.HashMap;
@@ -11,7 +15,9 @@ import java.util.Objects;
  * @description 返回实体类
  * @date: 2023/09/21 14:33
  */
+@EqualsAndHashCode(callSuper = true)
 @ToString
+@Data
 public class RespResult extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
@@ -60,7 +66,7 @@ public class RespResult extends HashMap<String, Object> {
     /**
      * 状态码
      */
-    private String code;
+    private Integer code;
 
     /**
      * 返回内容
@@ -91,33 +97,6 @@ public class RespResult extends HashMap<String, Object> {
      *
      * @param type 状态类型
      * @param msg  返回内容
-     */
-    public RespResult(Type type, String msg) {
-        super.put(CODE_TAG, type.value);
-        super.put(MSG_TAG, msg);
-        super.put(FUNCTION_TAG, getApiRequestFunction());
-    }
-
-    /**
-     * 初始化一个新创建的 AjaxResult 对象
-     *
-     * @param msg  返回内容
-     * @param data 数据对象
-     */
-    public RespResult(String msg, Object data) {
-        super.put(CODE_TAG, type.value);
-        super.put(MSG_TAG, msg);
-        super.put(FUNCTION_TAG, getApiRequestFunction());
-        if (Objects.nonNull(data)) {
-            super.put(DATA_TAG, data);
-        }
-    }
-
-    /**
-     * 初始化一个新创建的 AjaxResult 对象
-     *
-     * @param type 状态类型
-     * @param msg  返回内容
      * @param data 数据对象
      */
     public RespResult(Type type, String msg, Object data) {
@@ -127,6 +106,26 @@ public class RespResult extends HashMap<String, Object> {
         if (Objects.nonNull(data)) {
             super.put(DATA_TAG, data);
         }
+        super.put(Trace.TRACE_ID, TraceHelper.getCurrentTrace().getTraceId());
+        super.put(Trace.SPAN_ID, TraceHelper.getCurrentTrace().getSpanId());
+    }
+
+    /**
+     * 初始化一个新创建的 AjaxResult 对象
+     *
+     * @param code 状态编码
+     * @param msg  返回内容
+     * @param data 数据对象
+     */
+    public RespResult(Integer code, String msg, Object data) {
+        super.put(CODE_TAG, code);
+        super.put(MSG_TAG, msg);
+        super.put(FUNCTION_TAG, getApiRequestFunction());
+        if (Objects.nonNull(data)) {
+            super.put(DATA_TAG, data);
+        }
+        super.put(Trace.TRACE_ID, TraceHelper.getCurrentTrace().getTraceId());
+        super.put(Trace.SPAN_ID, TraceHelper.getCurrentTrace().getSpanId());
     }
 
     /**
@@ -140,22 +139,6 @@ public class RespResult extends HashMap<String, Object> {
     public RespResult put(String key, Object value) {
         super.put(key, value);
         return this;
-    }
-
-    /**
-     * 初始化一个新创建的 AjaxResult 对象
-     *
-     * @param code 状态编码
-     * @param msg  返回内容
-     * @param data 数据对象
-     */
-    public RespResult(String code, String msg, Object data) {
-        super.put(CODE_TAG, code);
-        super.put(MSG_TAG, msg);
-        super.put(FUNCTION_TAG, getApiRequestFunction());
-        if (Objects.nonNull(data)) {
-            super.put(DATA_TAG, data);
-        }
     }
 
     /**
@@ -200,12 +183,22 @@ public class RespResult extends HashMap<String, Object> {
     /**
      * 返回成功消息
      *
+     * @param msg 返回内容
+     * @return 成功消息
+     */
+    public static RespResult success(Integer code, String msg) {
+        return new RespResult(code, msg, null);
+    }
+
+    /**
+     * 返回成功消息
+     *
      * @param code 返回码
      * @param msg  返回内容
      * @param data 数据对象
      * @return 成功消息
      */
-    public static RespResult success(String code, String msg, Object data) {
+    public static RespResult success(Integer code, String msg, Object data) {
         return new RespResult(code, msg, data);
     }
 
@@ -288,7 +281,7 @@ public class RespResult extends HashMap<String, Object> {
      * @param data 数据对象
      * @return 警告消息
      */
-    public static RespResult error(String code, String msg, Object data) {
+    public static RespResult error(Integer code, String msg, Object data) {
         return new RespResult(code, msg, data);
     }
 
@@ -299,40 +292,8 @@ public class RespResult extends HashMap<String, Object> {
      * @param msg
      * @return
      */
-    public static RespResult error(String code, String msg) {
+    public static RespResult error(Integer code, String msg) {
         return new RespResult(code, msg, null);
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tiny.common.web;
+package com.tiny.common.core.result;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;

@@ -38,7 +38,7 @@
         <easyexcel.verson>3.3.2</easyexcel.verson>
         <!-- 解决loadbalancer缓存问题，jdk1.8版本最高2.9.3不建议升级 -->
         <caffeine.verson>2.9.3</caffeine.verson>
-        <jwt.version>0.11.5</jwt.version>
+        <jwt.version>4.4.0</jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -183,10 +183,10 @@
                 <version>${caffeine.verson}</version>
             </dependency>
 
-            <!-- jwt -->
+            <!-- jwt令牌生成算法 token校验 -->
             <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-api</artifactId>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
                 <version>${jwt.version}</version>
             </dependency>
 

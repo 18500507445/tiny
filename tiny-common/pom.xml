@@ -19,7 +19,6 @@
         <module>tiny-common-core</module>
         <module>tiny-common-generator</module>
         <module>tiny-common-starter</module>
-        <module>tiny-common-web</module>
     </modules>
 
 </project>

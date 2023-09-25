@@ -11,14 +11,14 @@
 tiny
 ├─tiny-common               -- 公共组件包
 │  ├─tiny-common-cloud      -- spring-cloud核心依赖（nacos、openfegin、loadbalancer、cloud环境上下文、限流sentinel（待完成）、分布式事务seata（待完成） ）
-│  ├─tiny-common-core       -- spring-boot核心依赖、常量类、通用返回类，工具类（各种工具类，hutool、guava）
+│  ├─tiny-common-core       -- spring-boot核心依赖、常量类、通用返回类，工具类（各种工具类，hutool、guava），Body请求加密和响应处理、全局log（待完成）、全局接口耗时(待完成)
 │  ├─tiny-common-genertor   -- 代码生成器（mybatisplus模板、mybatis模板）
-│  ├─tiny-common-starter    -- 开胃菜，自定义starter
-│  │  ├─tiny-common-starter-redis          -- redis-单数据源
-│  │  ├─tiny-common-starter-mongo          -- mongo-单数据源，如果配置多个，在写一套就行了
-│  │  ├─tiny-common-starter-xxl            -- xxl
-│  │  └─tiny-common-starter-mq             -- mq(待完成)
-│  └─tiny-common-web        -- 包含tool包，拦截器、过滤器、Body请求加密和响应处理、全局log（待完成）、全局接口耗时(待完成)
+│  └─tiny-common-starter    -- 开胃菜，自定义starter
+│     ├─tiny-common-starter-redis          -- redis-单数据源
+│     ├─tiny-common-starter-mongo          -- mongo-单数据源，如果配置多个，在写一套就行了
+│     ├─tiny-common-starter-xxl            -- xxl
+│     └─tiny-common-starter-mq             -- mq(待完成)  
+│  └─tiny-common-web        -- 包含tool包，拦截器、过滤器、
 ├─tiny-dependencies         -- 统一管理依赖，版本锁死
 ├─tiny-gateway              -- 网关服务，路由规则、跨域、空白页改造，header解析token，token失效判断-redis（待完成），用户状态判断-fegin调用（待完成）
 │  ├─xxx                    -- xxx

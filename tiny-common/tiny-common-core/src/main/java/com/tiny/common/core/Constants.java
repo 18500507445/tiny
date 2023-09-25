@@ -47,5 +47,8 @@ public class Constants {
 
     public static final boolean IS_OPEN = true;
 
-    public static final String START_TIME = "startTime";
+    public static final String AUTHORIZATION = "Authorization";
+
+    public static final String USER_CONTEXT = "userContext";
+
 }
