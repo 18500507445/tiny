@@ -37,7 +37,7 @@
 
     </properties>
 
-    <!-- 引入dependencies依赖管理 -->
+    <!-- 引入dependencies模块，所有子model的父类都引用主pom就ok -->
     <dependencyManagement>
         <dependencies>
             <dependency>
