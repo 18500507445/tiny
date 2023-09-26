@@ -104,7 +104,7 @@ public class AccessFilter implements GlobalFilter {
         // 从header Authorization中获取
         String authorization = httpHeaders.getFirst(Constants.AUTHORIZATION);
         if (StrUtil.isEmpty(authorization)) {
-            log.error("invalid token or not login! authorization:{}", authorization);
+            log.error("invalid token or not login! authorization：{}", authorization);
             return responseErrorMsg(exchange, 401, "invalid token or not login");
         }
 
@@ -136,22 +136,35 @@ public class AccessFilter implements GlobalFilter {
     }
 
     /**
-     * 功能: 全局的traceId处理
+     * 功能: 全局的traceId处理，生成traceId和spanId放入header
      */
     private ServerWebExchange buildGlobalTraceId(ServerWebExchange exchange) {
+        HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(exchange.getRequest().getHeaders());
         TraceHelper.removeTrace();
         TraceHelper.getCurrentTrace();
-        String[] headerArray = {MDC.get(Trace.TRACE_ID)};
-        ServerHttpRequest req = exchange.getRequest().mutate().header(Trace.TRACE_ID, headerArray).build();
+        String traceId = MDC.get(Trace.TRACE_ID);
+        String spanId = MDC.get(Trace.SPAN_ID);
+        Consumer<HttpHeaders> httpHeadersConsumer = x -> {
+            httpHeaders.set(Trace.TRACE_ID, traceId);
+            httpHeaders.set(Trace.SPAN_ID, spanId);
+        };
+        ServerHttpRequest req = exchange.getRequest().mutate().headers(httpHeadersConsumer).build();
         return exchange.mutate().request(req).build();
     }
 
     private Mono<Void> filter(GatewayFilterChain chain, ServerWebExchange build, ServerWebExchange exchange, String url) {
         return chain.filter(build).then(Mono.fromRunnable(() -> {
-            Long startTime = exchange.getAttribute(START_TIME);
-            if (gatewayConfig.getSlowEnable() && startTime != null) {
-                Long executeTime = (System.currentTimeMillis() - startTime);
-                log.info("响应url：{}，耗时：{} ms", url, executeTime);
+            if (gatewayConfig.getSlowEnable()) {
+                Long startTime = exchange.getAttribute(START_TIME);
+                if (null != startTime) {
+                    Long executeTime = (System.currentTimeMillis() - startTime);
+                    if (executeTime > gatewayConfig.getSlowMillisecond()) {
+                        HttpHeaders headers = exchange.getRequest().getHeaders();
+                        MDC.put(Trace.TRACE_ID, headers.getFirst(Trace.TRACE_ID));
+                        MDC.put(Trace.SPAN_ID, headers.getFirst(Trace.SPAN_ID));
+                        log.info("响应url：{}，耗时：{} ms", url, executeTime);
+                    }
+                }
             }
         }));
     }

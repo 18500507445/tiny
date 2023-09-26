@@ -23,20 +23,26 @@ public class GateWayConfig {
     private Boolean authEnable;
 
     /**
-     * 放行的url
+     * 放行的url，默认值""
      */
-    @Value("${auth.release.urls:''}")
+    @Value("${auth.release.urls: }")
     private String[] releaseUrls;
 
     /**
      * 禁止的url
      */
-    @Value("${auth.forbidden.urls:''}")
+    @Value("${auth.forbidden.urls: }")
     private String[] forbiddenUrls;
 
     /**
-     * 网关配置，慢接口展示
+     * 网关配置，慢接展示开关，默认打开
      */
     @Value("${gateway.slow.enable:true}")
     private Boolean slowEnable;
+
+    /**
+     * 网关配置，慢接口毫秒界限值，默认1000
+     */
+    @Value("${gateway.slow.millisecond:1000}")
+    private Long slowMillisecond;
 }

@@ -26,6 +26,5 @@ public class TinyGatewayApplication {
      */
     public static void main(String[] args) {
         SpringApplication.run(TinyGatewayApplication.class, args);
-        log.warn("网关启动成功......");
     }
 }
