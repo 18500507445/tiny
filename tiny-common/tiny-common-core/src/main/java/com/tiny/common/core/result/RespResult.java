@@ -1,6 +1,7 @@
 package com.tiny.common.core.result;
 
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.tiny.common.core.trace.Trace;
 import com.tiny.common.core.trace.TraceHelper;
 import lombok.Data;
@@ -24,11 +25,13 @@ public class RespResult extends HashMap<String, Object> {
 
     public static final String CODE_TAG = "code";
 
-    public static final String MSG_TAG = "msg";
+    public static final String MSG_TAG = "message";
 
     public static final String DATA_TAG = "data";
 
-    public static final String FUNCTION_TAG = "function";
+    public static final String TIME = "systemTime";
+
+    public static final String ENV = "env";
 
     /**
      * 状态类型
@@ -79,13 +82,6 @@ public class RespResult extends HashMap<String, Object> {
     private Object data;
 
     /**
-     * 获取请求过来的参数，取出api中的function名称，添加到返回值中
-     */
-    protected String getApiRequestFunction() {
-        return "";
-    }
-
-    /**
      * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
      */
     public RespResult() {
@@ -102,12 +98,14 @@ public class RespResult extends HashMap<String, Object> {
     public RespResult(Type type, String msg, Object data) {
         super.put(CODE_TAG, type.value);
         super.put(MSG_TAG, msg);
-        super.put(FUNCTION_TAG, getApiRequestFunction());
         if (Objects.nonNull(data)) {
             super.put(DATA_TAG, data);
         }
+        super.put(TIME, System.currentTimeMillis());
         super.put(Trace.TRACE_ID, TraceHelper.getCurrentTrace().getTraceId());
         super.put(Trace.SPAN_ID, TraceHelper.getCurrentTrace().getSpanId());
+        super.put(ENV, SpringUtil.getActiveProfile());
+
     }
 
     /**
@@ -120,12 +118,13 @@ public class RespResult extends HashMap<String, Object> {
     public RespResult(Integer code, String msg, Object data) {
         super.put(CODE_TAG, code);
         super.put(MSG_TAG, msg);
-        super.put(FUNCTION_TAG, getApiRequestFunction());
         if (Objects.nonNull(data)) {
             super.put(DATA_TAG, data);
         }
+        super.put(TIME, System.currentTimeMillis());
         super.put(Trace.TRACE_ID, TraceHelper.getCurrentTrace().getTraceId());
         super.put(Trace.SPAN_ID, TraceHelper.getCurrentTrace().getSpanId());
+        super.put(ENV, SpringUtil.getActiveProfile());
     }
 
     /**
