@@ -18,18 +18,6 @@
     </properties>
 
     <dependencies>
-        <!-- spring-cloud应用上下文 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-context</artifactId>
-        </dependency>
-
-        <!-- Spring框架基本的核心工具 -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
-
         <!-- spring-toot Web容器，实现对 SpringMVC 的自动化配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,6 +52,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!-- spring-cloud应用上下文 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-context</artifactId>
         </dependency>
 
         <!-- 自动配置 -->
