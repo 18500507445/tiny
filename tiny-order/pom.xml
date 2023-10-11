@@ -9,8 +9,13 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>tiny-example</artifactId>
-    <description>样例工程</description>
+    <artifactId>tiny-order</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -21,16 +26,19 @@
         <dependency>
             <groupId>com.tiny</groupId>
             <artifactId>tiny-common-starter-xxl</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
             <artifactId>tiny-common-starter-mongo</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
             <artifactId>tiny-common-starter-redis</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -38,13 +46,16 @@
             <artifactId>tiny-common-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-order-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <!-- 设置构建的 jar 包名 -->
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
-            <!-- 打包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -55,7 +66,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>

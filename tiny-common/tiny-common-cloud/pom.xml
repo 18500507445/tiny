@@ -18,7 +18,6 @@
         <dependency>
             <groupId>com.tiny</groupId>
             <artifactId>tiny-common-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!-- 负载均衡loadbalancer -->

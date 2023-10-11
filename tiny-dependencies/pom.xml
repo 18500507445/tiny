@@ -102,6 +102,36 @@
                 <artifactId>tiny-common-web</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-starter-xxl</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-starter-mongo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-starter-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-order-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-pay-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- common件 start -->
 
 

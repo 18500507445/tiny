@@ -20,6 +20,9 @@
         <module>tiny-common</module>
         <module>tiny-gateway</module>
         <module>tiny-example</module>
+        <module>tiny-api</module>
+        <module>tiny-order</module>
+        <module>tiny-pay</module>
     </modules>
 
     <properties>

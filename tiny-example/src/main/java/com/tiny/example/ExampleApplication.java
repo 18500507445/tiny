@@ -16,7 +16,7 @@ import org.springframework.context.annotation.FilterType;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
 @EnableFeignClients(basePackages = "com.tiny")
-public class TinyExampleApplication {
+public class ExampleApplication {
 
     /**
      * ComponentScan 组件扫描指定路径，因为例如SpringUtils打上组件注解，但是跨包扩这项目了，不会自己注册为bean
@@ -28,7 +28,7 @@ public class TinyExampleApplication {
         //关闭 pageHelper启动banner
         System.setProperty("pagehelper.banner", "false");
 
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(TinyExampleApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(ExampleApplication.class, args);
         String redis = applicationContext.getEnvironment().getProperty("spring.redis.host");
         String mongo = applicationContext.getEnvironment().getProperty("spring.data.mongodb.host");
         String profile = applicationContext.getEnvironment().getProperty("spring.config.activate.on-profile");
