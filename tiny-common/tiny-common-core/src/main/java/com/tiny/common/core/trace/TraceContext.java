@@ -31,9 +31,9 @@ public class TraceContext {
     }
 
     /**
-     * 设置traceId
+     * 设置traceId，traceId有就复用，spanId每个服务都从新生成
      */
-    public static void setCurrentTrace(String traceId) {
+    public static Trace setCurrentTrace(String traceId) {
         if (StrUtil.isBlank(traceId)) {
             traceId = genTraceId();
         }
@@ -43,6 +43,7 @@ public class TraceContext {
         MDC.put(Trace.TRACE_ID, trace.getTraceId());
         MDC.put(Trace.SPAN_ID, trace.getSpanId());
         TRACE_CONTEXT.set(trace);
+        return trace;
     }
 
     /**
@@ -52,8 +53,7 @@ public class TraceContext {
         Trace trace = TRACE_CONTEXT.get();
         if (trace == null) {
             //如果为空，从新设置一次
-            setCurrentTrace("");
-            trace = TRACE_CONTEXT.get();
+            trace = setCurrentTrace("");
         }
         return trace;
     }

@@ -142,12 +142,10 @@ public class AccessFilter implements GlobalFilter {
     private ServerWebExchange buildGlobalTraceId(ServerWebExchange exchange) {
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(exchange.getRequest().getHeaders());
         TraceContext.removeTrace();
-        TraceContext.getCurrentTrace();
-        String traceId = MDC.get(Trace.TRACE_ID);
-        String spanId = MDC.get(Trace.SPAN_ID);
+        Trace trace = TraceContext.getCurrentTrace();
         Consumer<HttpHeaders> httpHeadersConsumer = x -> {
-            httpHeaders.set(Trace.TRACE_ID, traceId);
-            httpHeaders.set(Trace.SPAN_ID, spanId);
+            httpHeaders.set(Trace.TRACE_ID, trace.getTraceId());
+            httpHeaders.set(Trace.SPAN_ID, trace.getSpanId());
         };
         ServerHttpRequest req = exchange.getRequest().mutate().headers(httpHeadersConsumer).build();
         return exchange.mutate().request(req).build();

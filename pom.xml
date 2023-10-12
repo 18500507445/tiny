@@ -144,16 +144,12 @@
         </plugins>
 
         <resources>
-            <!-- yml读取配置 @project.artifactId@ -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
 
-            <!--排除配置文件-->
             <resource>
                 <directory>src/main/resources</directory>
-                <!--先排除所有的配置文件-->
+                <!-- yml读取配置 @project.artifactId@ -->
+                <filtering>true</filtering>
+                <!--排除所有的配置文件-->
                 <excludes>
                     <!--使用通配符，当然可以定义多个exclude标签进行排除-->
                     <exclude>application*.yml</exclude>
