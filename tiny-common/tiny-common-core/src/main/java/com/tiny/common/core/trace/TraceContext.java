@@ -51,14 +51,10 @@ public class TraceContext {
     public static Trace getCurrentTrace() {
         Trace trace = TRACE_CONTEXT.get();
         if (trace == null) {
-            trace = new Trace();
-            trace.setTraceId(genTraceId());
-            MDC.put(Trace.TRACE_ID, trace.getTraceId());
+            //如果为空，从新设置一次
+            setCurrentTrace("");
+            trace = TRACE_CONTEXT.get();
         }
-        // spanId每次不一样，重新生成，放到MDC中
-        trace.setSpanId(genSpanId());
-        MDC.put(Trace.SPAN_ID, trace.getSpanId());
-        TRACE_CONTEXT.set(trace);
         return trace;
     }
 
@@ -66,8 +62,6 @@ public class TraceContext {
      * 清空trace对象
      */
     public static void removeTrace() {
-        MDC.remove(Trace.TRACE_ID);
-        MDC.remove(Trace.SPAN_ID);
         TRACE_CONTEXT.remove();
     }
 }

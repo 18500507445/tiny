@@ -41,10 +41,7 @@ public class TraceFilter extends GenericFilterBean {
                 TraceContext.getCurrentTrace();
             }
             RequestWrapper requestWrapper = printAccessLog(request);
-            log.info("trace web filter-traceId:{}", MDC.get(Trace.TRACE_ID));
             filterChain.doFilter(requestWrapper, resp);
-            //响应后置处理 MDC放入spanId
-            MDC.put(Trace.SPAN_ID, TraceContext.genSpanId());
             log.error("当前请求总耗时：{} ms", System.currentTimeMillis() - start);
         } finally {
             TraceContext.removeTrace();
