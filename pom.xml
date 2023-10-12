@@ -53,6 +53,29 @@
         </dependencies>
     </dependencyManagement>
 
+    <!--分别设置local，dev环境-->
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>local</environment>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>pro</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>pro</environment>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -120,11 +143,33 @@
 
         </plugins>
 
-        <!-- yml读取配置 @project.artifactId@ -->
         <resources>
+            <!-- yml读取配置 @project.artifactId@ -->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+            </resource>
+
+            <!--排除配置文件-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--先排除所有的配置文件-->
+                <excludes>
+                    <!--使用通配符，当然可以定义多个exclude标签进行排除-->
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
+
+            <!--根据激活条件引入打包所需的配置和文件-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--引入所需环境的配置文件-->
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.yml</include>
+                    <!--根据maven选择环境导入配置文件-->
+                    <include>application-${environment}.yml</include>
+                </includes>
             </resource>
         </resources>
 

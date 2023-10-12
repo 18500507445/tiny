@@ -2,4 +2,4 @@ spring:
   # 开发环境
   config:
     activate:
-      on-profile: local
+      on-profile: @environment@

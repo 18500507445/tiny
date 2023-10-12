@@ -18,6 +18,7 @@ import org.springframework.context.annotation.FilterType;
 public class OrderApplication {
 
     public static void main(String[] args) {
+        System.setProperty("pagehelper.banner", "false");
         SpringApplication.run(OrderApplication.class, args);
     }
 }

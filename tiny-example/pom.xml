@@ -38,6 +38,16 @@
             <artifactId>tiny-common-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-order-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-pay-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

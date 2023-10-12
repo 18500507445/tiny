@@ -25,24 +25,6 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-xxl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-mongo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-redis</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tiny</groupId>
             <artifactId>tiny-common-generator</artifactId>
         </dependency>
 
