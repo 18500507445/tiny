@@ -2,6 +2,7 @@ package com.tiny.gateway.filter;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
@@ -229,7 +230,7 @@ public class AccessFilter implements GlobalFilter {
     private void setHeaderInfo(ServerWebExchange build, ServerHttpRequest request, String userContext, HttpHeaders headers) {
         Consumer<HttpHeaders> httpHeadersConsumer = x -> {
             if (StrUtil.isNotEmpty(userContext)) {
-                headers.set(Constants.USER_CONTEXT, userContext);
+                headers.set(Constants.USER_CONTEXT, URLUtil.encode(userContext));
             }
         };
         build.mutate().request(request.mutate().headers(httpHeadersConsumer).build()).build();

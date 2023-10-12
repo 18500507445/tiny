@@ -1,14 +1,18 @@
 package com.tiny.example.controller;
 
+import cn.hutool.core.map.MapUtil;
 import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.common.core.result.BaseController;
 import com.tiny.common.core.result.RespResult;
+import com.tiny.common.core.user.UserContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author: wzh
@@ -40,6 +44,10 @@ public class ExampleController extends BaseController {
 
     @RequestMapping(value = "/getPayOrderId", method = RequestMethod.GET)
     public RespResult getPayOrderId() {
-        return payFeignClient.getPayOrderId();
+        UserContext.UserToken userToken = UserContext.get();
+        RespResult result = payFeignClient.getPayOrderId();
+        Map<String, Object> hashMap = MapUtil.of("payOrder", result.get("data"));
+        hashMap.put("userInfo", userToken);
+        return RespResult.success(hashMap);
     }
 }
