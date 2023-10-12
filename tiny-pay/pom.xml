@@ -31,7 +31,12 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-pay-api</artifactId>
+            <artifactId>tiny-api-pay</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-api-order</artifactId>
         </dependency>
     </dependencies>
 

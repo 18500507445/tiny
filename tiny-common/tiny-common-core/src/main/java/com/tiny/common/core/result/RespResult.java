@@ -3,9 +3,9 @@ package com.tiny.common.core.result;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.tiny.common.core.trace.Trace;
-import com.tiny.common.core.trace.TraceHelper;
-import lombok.Data;
+import com.tiny.common.core.trace.TraceContext;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-@Data
+@Setter
 public class RespResult extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
@@ -82,9 +82,14 @@ public class RespResult extends HashMap<String, Object> {
     private Object data;
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
+     * 公网ip 最后2位，方便查找log
      */
-    public RespResult() {
+    public static String IP = "00";
+
+    /**
+     * 私有构造
+     */
+    private RespResult() {
 
     }
 
@@ -102,10 +107,10 @@ public class RespResult extends HashMap<String, Object> {
             super.put(DATA_TAG, data);
         }
         super.put(TIME, System.currentTimeMillis());
-        super.put(Trace.TRACE_ID, TraceHelper.getCurrentTrace().getTraceId());
-        super.put(Trace.SPAN_ID, TraceHelper.getCurrentTrace().getSpanId());
+        super.put(Trace.TRACE_ID, TraceContext.getCurrentTrace().getTraceId());
+        super.put(Trace.SPAN_ID, TraceContext.getCurrentTrace().getSpanId());
         super.put(ENV, SpringUtil.getActiveProfile());
-
+        super.put("ip", IP);
     }
 
     /**
@@ -122,9 +127,10 @@ public class RespResult extends HashMap<String, Object> {
             super.put(DATA_TAG, data);
         }
         super.put(TIME, System.currentTimeMillis());
-        super.put(Trace.TRACE_ID, TraceHelper.getCurrentTrace().getTraceId());
-        super.put(Trace.SPAN_ID, TraceHelper.getCurrentTrace().getSpanId());
+        super.put(Trace.TRACE_ID, TraceContext.getCurrentTrace().getTraceId());
+        super.put(Trace.SPAN_ID, TraceContext.getCurrentTrace().getSpanId());
         super.put(ENV, SpringUtil.getActiveProfile());
+        super.put("ip", IP);
     }
 
     /**
@@ -156,16 +162,6 @@ public class RespResult extends HashMap<String, Object> {
      */
     public static RespResult success(Object data) {
         return RespResult.success("请求成功", data);
-    }
-
-    /**
-     * 返回成功消息
-     *
-     * @param msg 返回内容
-     * @return 成功消息
-     */
-    public static RespResult success(String msg) {
-        return RespResult.success(msg, null);
     }
 
     /**

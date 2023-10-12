@@ -1,5 +1,6 @@
 package com.tiny.example.controller;
 
+import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.common.core.result.BaseController;
 import com.tiny.common.core.result.RespResult;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tiny-example/api")
 public class ExampleController extends BaseController {
 
+    private final PayFeignClient payFeignClient;
+
     @RequestMapping(value = "/traceId", method = RequestMethod.GET, name = "测试traceId透传")
     @ResponseBody
     public RespResult traceId() {
@@ -33,5 +36,10 @@ public class ExampleController extends BaseController {
             log.info("这是{}条日志！", i);
         }
         return RespResult.success("测试异步log");
+    }
+
+    @RequestMapping(value = "/getPayOrderId", method = RequestMethod.GET)
+    public RespResult getPayOrderId() {
+        return payFeignClient.getPayOrderId();
     }
 }

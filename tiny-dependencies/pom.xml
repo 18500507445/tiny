@@ -123,13 +123,13 @@
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-order-api</artifactId>
+                <artifactId>tiny-api-pay</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-pay-api</artifactId>
+                <artifactId>tiny-api-order</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- common件 start -->

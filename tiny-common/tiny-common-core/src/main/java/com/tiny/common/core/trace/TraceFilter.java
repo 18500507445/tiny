@@ -3,7 +3,7 @@ package com.tiny.common.core.trace;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.tiny.common.core.utils.common.RequestParamsUtil;
-import com.tiny.common.core.context.RequestWrapper;
+import com.tiny.common.core.request.RequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.HttpMethod;
@@ -36,18 +36,18 @@ public class TraceFilter extends GenericFilterBean {
             String traceId = request.getHeader(Trace.TRACE_ID);
             //正常启动单服务可能拿不到，需要生成一个，如果网关进行设置了直接放入Trace对象
             if (StrUtil.isNotEmpty(traceId)) {
-                TraceHelper.setCurrentTrace(traceId);
+                TraceContext.setCurrentTrace(traceId);
             } else {
-                TraceHelper.getCurrentTrace();
+                TraceContext.getCurrentTrace();
             }
             RequestWrapper requestWrapper = printAccessLog(request);
             log.info("trace web filter-traceId:{}", MDC.get(Trace.TRACE_ID));
             filterChain.doFilter(requestWrapper, resp);
             //响应后置处理 MDC放入spanId
-            MDC.put(Trace.SPAN_ID, TraceHelper.genSpanId());
+            MDC.put(Trace.SPAN_ID, TraceContext.genSpanId());
             log.error("当前请求总耗时：{} ms", System.currentTimeMillis() - start);
         } finally {
-            TraceHelper.removeTrace();
+            TraceContext.removeTrace();
         }
     }
 

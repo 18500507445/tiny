@@ -31,6 +31,16 @@ spring:
           predicates: # 路由规则，断言什么请求会被路由
             - Path=/tiny-example/api/** # 只要是访问的这个路径，一律都被路由到上面指定的服务
 
+        - id: tiny-order
+          uri: lb://tiny-order
+          predicates:
+            - Path=/tiny-order/api/**
+
+        - id: tiny-pay
+          uri: lb://tiny-pay
+          predicates:
+            - Path=/tiny-pay/api/**
+
 # log路径
 logging:
   file:

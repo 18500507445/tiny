@@ -22,7 +22,7 @@ public class TraceConfig {
         FilterRegistrationBean<TraceFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(traceFilter);
         registration.addUrlPatterns("/*");
-        registration.setName("traceWebFilter");
+        registration.setName("traceFilter");
         registration.setOrder(1);
         return registration;
     }

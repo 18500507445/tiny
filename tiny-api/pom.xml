@@ -11,10 +11,11 @@
 
     <artifactId>tiny-api</artifactId>
     <packaging>pom</packaging>
+    <description>tiny内网api</description>
 
     <modules>
-        <module>tiny-order-api</module>
-        <module>tiny-pay-api</module>
+        <module>tiny-api-order</module>
+        <module>tiny-api-pay</module>
     </modules>
 
 </project>

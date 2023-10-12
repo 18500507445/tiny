@@ -1,16 +1,26 @@
 package com.tiny.common.core.utils.common;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 /**
  * 获取IP方法
  */
+@Slf4j
 public class IpUtils {
 
     private IpUtils() {
@@ -198,4 +208,34 @@ public class IpUtils {
         return "未知";
     }
 
+    public static String getInternetIp(String command) {
+        TimeInterval timer = DateUtil.timer();
+        String ip = "";
+        String result = "";
+        String line;
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
+            Process process = processBuilder.start();
+            // 获取命令输出
+            InputStream inputStream = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((line = reader.readLine()) != null) {
+                if (StrUtil.containsAnyIgnoreCase(line, "ip", ":")) {
+                    List<String> split = StrUtil.split(line, ":");
+                    if (split.size() > 1) {
+                        ip = split.get(1);
+                    }
+                    break;
+                }
+            }
+            List<String> split = StrUtil.split(ip, ".");
+            if (split.size() > 3) {
+                result = split.get(3);
+            }
+            log.info("getInternetIp--ip：{}，result：{}，耗时：{} ms", ip, result, timer.interval());
+            return result;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

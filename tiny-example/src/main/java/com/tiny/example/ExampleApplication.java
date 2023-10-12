@@ -21,8 +21,6 @@ public class ExampleApplication {
     /**
      * ComponentScan 组件扫描指定路径，因为例如SpringUtils打上组件注解，但是跨包扩这项目了，不会自己注册为bean
      * 除非starter这种自动装配的，所以还需要把starter路径下已经装配手动排除掉
-     *
-     * @param args
      */
     public static void main(String[] args) {
         //关闭 pageHelper启动banner

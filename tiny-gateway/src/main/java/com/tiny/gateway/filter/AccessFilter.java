@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.tiny.common.core.Constants;
 import com.tiny.common.core.result.RespResult;
 import com.tiny.common.core.trace.Trace;
-import com.tiny.common.core.trace.TraceHelper;
+import com.tiny.common.core.trace.TraceContext;
 import com.tiny.common.core.utils.common.IpUtils;
 import com.tiny.common.core.utils.common.JwtUtils;
 import com.tiny.gateway.config.GateWayConfig;
@@ -140,8 +140,8 @@ public class AccessFilter implements GlobalFilter {
      */
     private ServerWebExchange buildGlobalTraceId(ServerWebExchange exchange) {
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(exchange.getRequest().getHeaders());
-        TraceHelper.removeTrace();
-        TraceHelper.getCurrentTrace();
+        TraceContext.removeTrace();
+        TraceContext.getCurrentTrace();
         String traceId = MDC.get(Trace.TRACE_ID);
         String spanId = MDC.get(Trace.SPAN_ID);
         Consumer<HttpHeaders> httpHeadersConsumer = x -> {

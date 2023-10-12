@@ -30,7 +30,7 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-order-api</artifactId>
+            <artifactId>tiny-api-order</artifactId>
         </dependency>
 
     </dependencies>
