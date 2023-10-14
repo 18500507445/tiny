@@ -10,18 +10,18 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.IdUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
  * ID生成器工具类
+ * @author wzh
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IdUtils {
-
-    private IdUtils() {
-
-    }
 
     /**
      * 获取随机UUID

@@ -2,6 +2,8 @@ package com.tiny.common.core.utils.common;
 
 import cn.hutool.core.util.StrUtil;
 import com.tiny.common.core.Constants;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +18,8 @@ import java.util.Set;
  * @date: 2023/09/20 11:16
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequestParamsUtil {
-
-    private RequestParamsUtil() {
-
-    }
 
     public static Map<String, Object> getFormParams(HttpServletRequest request) {
         Map<String, Object> paramMap = new HashMap<>(16);

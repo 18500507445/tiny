@@ -2,6 +2,8 @@ package com.tiny.common.core.utils.spring;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -15,11 +17,8 @@ import org.springframework.stereotype.Component;
  * spring工具类 方便在非spring管理环境中获取bean
  */
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
-
-    private SpringUtils() {
-
-    }
 
     /**
      * Spring应用上下文环境

@@ -4,6 +4,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -21,11 +23,8 @@ import java.util.List;
  * 获取IP方法
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IpUtils {
-
-    private IpUtils() {
-
-    }
 
     public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {

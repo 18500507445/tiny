@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.alibaba.fastjson2.JSON;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,16 +16,13 @@ import java.util.Set;
  * @description json工具类
  * @date: 2023/08/18 16:57
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtil {
 
     public enum Type {
         INCLUDE,
 
         EXCLUDE
-    }
-
-    private JsonUtil() {
-
     }
 
     /**
