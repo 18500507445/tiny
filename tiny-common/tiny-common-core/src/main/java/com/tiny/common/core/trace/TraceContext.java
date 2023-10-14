@@ -31,6 +31,13 @@ public class TraceContext {
     }
 
     /**
+     * 从MDC获取traceId
+     */
+    public static String getTraceId() {
+        return MDC.get(Trace.TRACE_ID);
+    }
+
+    /**
      * 设置traceId，traceId有就复用，spanId每个服务都从新生成
      */
     public static Trace setCurrentTrace(String traceId) {
