@@ -1,5 +1,5 @@
 spring:
-  # 开发环境
+  # 选择环境
   config:
     activate:
       on-profile: @environment@
