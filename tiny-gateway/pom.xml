@@ -18,11 +18,17 @@
         <dependency>
             <groupId>com.tiny</groupId>
             <artifactId>tiny-common-cloud</artifactId>
-            <!-- 网关不需要boot-web排除掉 -->
             <exclusions>
+                <!-- 网关不需要boot-web排除掉 -->
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+
+                <!-- 不需要德鲁伊连接池 -->
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>druid-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

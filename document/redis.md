@@ -27,11 +27,84 @@ spring:
 
   redis2:
     database: 1
+    host: xx.xx.xxx.xxx
+    port: 1
+    password: 1
+    lettuce:
+      pool:
+        max-active: -1
+        max-wait: 3000
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000
 ~~~
 
-### 代码
+### 配置类代码
 ~~~java
-//第二个数据源
-@Resource
-private RedisTemplate<String, Object> secondRedisTemplate;
+@Configuration
+public class RedisAutoConfiguration {
+    /**
+     * 第二数据源配置信息
+     */
+    @Bean(name = "secondRedisProperties")
+    @ConfigurationProperties(prefix = "spring.redis2")
+    public RedisProperties secondRedisProperties() {
+        return new RedisProperties();
+    }
+
+    @Bean(name = "secondRedisTemplate")
+    public RedisTemplate<String, Object> secondRedisTemplate(@Qualifier("secondRedisProperties") RedisProperties secondRedisProperties) {
+        if ("localhost".equals(secondRedisProperties.getHost())) {
+            return null;
+        }
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory(secondRedisProperties));
+        template.setKeySerializer(RedisSerializer.string());
+        template.setHashKeySerializer(RedisSerializer.string());
+        template.setValueSerializer(RedisSerializer.json());
+        template.setHashValueSerializer(RedisSerializer.json());
+        return template;
+    }
+
+    /**
+     * 使用lettuce配置Redis连接信息
+     */
+    public RedisConnectionFactory connectionFactory(RedisProperties redisProperties) {
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        String host = redisProperties.getHost();
+        int port = redisProperties.getPort();
+        String password = redisProperties.getPassword();
+        int database = redisProperties.getDatabase();
+
+        Duration timeout = null == redisProperties.getTimeout() ? Duration.ZERO : redisProperties.getTimeout();
+
+        int maxIdle = redisProperties.getLettuce().getPool().getMaxIdle();
+        int minIdle = redisProperties.getLettuce().getPool().getMinIdle();
+        int maxActive = redisProperties.getLettuce().getPool().getMaxActive();
+        Duration maxWait = redisProperties.getLettuce().getPool().getMaxWait();
+
+        configuration.setHostName(host);
+        configuration.setPort(port);
+        if (null != password) {
+            configuration.setPassword(password);
+        }
+        if (database != 0) {
+            configuration.setDatabase(database);
+        }
+        GenericObjectPoolConfig<Object> genericObjectPoolConfig = new GenericObjectPoolConfig<>();
+        genericObjectPoolConfig.setMaxIdle(maxIdle);
+        genericObjectPoolConfig.setMinIdle(minIdle);
+        genericObjectPoolConfig.setMaxTotal(maxActive);
+        genericObjectPoolConfig.setMaxWait(maxWait);
+
+        LettuceClientConfiguration clientConfig = LettucePoolingClientConfiguration.builder()
+                .commandTimeout(timeout)
+                .poolConfig(genericObjectPoolConfig)
+                .build();
+
+        LettuceConnectionFactory lettuce = new LettuceConnectionFactory(configuration, clientConfig);
+        lettuce.afterPropertiesSet();
+        return lettuce;
+    }
+}
 ~~~

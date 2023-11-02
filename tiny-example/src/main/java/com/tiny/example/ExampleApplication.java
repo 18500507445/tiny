@@ -1,5 +1,7 @@
 package com.tiny.example;
 
+import com.tiny.common.core.result.RespResult;
+import com.tiny.common.core.utils.common.IpUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -7,6 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author: wzh
@@ -38,6 +42,13 @@ public class ExampleApplication {
         System.err.println("serverAddr :" + serverAddr);
         System.err.println("redis :" + redis);
         System.err.println("mongo :" + mongo);
+
+        //公网ip 后两位初始化ResultVO
+        CompletableFuture.runAsync(() -> {
+            System.err.println("当前模块启动成功，初始化ResultVO");
+            String internetIp = IpUtils.getInternetIp("curl cip.cc");
+            RespResult.setIP(internetIp);
+        });
     }
 
 }
