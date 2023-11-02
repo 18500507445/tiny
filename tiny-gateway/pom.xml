@@ -45,12 +45,6 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
-        <!-- 兼容mac m1芯片启动问题 -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
