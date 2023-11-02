@@ -14,7 +14,9 @@ import org.springframework.context.annotation.FilterType;
  * @date: 2023/08/29 14:19
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"com.tiny.common.starter.*", "com.tiny.common.core.*"})})
+@ComponentScan(basePackages = {"com.tiny"},
+        excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX,
+        pattern = {"com.tiny.common.*"})})
 @EnableFeignClients(basePackages = "com.tiny")
 @Slf4j
 public class GatewayApplication {
