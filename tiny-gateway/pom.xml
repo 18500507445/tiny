@@ -39,6 +39,12 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
+        <!-- 因为网关启动不需要spring-boot-starter-web，但是引入了core包又需要servlet所以单独引入 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
         <!-- 兼容mac m1芯片启动问题 -->
         <dependency>
             <groupId>io.netty</groupId>
