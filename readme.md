@@ -16,8 +16,7 @@ tiny
 │  └─tiny-common-starter    -- 开胃菜，自定义starter
 │     ├─tiny-common-starter-redis          -- redis-单数据源
 │     ├─tiny-common-starter-mongo          -- mongo-单数据源，如果配置多个，在写一套就行了
-│     ├─tiny-common-starter-xxl            -- xxl
-│     └─tiny-common-starter-mq             -- mq(待完成)  
+│     └─tiny-common-starter-xxl            -- xxl 
 │  └─tiny-common-web        -- 包含tool包，拦截器、过滤器、
 ├─tiny-dependencies         -- 统一管理依赖，版本锁死
 ├─tiny-gateway              -- 网关服务，路由规则、跨域、空白页改造，header解析token，token失效判断-redis（待完成），用户状态判断-fegin调用（待完成）
@@ -42,4 +41,6 @@ tiny
 
 ## 说明
 > （1）新添加model可以参考example工程  
-> （2）主pom进行打包，进入样例服务jar包目录，执行`java -jar -Dspring.profiles.active=local tiny-example-1.0-SNAPSHOT.jar`可以正常启动
+> （2）服务本地启动，需要先配置好nacos，然后配置Active Profiles=local，再启动
+> （2）访问url需要Header里添加Authorization，工具类JwtUtils.main方法生成
+> （3）主pom进行打包，进入样例服务jar包目录，执行`java -jar -Dspring.profiles.active=local tiny-example-1.0-SNAPSHOT.jar`可以正常启动
