@@ -19,6 +19,11 @@ import java.io.IOException;
 @Slf4j
 public class UserFilter implements Filter {
 
+
+    /**
+     * 无论是否userContext有没有值，都放入用户上下文里
+     * 禁止判空然后再放入，然后filterChain.doFilter，否则不会进行传递了，那么进不到其它服务了
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) {
         HttpServletRequest request = (HttpServletRequest) req;
