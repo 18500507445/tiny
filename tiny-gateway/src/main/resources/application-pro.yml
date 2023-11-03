@@ -1,18 +1,14 @@
 spring:
-  # 应用名称
   application:
     name: @project.artifactId@
-  # 配置导入
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.config.activate.on-profile}.${spring.cloud.nacos.config.file-extension}
   cloud:
     nacos:
-      # 注册中心
       discovery:
         server-addr: localhost:8848
         namespace: dc464a71-0f8a-48d6-90f3-6ec7b41e4f48
-      # 配置中心
       config:
         server-addr: localhost:8848
         namespace: dc464a71-0f8a-48d6-90f3-6ec7b41e4f48
@@ -22,16 +18,22 @@ spring:
         group: DEFAULT_GROUP
 
     gateway:
-      # 配置路由列表
       routes:
-        - id: tiny-example  # 路由名称
-          uri: lb://tiny-example  # 路由的地址，lb表示使用负载均衡到微服务，也可以使用http正常转发
-          predicates: # 路由规则，断言什么请求会被路由
-            - Path=/tiny-example/api/** # 只要是访问的这个路径，一律都被路由到上面指定的服务
+        - id: tiny-example
+          uri: lb://tiny-example
+          predicates:
+            - Path=/tiny-example/api/**
 
-# log路径
+        - id: tiny-order
+          uri: lb://tiny-order
+          predicates:
+            - Path=/tiny-order/api/**
+
+        - id: tiny-pay
+          uri: lb://tiny-pay
+          predicates:
+            - Path=/tiny-pay/api/**
+
 logging:
   file:
-#    path: /mnt/vdb/logs/tiny/${spring.application.name}
     path: /Users/wangzehui/Documents/Logs/tiny/${spring.application.name}
----

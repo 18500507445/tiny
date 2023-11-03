@@ -1,7 +1,7 @@
 package com.tiny.gateway.config;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,35 +14,32 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @RefreshScope
 @Configuration
+@ConfigurationProperties(prefix = "gateway")
 public class GateWayConfig {
 
     /**
      * 鉴权开关，默认打开
      */
-    @Value("${auth.enable:true}")
-    private Boolean authEnable;
+    private Boolean authEnable = true;
 
     /**
-     * 放行的url，默认值""
+     * 放行的url
      */
-    @Value("${auth.release.urls: }")
     private String[] releaseUrls;
 
     /**
      * 禁止的url
      */
-    @Value("${auth.forbidden.urls: }")
     private String[] forbiddenUrls;
 
     /**
      * 网关配置，慢接展示开关，默认打开
      */
-    @Value("${gateway.slow.enable:true}")
-    private Boolean slowEnable;
+    private Boolean slowEnable = true;
 
     /**
      * 网关配置，慢接口毫秒界限值，默认1000
      */
-    @Value("${gateway.slow.millisecond:1000}")
-    private Long slowMillisecond;
+    private Long slowMillisecond = 1000L;
+
 }
