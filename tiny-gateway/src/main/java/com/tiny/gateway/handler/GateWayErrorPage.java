@@ -18,16 +18,16 @@ import java.util.Map;
 
 /**
  * @author: wzh
- * @description 自定义空白页
+ * @description 网关自定义空白页
  * @date: 2023/08/29 16:24
  */
 @Component
 @Order(-1)
-public class CustomErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
+public class GateWayErrorPage extends AbstractErrorWebExceptionHandler {
 
-    public CustomErrorWebExceptionHandler(ErrorAttributes errorAttributes,
-                                          ApplicationContext applicationContext,
-                                          ServerCodecConfigurer serverCodecConfigurer) {
+    public GateWayErrorPage(ErrorAttributes errorAttributes,
+                            ApplicationContext applicationContext,
+                            ServerCodecConfigurer serverCodecConfigurer) {
         super(errorAttributes, new WebProperties.Resources(), applicationContext);
         super.setMessageWriters(serverCodecConfigurer.getWriters());
         super.setMessageReaders(serverCodecConfigurer.getReaders());
@@ -41,7 +41,7 @@ public class CustomErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
     private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         // 获取异常信息
         Map<String, Object> map = getErrorAttributes(request, ErrorAttributeOptions.defaults());
-        map.put("message", "找不到当前地址~~！");
+        map.put("message", "找不到当前服务~~！");
         // 构建响应
         return ServerResponse.status(HttpStatus.NOT_FOUND)   // 404状态码
                 .contentType(MediaType.APPLICATION_JSON)     // 以JSON格式显示响应
