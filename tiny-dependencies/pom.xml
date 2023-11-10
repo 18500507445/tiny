@@ -38,6 +38,8 @@
         <easyexcel.verson>3.3.2</easyexcel.verson>
         <!-- 解决loadbalancer缓存问题，jdk1.8版本最高2.9.3不建议升级 -->
         <caffeine.verson>2.9.3</caffeine.verson>
+        <!-- 3.0之前最后一个版本，不要升级了 -->
+        <redisson.version>3.18.0</redisson.version>
         <jwt.version>4.4.0</jwt.version>
     </properties>
 
@@ -211,6 +213,13 @@
                 <groupId>com.github.ben-manes.caffeine</groupId>
                 <artifactId>caffeine</artifactId>
                 <version>${caffeine.verson}</version>
+            </dependency>
+
+            <!-- redisson -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
 
             <!-- jwt令牌生成算法 token校验 -->

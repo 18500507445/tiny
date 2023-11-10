@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RequestParamsUtil {
+public final class RequestParamsUtil {
 
     public static Map<String, Object> getFormParams(HttpServletRequest request) {
         Map<String, Object> paramMap = new HashMap<>(16);

@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class IpUtils {
+public final class IpUtils {
 
     public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {

@@ -1,6 +1,8 @@
 package com.tiny.common.core.user;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.core.NamedThreadLocal;
 
 /**
@@ -8,7 +10,8 @@ import org.springframework.core.NamedThreadLocal;
  * @description 用户上下文
  * @date: 2023/10/12 13:43
  */
-public class UserContext {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class UserContext {
 
     public static final ThreadLocal<UserToken> USER_CONTEXT = new NamedThreadLocal<>("User Context");
 

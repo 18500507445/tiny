@@ -21,7 +21,7 @@ import java.util.concurrent.CountDownLatch;
  * @author wzh
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class IdUtils {
+public final class IdUtils {
 
     /**
      * 获取随机UUID

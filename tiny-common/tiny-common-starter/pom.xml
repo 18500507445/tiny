@@ -14,9 +14,10 @@
     <description>自定义starter</description>
 
     <modules>
-        <module>tiny-common-starter-xxl</module>
-        <module>tiny-common-starter-redis</module>
         <module>tiny-common-starter-mongo</module>
+        <module>tiny-common-starter-redis</module>
+        <module>tiny-common-starter-redisson</module>
+        <module>tiny-common-starter-xxl</module>
     </modules>
 
     <dependencies>

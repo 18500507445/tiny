@@ -15,10 +15,9 @@ import java.io.IOException;
  * @description 用户过滤器
  * @date: 2023/10/12 13:59
  */
-@Component
 @Slf4j
+@Component
 public class UserFilter implements Filter {
-
 
     /**
      * 无论是否userContext有没有值，都放入用户上下文里

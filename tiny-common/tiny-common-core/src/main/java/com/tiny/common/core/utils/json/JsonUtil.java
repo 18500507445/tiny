@@ -17,7 +17,7 @@ import java.util.Set;
  * @date: 2023/08/18 16:57
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class JsonUtil {
+public final class JsonUtil {
 
     public enum Type {
         INCLUDE,
