@@ -1,5 +1,6 @@
 package com.tiny.common.starter.xxl;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -7,8 +8,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: wzh
  * @date: 2023/4/22 22:10
  */
+@Getter
 @ConfigurationProperties("xxl.job")
-public class XxlProperties {
+public final class XxlProperties {
 
     /**
      * 是否开启，默认为 true 关闭
@@ -44,22 +46,6 @@ public class XxlProperties {
 
     public void setExecutor(ExecutorProperties executor) {
         this.executor = executor;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public AdminProperties getAdmin() {
-        return admin;
-    }
-
-    public ExecutorProperties getExecutor() {
-        return executor;
     }
 
     /**

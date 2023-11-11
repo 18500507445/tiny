@@ -44,10 +44,9 @@ public class ExampleApplication {
         System.err.println("mongo :" + mongo);
 
         //公网ip 后两位初始化ResultVO
-        CompletableFuture.runAsync(() -> {
-            System.err.println("当前模块启动成功，初始化ResultVO");
-            String internetIp = IpUtils.getInternetIp("curl cip.cc");
-            RespResult.setIP(internetIp);
+        CompletableFuture.supplyAsync(() -> IpUtils.getInternetIp("curl cip.cc")).thenAccept(s -> {
+            RespResult.setIP(s);
+            System.err.println("example模块启动成功，初始化公网ip：" + s + "，放入ResultVO");
         });
     }
 

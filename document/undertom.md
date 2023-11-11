@@ -20,3 +20,12 @@ public class UndertowPoolCustomizer implements WebServerFactoryCustomizer<Undert
     }
 }
 ~~~
+
+~~~yml
+server:
+  # undertow配置
+  undertow:
+    threads:
+      io: 10 #默认机器核数
+      worker: 200 #默认 io * 8
+~~~
