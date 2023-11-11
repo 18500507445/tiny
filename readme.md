@@ -35,24 +35,8 @@ tiny
 | example | 10000 | xx |
 
 ## 环境准备
-（1）本地添加nacos，参照如下 [访问地址](http://localhost:8848/nacos/)
+本地添加nacos，如图 [访问地址](http://localhost:8848/nacos/)
 ![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/nacos.png)
-
-（2）本地添加sentinel，参照如下[访问地址](http://localhost:8858/#/login)
-![sentinel](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/sentinel.png)
-
-流控
-![sentinel](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/sentinel-config.png)
-
-（3）本地添加seata，参照如下[访问地址](http://localhost:8858/#/login)
-![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/seata.png)
-
-seata源码执行
-![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/seata-source.png)
-
-seata-nacos配置格式
-![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/seata-nacos.png)
-
 
 ## 说明
 > （1）新添加model可以参考example工程  

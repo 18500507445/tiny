@@ -25,9 +25,9 @@
 [注册中心nacos服务端下载](https://github.com/alibaba/nacos)
 
 项目中下载的2.2.2版本，导入项目中，然后添加一个shell script单节点配置
-![](./img/nacos.png)
+本地添加nacos，如图 [访问地址](http://localhost:8848/nacos/)
+![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/nacos.png)
 
-[访问地址](http://192.168.1.9:8848/nacos/index.html)
 
 服务pom添加依赖
 ~~~xml
@@ -112,9 +112,8 @@ OrderApplication添加@EnableFeignClients注解开启远程调用
 ### 5.Sentinel（流量防卫兵，和Nacos一样需要单独下载部署）
 [中文文档](https://sentinelguard.io/zh-cn/docs/introduction.html)
 
-配置启动参数
-![](./img/sentinel.png)
-
+本地添加sentinel，如图[访问地址](http://localhost:8858/#/login)
+![sentinel](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/sentinel.png)
 [访问地址 账号密码：sentinel](http://localhost:8858/#/login)
 
 然后pom引入依赖
@@ -126,7 +125,7 @@ OrderApplication添加@EnableFeignClients注解开启远程调用
 ~~~
 
 #### 5.1 流量控制    
-![](./img/流控.png)  
+![sentinel](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/sentinel-config.png)
 流控模式：（1）针对当前接口  （2）当关联接口超阈值会导致当前接口限流（相当于就是别人出错，你背锅）   （3）更细粒度，精确具体方法  
 流控效果：（1）快速失败，直接抛出异常FlowException  （2）预热Warm Up按照预热时长缓慢地进入 （3）排队等待
 
@@ -149,6 +148,9 @@ JSONObject blocked() {
 }
 ~~~
 
+流控
+![sentinel](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/sentinel-config.png)
+
 #### 5.3 热点参数限流
 热点规则：针对一个接口中的参数进行策略限流
 
@@ -162,7 +164,7 @@ JSONObject blocked() {
 [客户端下载地址](https://github.com/seata/seata)
 
 本地配置启动，注意：修改bin目录seata-server.sh jvm参数-Xss改成1M否则启动失败
-![](./img/seata.png)
+![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/seata.png)
 
 ~~~xml
 <dependency>
@@ -263,16 +265,14 @@ seata:
 ~~~
 
 找到源码文件，解压后找到script/config-center/nacos/nacos-config-interactive.sh  
-![](./img/seata源码.png)
 
 终端执行    
-![](./img/seata源码执行.png)
+![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/seata-source.png)
 
 然后再Nacos后台看到  
-![](./img/nacos-seata配置.png)
+![nacos](https://cdn.jsdelivr.net/gh/18500507445/drawing-bed/tiny/seata-nacos.png)
 
 新建一个配置  
-![](./img/seata-nacos配置格式.png)
 
 最后yml文件配置，就可以启动啦
 ~~~yml
