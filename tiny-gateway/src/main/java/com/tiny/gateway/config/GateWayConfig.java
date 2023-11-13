@@ -33,6 +33,11 @@ public class GateWayConfig {
     private String[] forbiddenUrls;
 
     /**
+     * ip黑名单
+     */
+    private String[] ipBlackList;
+
+    /**
      * 网关配置，慢接展示开关，默认打开
      */
     private Boolean slowEnable = true;

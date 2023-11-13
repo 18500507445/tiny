@@ -102,6 +102,12 @@ public class AccessFilter implements GlobalFilter {
             return filter(chain, build, exchange, url);
         }
 
+        //禁止的ip访问
+        if (checkIpBlackList(ip)) {
+            log.error("网关配置禁止访问的ip：{}", ip);
+            return responseErrorMsg(exchange, 403, "forbidden request ip!");
+        }
+
         // 从header Authorization中获取
         String authorization = httpHeaders.getFirst(Constants.AUTHORIZATION);
         if (StrUtil.isEmpty(authorization)) {
@@ -191,6 +197,21 @@ public class AccessFilter implements GlobalFilter {
         if (ArrayUtil.isNotEmpty(releaseUrls)) {
             for (String authIgnoreUrl : releaseUrls) {
                 if (pathMatcher.match(authIgnoreUrl, url)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 从配置中心检查ip黑名单
+     */
+    private boolean checkIpBlackList(String ip) {
+        String[] ipBlackList = gatewayConfig.getIpBlackList();
+        if (ArrayUtil.isNotEmpty(ipBlackList)) {
+            for (String authIgnoreUrl : ipBlackList) {
+                if (pathMatcher.match(authIgnoreUrl, ip)) {
                     return true;
                 }
             }
