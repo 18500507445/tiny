@@ -15,6 +15,7 @@
 
     <modules>
         <module>tiny-common-starter-mongo</module>
+        <module>tiny-common-starter-rabbit</module>
         <module>tiny-common-starter-redis</module>
         <module>tiny-common-starter-redisson</module>
         <module>tiny-common-starter-xxl</module>

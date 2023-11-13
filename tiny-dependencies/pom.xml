@@ -108,13 +108,13 @@
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-xxl</artifactId>
+                <artifactId>tiny-common-starter-mongo</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-mongo</artifactId>
+                <artifactId>tiny-common-starter-rabbit</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -124,6 +124,19 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-starter-redisson</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
+                <artifactId>tiny-common-starter-xxl</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 业务组件 start -->
             <dependency>
                 <groupId>com.tiny</groupId>
                 <artifactId>tiny-api-pay</artifactId>
