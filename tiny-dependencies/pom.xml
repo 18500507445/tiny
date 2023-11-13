@@ -34,7 +34,7 @@
         <!-- 工具版本 -->
         <fastjson.version>2.0.40</fastjson.version>
         <hutool.version>5.8.20</hutool.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>32.1.3-jre</guava.version>
         <xxljob.version>2.4.0</xxljob.version>
         <easyexcel.verson>3.3.2</easyexcel.verson>
         <!-- 解决loadbalancer缓存问题，jdk1.8版本最高2.9.3不建议升级 -->
