@@ -43,7 +43,6 @@ public class MongoAutoConfiguration {
      */
     @Bean(name = "primaryMongoTemplate")
     @Primary
-    @Qualifier("primaryMongoTemplate")
     public MongoTemplate primaryMongoTemplate() throws UnsupportedEncodingException {
         MongoProperties mongoProperties = this.primaryMongoProperties();
         if (null != mongoProperties.getHost()) {
