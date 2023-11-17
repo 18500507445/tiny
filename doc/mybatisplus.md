@@ -35,11 +35,36 @@ mybatis-plus:
     map-underscore-to-camel-case: true
 ~~~
 
-### 代码
+### 多数据源Mapper注解
 ~~~java
 @Mapper
-@DS("second")
+@DS("db1")
 public interface XxxMapper extends BaseMapper<Entity> {
 
 }
+~~~
+
+
+### mybatis-plus内置分页插件（需要配置，放到avic-parent里面去配置，自动装配），如果已经添加了pagehelper依赖，`不建议这么做`
+~~~java
+@Configuration
+public class MybatisPlusConfig {
+   
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        //MybatisPlusInterceptor插件，默认提供分页插件，如需其他MP内置插件，则需自定义该Bean
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+
+        //分页插件 用依赖包自己的Page对象，不是pagehelper的Page
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
+    }
+
+
+}
+~~~
+
+### 内置分页如何使用
+~~~java
+Page<UserDO> page = mapper.selectPage(new Page<>(1, 5), queryWrapper);
 ~~~
