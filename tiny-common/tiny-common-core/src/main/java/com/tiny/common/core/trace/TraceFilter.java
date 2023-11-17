@@ -2,10 +2,9 @@ package com.tiny.common.core.trace;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.tiny.common.core.utils.common.RequestParamsUtil;
 import com.tiny.common.core.request.RequestWrapper;
+import com.tiny.common.core.utils.common.RequestParamsUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
@@ -41,7 +40,7 @@ public class TraceFilter extends GenericFilterBean {
                 TraceContext.getCurrentTrace();
             }
             RequestWrapper requestWrapper = printAccessLog(request);
-            filterChain.doFilter(requestWrapper, resp);
+            filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
             log.error("当前请求总耗时：{} ms", System.currentTimeMillis() - start);
         } finally {
             TraceContext.removeTrace();
@@ -53,7 +52,7 @@ public class TraceFilter extends GenericFilterBean {
      */
     @SuppressWarnings({"unchecked"})
     private RequestWrapper printAccessLog(HttpServletRequest request) throws IOException {
-        RequestWrapper requestWrapper = new RequestWrapper(request);
+        RequestWrapper requestWrapper;
         String requestUrl = request.getRequestURI();
         SortedMap<String, Object> paramResult = new TreeMap<>(RequestParamsUtil.getUrlParams(request));
         try {
@@ -61,10 +60,11 @@ public class TraceFilter extends GenericFilterBean {
             if (!StrUtil.equals(HttpMethod.GET.name(), request.getMethod())) {
                 String contentType = request.getContentType();
                 if (StrUtil.containsIgnoreCase(contentType, "json")) {
-                    String body = getBody(requestWrapper);
+                    String body = getBody(requestWrapper = new RequestWrapper(request));
                     if (StrUtil.isNotBlank(body)) {
                         paramResult.putAll(JSONObject.parseObject(body, Map.class));
                     }
+                    return requestWrapper;
                 } else if (StrUtil.containsIgnoreCase(contentType, "form")) {
                     paramResult.putAll(RequestParamsUtil.getFormParams(request));
                 }
@@ -72,7 +72,7 @@ public class TraceFilter extends GenericFilterBean {
         } finally {
             log.info("请求apiName：{}，方式：{}，body：{}", requestUrl, request.getMethod(), JSONObject.toJSONString(paramResult));
         }
-        return requestWrapper;
+        return null;
     }
 
     public static String getBody(HttpServletRequest request) {
