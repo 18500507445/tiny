@@ -22,12 +22,29 @@ spring:
         group: DEFAULT_GROUP
 
     gateway:
+      # 全局http超时 10s
+      httpclient:
+        response-timeout: 10s
+        connect-timeout: 10000
+
+      # 跨域处理
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowCredentials: true
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
       # 配置路由列表
       routes:
         - id: tiny-example  # 路由名称
           uri: lb://tiny-example  # 路由的地址，lb表示使用负载均衡到微服务，也可以使用http正常转发
           predicates: # 路由规则，断言什么请求会被路由
             - Path=/tiny-example/api/** # 只要是访问的这个路径，一律都被路由到上面指定的服务
+          #局部http超时
+          metadata:
+            response-timeout: 10s
+            connect-timeout: 10000
 
         - id: tiny-order
           uri: lb://tiny-order

@@ -18,11 +18,25 @@ spring:
         group: DEFAULT_GROUP
 
     gateway:
+      httpclient:
+        response-timeout: 10s
+        connect-timeout: 10000
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowCredentials: true
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
       routes:
         - id: tiny-example
           uri: lb://tiny-example
           predicates:
             - Path=/tiny-example/api/**
+          metadata:
+            response-timeout: 10s
+            connect-timeout: 10000
 
         - id: tiny-order
           uri: lb://tiny-order
