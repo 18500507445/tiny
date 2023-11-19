@@ -10,7 +10,6 @@
     <version>${revision}</version>
 
     <description>统一依赖管理</description>
-    <name>${project.artifactId}</name>
 
     <properties>
         <revision>1.0-SNAPSHOT</revision>

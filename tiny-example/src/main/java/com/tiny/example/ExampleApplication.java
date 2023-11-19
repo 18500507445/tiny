@@ -2,6 +2,7 @@ package com.tiny.example;
 
 import com.tiny.common.core.result.RespResult;
 import com.tiny.common.core.utils.common.IpUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -17,6 +18,7 @@ import java.util.concurrent.CompletableFuture;
  * @description 样例工程启动类
  * @date: 2023/08/29 14:45
  */
+@Slf4j(topic = "ExampleApplication")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
 @EnableFeignClients(basePackages = "com.tiny")
@@ -37,11 +39,7 @@ public class ExampleApplication {
         String name = applicationContext.getEnvironment().getProperty("spring.application.name");
         String serverAddr = applicationContext.getEnvironment().getProperty("spring.cloud.nacos.discovery.server-addr");
 
-        System.err.println("profile :" + profile);
-        System.err.println("name :" + name);
-        System.err.println("serverAddr :" + serverAddr);
-        System.err.println("redis :" + redis);
-        System.err.println("mongo :" + mongo);
+        log.warn("profile :{}，name :{}，serverAddr :{}，redis :{}，mongo :{}", profile, name, serverAddr, redis, mongo);
 
         //公网ip 后两位初始化ResultVO
         CompletableFuture.supplyAsync(() -> IpUtils.getInternetIp("curl cip.cc")).thenAccept(s -> {
