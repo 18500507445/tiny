@@ -1,9 +1,9 @@
 package com.tiny.common.core.utils.json;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -48,11 +48,11 @@ public final class JsonUtil {
                 break;
         }
         set.addAll(fieldList);
-        String jsonString = JSONObject.toJSONString(object, filter);
+        String jsonString = JSON.toJSONString(object, filter);
         String name = clazz.getName();
-        if (JSONObject.class.getName().equals(name) || com.alibaba.fastjson2.JSONObject.class.getName().equals(name)) {
+        if (JSONObject.class.getName().equals(name)) {
             return (T) JSON.parseObject(jsonString);
-        } else if (JSONArray.class.getName().equals(name) || com.alibaba.fastjson2.JSONArray.class.getName().equals(name)) {
+        } else if (JSONArray.class.getName().equals(name)) {
             return (T) JSON.parseArray(jsonString);
         } else {
             return null;

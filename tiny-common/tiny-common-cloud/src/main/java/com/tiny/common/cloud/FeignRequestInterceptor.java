@@ -2,10 +2,10 @@ package com.tiny.common.cloud;
 
 import cn.hutool.core.util.StrUtil;
 import com.tiny.common.core.trace.Trace;
+import com.tiny.common.core.trace.TraceContext;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -24,7 +24,8 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        String traceId = MDC.get(Trace.TRACE_ID);
+        //MDC获取traceId
+        String traceId = TraceContext.getTraceId();
         if (StrUtil.isNotEmpty(traceId)) {
             // 传递traceId
             requestTemplate.header(Trace.TRACE_ID, traceId);
@@ -49,7 +50,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
                 }
             }
         } catch (Exception e) {
-            log.error("执行FeignRequestInterceptor系统异常！errMsg: {}", e.getMessage(), e);
+            log.error("执行FeignRequestInterceptor系统异常！errMsg: {}", e.getMessage());
         }
     }
 }

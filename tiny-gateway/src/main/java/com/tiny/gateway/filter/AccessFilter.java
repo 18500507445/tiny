@@ -147,8 +147,10 @@ public class AccessFilter implements GlobalFilter {
      */
     private ServerWebExchange buildGlobalTraceId(ServerWebExchange exchange) {
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(exchange.getRequest().getHeaders());
+        //先清除，防止有残留的trace对象
         TraceContext.removeTrace();
         Trace trace = TraceContext.getCurrentTrace();
+        //放入header
         Consumer<HttpHeaders> httpHeadersConsumer = x -> {
             httpHeaders.set(Trace.TRACE_ID, trace.getTraceId());
             httpHeaders.set(Trace.SPAN_ID, trace.getSpanId());
@@ -157,6 +159,14 @@ public class AccessFilter implements GlobalFilter {
         return exchange.mutate().request(req).build();
     }
 
+    /**
+     * 处理请求
+     * 开启慢日志，并且超过1000ms，从header里面取出来放入当前的MDC中，方便日志打印的时候展示traceId、spanId
+     * @param chain
+     * @param build
+     * @param exchange
+     * @param url
+     */
     private Mono<Void> filter(GatewayFilterChain chain, ServerWebExchange build, ServerWebExchange exchange, String url) {
         return chain.filter(build).then(Mono.fromRunnable(() -> {
             if (gatewayConfig.getSlowEnable()) {
