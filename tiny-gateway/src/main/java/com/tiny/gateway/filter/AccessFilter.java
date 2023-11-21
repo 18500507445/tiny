@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
 import com.tiny.common.core.Constants;
@@ -162,6 +163,7 @@ public class AccessFilter implements GlobalFilter {
     /**
      * 处理请求
      * 开启慢日志，并且超过1000ms，从header里面取出来放入当前的MDC中，方便日志打印的时候展示traceId、spanId
+     *
      * @param chain
      * @param build
      * @param exchange
@@ -263,6 +265,27 @@ public class AccessFilter implements GlobalFilter {
             }
         };
         build.mutate().request(request.mutate().headers(httpHeadersConsumer).build()).build();
+    }
+
+
+    /**
+     * 认证错误输出
+     *
+     * @param resp 响应对象
+     * @return 错误结果
+     */
+    private Mono<Void> authError(ServerHttpResponse resp) {
+        resp.setStatusCode(HttpStatus.UNAUTHORIZED);
+        resp.getHeaders().add("Content-Type", Constants.JSON);
+        RespResult error = RespResult.error(401, "认证错误");
+        String returnStr = "";
+        try {
+            returnStr = JSON.toJSONString(error);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        DataBuffer buffer = resp.bufferFactory().wrap(returnStr.getBytes(StandardCharsets.UTF_8));
+        return resp.writeWith(Flux.just(buffer));
     }
 
 }
