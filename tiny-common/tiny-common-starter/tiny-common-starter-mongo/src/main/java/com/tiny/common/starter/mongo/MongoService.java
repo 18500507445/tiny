@@ -117,12 +117,12 @@ public class MongoService {
     /**
      * 根据条件查询出所有结果集 集合为数据对象中@Document 注解所配置的collection
      *
-     * @param obj        数据对象
+     * @param clazz      数据对象
      * @param findKeys   查询条件 key
      * @param findValues 查询条件 value
      * @return
      */
-    public List<? extends Object> find(Object obj, String[] findKeys, Object[] findValues) {
+    public <T> List<T> find(Class<T> clazz, String[] findKeys, Object[] findValues) {
         Criteria criteria = null;
         for (int i = 0; i < findKeys.length; i++) {
             if (i == 0) {
@@ -132,19 +132,19 @@ public class MongoService {
             }
         }
         Query query = Query.query(criteria);
-        return primaryMongoTemplate.find(query, obj.getClass());
+        return primaryMongoTemplate.find(query, clazz);
     }
 
     /**
      * 指定集合 根据条件查询出所有结果集
      *
-     * @param obj            数据对象
+     * @param clazz          数据对象
      * @param findKeys       查询条件 key
      * @param findValues     查询条件 value
      * @param collectionName 集合名
      * @return
      */
-    public List<? extends Object> find(Object obj, String[] findKeys, Object[] findValues, String collectionName) {
+    public <T> List<T> find(Class<T> clazz, String[] findKeys, Object[] findValues, String collectionName) {
         Criteria criteria = null;
         for (int i = 0; i < findKeys.length; i++) {
             if (i == 0) {
@@ -153,21 +153,22 @@ public class MongoService {
                 criteria.and(findKeys[i]).is(findValues[i]);
             }
         }
+        assert criteria != null;
         Query query = Query.query(criteria);
-        return primaryMongoTemplate.find(query, obj.getClass(), collectionName);
+        return primaryMongoTemplate.find(query, clazz, collectionName);
     }
 
     /**
      * 指定集合 根据条件查询出所有结果集 并排倒序
      *
-     * @param obj            数据对象
+     * @param clazz          数据对象
      * @param findKeys       查询条件 key
      * @param findValues     查询条件 value
      * @param collectionName 集合名
      * @param sort           排序字段
      * @return
      */
-    public List<? extends Object> find(Object obj, String[] findKeys, Object[] findValues, String collectionName, String sort) {
+    public <T> List<T> find(Class<T> clazz, String[] findKeys, Object[] findValues, String collectionName, String sort) {
         Criteria criteria = null;
         for (int i = 0; i < findKeys.length; i++) {
             if (i == 0) {
@@ -176,20 +177,21 @@ public class MongoService {
                 criteria.and(findKeys[i]).is(findValues[i]);
             }
         }
+        assert criteria != null;
         Query query = Query.query(criteria);
         query.with(Sort.by(Sort.Direction.DESC, sort));
-        return primaryMongoTemplate.find(query, obj.getClass(), collectionName);
+        return primaryMongoTemplate.find(query, clazz, collectionName);
     }
 
     /**
      * 根据条件查询出符合的第一条数据 集合为数据对象中 @Document 注解所配置的collection
      *
-     * @param obj        数据对象
+     * @param clazz      数据对象
      * @param findKeys   查询条件 key
      * @param findValues 查询条件 value
      * @return
      */
-    public Object findOne(Object obj, String[] findKeys, Object[] findValues) {
+    public <T> T findOne(Class<T> clazz, String[] findKeys, Object[] findValues) {
         Criteria criteria = null;
         for (int i = 0; i < findKeys.length; i++) {
             if (i == 0) {
@@ -198,20 +200,21 @@ public class MongoService {
                 criteria.and(findKeys[i]).is(findValues[i]);
             }
         }
+        assert criteria != null;
         Query query = Query.query(criteria);
-        return primaryMongoTemplate.findOne(query, obj.getClass());
+        return primaryMongoTemplate.findOne(query, clazz);
     }
 
     /**
      * 指定集合 根据条件查询出符合的第一条数据
      *
-     * @param obj            数据对象
+     * @param clazz          数据对象
      * @param findKeys       查询条件 key
      * @param findValues     查询条件 value
      * @param collectionName 集合名
      * @return
      */
-    public Object findOne(Object obj, String[] findKeys, Object[] findValues, String collectionName) {
+    public <T> T findOne(Class<T> clazz, String[] findKeys, Object[] findValues, String collectionName) {
         Criteria criteria = null;
         for (int i = 0; i < findKeys.length; i++) {
             if (i == 0) {
@@ -220,8 +223,9 @@ public class MongoService {
                 criteria.and(findKeys[i]).is(findValues[i]);
             }
         }
+        assert criteria != null;
         Query query = Query.query(criteria);
-        return primaryMongoTemplate.findOne(query, obj.getClass(), collectionName);
+        return primaryMongoTemplate.findOne(query, clazz, collectionName);
     }
 
     /**
@@ -230,7 +234,7 @@ public class MongoService {
      * @param obj 数据对象
      * @return
      */
-    public List<? extends Object> findAll(Object obj) {
+    public List<?> findAll(Object obj) {
         return primaryMongoTemplate.findAll(obj.getClass());
     }
 

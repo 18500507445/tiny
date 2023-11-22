@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,8 +22,14 @@ import java.util.concurrent.CompletableFuture;
  */
 @Slf4j(topic = "ExampleApplication")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+//组件扫描因为模块的原因需要手动设置，并且把starter已经装配的排除掉
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
+//开启feign客户端支持
 @EnableFeignClients(basePackages = "com.tiny")
+//开启spring异步支持
+@EnableAsync
+//实现配置的动态刷新功能
+@RefreshScope
 public class ExampleApplication {
 
     /**
@@ -44,7 +52,7 @@ public class ExampleApplication {
         //公网ip 后两位初始化ResultVO
         CompletableFuture.supplyAsync(() -> IpUtils.getInternetIp("curl cip.cc")).thenAccept(s -> {
             RespResult.setIP(s);
-            System.err.println("example模块启动成功，初始化公网ip：" + s + "，放入ResultVO");
+            log.warn("【example】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
         });
     }
 

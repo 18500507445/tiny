@@ -1,6 +1,5 @@
 package com.tiny.gateway;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.FilterType;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"com.tiny.common.*"})})
 @EnableFeignClients(basePackages = "com.tiny")
-@Slf4j
 public class GatewayApplication {
 
     /**
