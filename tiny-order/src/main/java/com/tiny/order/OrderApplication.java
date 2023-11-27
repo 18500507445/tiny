@@ -14,7 +14,7 @@ import org.springframework.context.annotation.FilterType;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
-@EnableFeignClients(basePackages = "com.tiny")
+@EnableFeignClients(basePackages = "com.tiny.api")
 public class OrderApplication {
 
     public static void main(String[] args) {
