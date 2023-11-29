@@ -1,4 +1,4 @@
-package com.tiny.example.controller;
+package com.tiny.example.web.controller;
 
 import cn.hutool.core.map.MapUtil;
 import com.tiny.api.pay.client.PayFeignClient;
