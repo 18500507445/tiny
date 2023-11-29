@@ -32,7 +32,7 @@
 
         <!-- 插件版本 -->
         <!-- 这个插件版本和 spring-boot版本可以同步，想想咋放到 父pom 里 -->
-        <spring.boot.plugin.version>2.7.17</spring.boot.plugin.version>
+        <spring.boot.plugin.version>2.7.18</spring.boot.plugin.version>
         <compiler.plugin.version>3.11.0</compiler.plugin.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
         <resources.plugin.version>3.3.1</resources.plugin.version>
