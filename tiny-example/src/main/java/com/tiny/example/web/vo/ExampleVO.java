@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * @author: wzh
  * @description 样例返回VO
@@ -17,5 +19,5 @@ import lombok.experimental.Accessors;
 @Builder
 @Accessors(chain = true)
 public class ExampleVO {
-
+    private Date createTime;
 }

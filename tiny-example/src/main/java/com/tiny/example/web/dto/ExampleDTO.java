@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * @author: wzh
  * @description 样例请求DTO
@@ -17,5 +19,5 @@ import lombok.experimental.Accessors;
 @Builder
 @Accessors(chain = true)
 public class ExampleDTO {
-
+    private Date createTime;
 }
