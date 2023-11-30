@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.tiny.common.starter.xxl.XxlAutoConfiguration
+com.tiny.common.starter.xxl.XxlAutoConfiguration,\
+com.tiny.common.starter.xxl.XxlJobAopConfig

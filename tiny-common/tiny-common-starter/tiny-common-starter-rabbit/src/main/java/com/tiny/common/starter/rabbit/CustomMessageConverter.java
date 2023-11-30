@@ -1,7 +1,11 @@
 package com.tiny.common.starter.rabbit;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import com.tiny.common.core.trace.Trace;
+import com.tiny.common.core.trace.TraceContext;
+import org.slf4j.MDC;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConversionException;
@@ -10,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author: wzh
- * @description rabbit自定义消息转换器
+ * @description 自定义消息转换器 + 透传TraceId
  * @date: 2023/11/30 11:18
  */
 @Component
@@ -28,6 +32,11 @@ public class CustomMessageConverter implements MessageConverter {
 
     @Override
     public Message toMessage(Object o, MessageProperties messageProperties) throws MessageConversionException {
+        String traceId = TraceContext.getTraceId();
+        if (StrUtil.isEmpty(traceId)) {
+            traceId = TraceContext.getCurrentTrace().getTraceId();
+        }
+        messageProperties.setHeader(Trace.TRACE_ID, traceId);
         try {
             Object parse = JSON.parse(Convert.toStr(o));
             return new Message(JSON.toJSONBytes(parse), messageProperties);
@@ -47,6 +56,8 @@ public class CustomMessageConverter implements MessageConverter {
 
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
-        return JSON.parseObject(message.getBody(), message.getMessageProperties().getInferredArgumentType());
+        MessageProperties messageProperties = message.getMessageProperties();
+        MDC.put(Trace.TRACE_ID, messageProperties.getHeader(Trace.TRACE_ID));
+        return JSON.parseObject(message.getBody(), messageProperties.getInferredArgumentType());
     }
 }
