@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author wzh
  * @date 2023/11/02 20:53
  */
-@Slf4j
+@Slf4j(topic = "RedissonLock")
 @Component
 public final class RedissonLock {
 
@@ -66,6 +66,7 @@ public final class RedissonLock {
      * @param lockName 锁名称
      */
     public void release(String lockName) {
+        log.info("获取Redisson分布式锁[解锁]，lockName={}", lockName);
         redissonClient.getLock(lockName).unlock();
     }
 

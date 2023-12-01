@@ -1,5 +1,6 @@
 package com.tiny.common.starter.mongo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +20,13 @@ import java.util.Arrays;
  * @author: wzh
  * @date: 2023/8/22 20:53
  */
+@Slf4j(topic = "tiny-common-starter ==> MongoAutoConfiguration")
 @Configuration
 public class MongoAutoConfiguration {
 
     @Bean(name = "mongoService")
     public MongoService mongoService() {
+        log.warn("装配【MongoService】");
         return new MongoService();
     }
 

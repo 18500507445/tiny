@@ -1,5 +1,6 @@
 package com.tiny.common.starter.redis;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -22,6 +23,7 @@ import java.time.Duration;
  * @author: wzh
  * @date: 2023/8/22 20:08
  */
+@Slf4j(topic = "tiny-common-starter ==> RedisAutoConfiguration")
 @Configuration
 public class RedisAutoConfiguration {
 
@@ -46,6 +48,7 @@ public class RedisAutoConfiguration {
 
     @Bean(name = "redisService")
     public RedisService redisService() {
+        log.warn("装配【RedisService】");
         return new RedisService();
     }
 
