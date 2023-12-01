@@ -72,7 +72,7 @@ public class RabbitConfig {
      */
     @Bean
     public Exchange exampleTopicExchange() {
-        return ExchangeBuilder.topicExchange("").build();
+        return ExchangeBuilder.topicExchange("amq.topic").build();
     }
 
     /**
@@ -80,7 +80,7 @@ public class RabbitConfig {
      */
     @Bean
     public Queue exampleQueue() {
-        return new Queue("");
+        return new Queue("exampleQueue");
     }
 
     /**
@@ -88,7 +88,7 @@ public class RabbitConfig {
      */
     @Bean
     public Binding exampleBindingProduct() {
-        return BindingBuilder.bind(exampleQueue()).to(exampleTopicExchange()).with("").noargs();
+        return BindingBuilder.bind(exampleQueue()).to(exampleTopicExchange()).with("exampleRoutingKey").noargs();
     }
 
 
