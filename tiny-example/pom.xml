@@ -35,6 +35,16 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
+            <artifactId>tiny-common-starter-redisson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
+            <artifactId>tiny-common-starter-rabbit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
             <artifactId>tiny-common-generator</artifactId>
         </dependency>
 
