@@ -231,7 +231,7 @@ public final class IpUtils {
             if (split.size() > 3) {
                 result = split.get(3);
             }
-            log.info("getInternetIp--ip：{}，result：{}，耗时：{} ms", ip, result, timer.interval());
+            log.warn("getInternetIp--ip：{}，result：{}，耗时：{} ms", ip, result, timer.interval());
             return result;
         } catch (IOException e) {
             throw new RuntimeException(e);
