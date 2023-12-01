@@ -28,8 +28,8 @@ public class RedisAutoConfiguration {
     /**
      * 第一数据源配置信息
      */
-    @Bean(name = "primaryRedisProperties")
     @Primary
+    @Bean(name = "primaryRedisProperties")
     @ConfigurationProperties(prefix = "spring.redis")
     public RedisProperties primaryRedisProperties() {
         return new RedisProperties();
