@@ -1,5 +1,6 @@
 package com.tiny.common.starter.mongo;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
@@ -16,6 +17,7 @@ import java.util.List;
  * @author: wzh
  * @date: 2023/8/22 21:37
  */
+@Getter
 @Component
 public class MongoService {
 

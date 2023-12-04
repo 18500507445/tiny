@@ -25,7 +25,7 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(BindException.class)
     public RespResult handleBindException(BindException e) {
-        log.debug("handleBindException：{}", e.getMessage());
+        log.error("handleBindException：{}", e.getMessage());
 
         StringBuilder msg = new StringBuilder();
         List<FieldError> fieldErrors = e.getFieldErrors();
@@ -44,7 +44,7 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(ParamException.class)
     public RespResult paramException(ParamException e) {
-        log.debug("paramException :{}", e.getMessage(), e);
+        log.error("paramException :{}", e.getMessage(), e);
         return RespResult.error(e.getMessage());
     }
 }

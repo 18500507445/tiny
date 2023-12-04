@@ -1,5 +1,6 @@
 package com.tiny.common.starter.redis;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -23,7 +24,8 @@ import java.util.concurrent.TimeUnit;
  * @author: wzh
  * @date: 2023/8/19 15:40
  */
-@Slf4j
+@Slf4j(topic = "tiny-common-starter ==> RedisService")
+@Getter
 @Component
 @SuppressWarnings("unchecked")
 public final class RedisService {

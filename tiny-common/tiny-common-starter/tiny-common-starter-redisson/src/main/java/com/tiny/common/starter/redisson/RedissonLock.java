@@ -1,5 +1,6 @@
 package com.tiny.common.starter.redisson;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/11/02 20:53
  */
 @Slf4j(topic = "RedissonLock")
+@Getter
 @Component
 public final class RedissonLock {
 
