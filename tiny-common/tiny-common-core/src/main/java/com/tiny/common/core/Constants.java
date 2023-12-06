@@ -1,5 +1,8 @@
 package com.tiny.common.core;
 
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.http.ContentType;
+
 /**
  * @author: wzh
  * @description 通用常量类
@@ -43,12 +46,15 @@ public class Constants {
 
     public static final String FAIL = "FAIL";
 
-    public static final String JSON = "application/json;charset=UTF-8";
+    public static final String JSON = ContentType.build(ContentType.JSON, CharsetUtil.CHARSET_UTF_8);
 
     public static final boolean IS_OPEN = true;
 
     public static final String AUTHORIZATION = "Authorization";
 
     public static final String USER_CONTEXT = "userContext";
+
+    public static final String START_TIME = "startTime";
+
 
 }

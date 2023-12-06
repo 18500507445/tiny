@@ -1,8 +1,10 @@
 package com.tiny.gateway.filter;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
+import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -60,8 +62,6 @@ public class AccessFilter implements GlobalFilter {
      */
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
-    public static final String START_TIME = "startTime";
-
     /**
      * 过滤器
      *
@@ -72,7 +72,7 @@ public class AccessFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //放入参数startTime，计算耗时
-        exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
+        exchange.getAttributes().put(Constants.START_TIME, System.currentTimeMillis());
 
         //构建trace
         ServerWebExchange build = buildGlobalTraceId(exchange);
@@ -172,7 +172,7 @@ public class AccessFilter implements GlobalFilter {
     private Mono<Void> filter(GatewayFilterChain chain, ServerWebExchange build, ServerWebExchange exchange, String url) {
         return chain.filter(build).then(Mono.fromRunnable(() -> {
             if (gatewayConfig.getSlowEnable()) {
-                Long startTime = exchange.getAttribute(START_TIME);
+                Long startTime = exchange.getAttribute(Constants.START_TIME);
                 if (null != startTime) {
                     Long executeTime = (System.currentTimeMillis() - startTime);
                     if (executeTime > gatewayConfig.getSlowMillisecond()) {

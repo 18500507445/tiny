@@ -66,7 +66,7 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
-        <!-- 配置处理，增加配置提示 -->
+        <!-- 配置处理，增加配置提示 它的主要作用是在编译时,根据代码中对@ConfigurationProperties注解的使用,生成一些META-INF/spring-configuration-metadata.json的配置元数据文件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure-processor</artifactId>

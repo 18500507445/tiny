@@ -68,3 +68,6 @@ public class MybatisPlusConfig {
 ~~~java
 Page<UserDO> page = mapper.selectPage(new Page<>(1, 5), queryWrapper);
 ~~~
+
+### 如何代码生成
+在需要生成的模块下创建测试类，参考avic-example模块test类`ExampleGeneratorTest`，执行mybatisPlusGeneratorTest方法既可。
