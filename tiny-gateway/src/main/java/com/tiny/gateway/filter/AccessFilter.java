@@ -60,7 +60,7 @@ public class AccessFilter implements GlobalFilter {
     /**
      * 路径匹配器
      */
-    private final AntPathMatcher pathMatcher = new AntPathMatcher();
+    private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
     /**
      * 过滤器
@@ -193,7 +193,7 @@ public class AccessFilter implements GlobalFilter {
         String[] forbiddenUrls = gatewayConfig.getForbiddenUrls();
         if (ArrayUtil.isNotEmpty(forbiddenUrls)) {
             for (String forbiddenUrl : forbiddenUrls) {
-                if (pathMatcher.match(forbiddenUrl, url)) {
+                if (PATH_MATCHER.match(forbiddenUrl, url)) {
                     return true;
                 }
             }
@@ -208,7 +208,7 @@ public class AccessFilter implements GlobalFilter {
         String[] releaseUrls = gatewayConfig.getReleaseUrls();
         if (ArrayUtil.isNotEmpty(releaseUrls)) {
             for (String authIgnoreUrl : releaseUrls) {
-                if (pathMatcher.match(authIgnoreUrl, url)) {
+                if (PATH_MATCHER.match(authIgnoreUrl, url)) {
                     return true;
                 }
             }
@@ -223,7 +223,7 @@ public class AccessFilter implements GlobalFilter {
         String[] ipBlackList = gatewayConfig.getIpBlackList();
         if (ArrayUtil.isNotEmpty(ipBlackList)) {
             for (String authIgnoreUrl : ipBlackList) {
-                if (pathMatcher.match(authIgnoreUrl, ip)) {
+                if (PATH_MATCHER.match(authIgnoreUrl, ip)) {
                     return true;
                 }
             }
