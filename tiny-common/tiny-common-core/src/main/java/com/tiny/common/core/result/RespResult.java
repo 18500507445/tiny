@@ -111,7 +111,7 @@ public class RespResult extends HashMap<String, Object> {
         super.put(Trace.TRACE_ID, TraceContext.getCurrentTrace().getTraceId());
         super.put(Trace.SPAN_ID, TraceContext.getCurrentTrace().getSpanId());
         super.put(ENV, SpringUtil.getActiveProfile());
-        super.put("ip", IP);
+        super.put("ip", ip);
     }
 
     /**
@@ -131,7 +131,7 @@ public class RespResult extends HashMap<String, Object> {
         super.put(Trace.TRACE_ID, TraceContext.getCurrentTrace().getTraceId());
         super.put(Trace.SPAN_ID, TraceContext.getCurrentTrace().getSpanId());
         super.put(ENV, SpringUtil.getActiveProfile());
-        super.put("ip", IP);
+        super.put("ip", ip);
     }
 
     /**
