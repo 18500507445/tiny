@@ -3,8 +3,10 @@ package com.tiny.common.starter.xxl;
 import cn.hutool.core.util.StrUtil;
 import com.tiny.common.core.trace.Trace;
 import com.tiny.common.core.trace.TraceContext;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
@@ -17,15 +19,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class XxlJobAopConfig {
 
-    @Before("@annotation(com.xxl.job.core.handler.annotation.XxlJob)")
-    public void beforeMethod() {
+    @Pointcut("@annotation(com.xxl.job.core.handler.annotation.XxlJob)")
+    public void pointcut() {
+
+    }
+
+    @Around("pointcut()")
+    public Object around(ProceedingJoinPoint point) {
         String traceId = TraceContext.getTraceId();
         //透传traceId，没有就生成一个
-        if (StrUtil.isNotEmpty(traceId)) {
-            MDC.put(Trace.TRACE_ID, traceId);
-        } else {
-            traceId = TraceContext.getCurrentTrace().getTraceId();
-            MDC.put(Trace.TRACE_ID, traceId);
+        try {
+            if (StrUtil.isNotEmpty(traceId)) {
+                MDC.put(Trace.TRACE_ID, traceId);
+            } else {
+                traceId = TraceContext.getCurrentTrace().getTraceId();
+                MDC.put(Trace.TRACE_ID, traceId);
+            }
+            return point.proceed();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        } finally {
+            MDC.clear();
         }
     }
 

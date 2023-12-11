@@ -53,7 +53,6 @@ public class CustomMessageConverter implements MessageConverter {
      * @return
      * @throws MessageConversionException
      */
-
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         MessageProperties messageProperties = message.getMessageProperties();
