@@ -85,7 +85,7 @@ public class RespResult extends HashMap<String, Object> {
      * 公网ip 最后2位，方便查找log
      */
     @Setter
-    public static String IP = "00";
+    private static String ip = "00";
 
     /**
      * 私有构造

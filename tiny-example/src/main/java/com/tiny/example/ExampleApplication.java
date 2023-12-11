@@ -1,5 +1,6 @@
 package com.tiny.example;
 
+import com.tiny.common.core.exception.GlobalExceptionAdvice;
 import com.tiny.common.core.result.RespResult;
 import com.tiny.common.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -49,10 +50,14 @@ public class ExampleApplication {
 
         log.warn("profile :{}，name :{}，serverAddr :{}，redis :{}，mongo :{}", profile, name, serverAddr, redis, mongo);
 
-        //公网ip 后两位初始化ResultVO
+        //异步执行
         CompletableFuture.supplyAsync(() -> IpUtils.getInternetIp("curl cip.cc")).thenAccept(s -> {
-            RespResult.setIP(s);
+            //公网ip 后两位初始化ResultVO
+            RespResult.setIp(s);
             log.warn("【example】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
+
+            GlobalExceptionAdvice.setRuntimeLog(true);
+            log.warn("【example】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
         });
     }
 

@@ -1,6 +1,7 @@
 package com.tiny.common.core.exception;
 
 import com.tiny.common.core.result.RespResult;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -18,6 +19,16 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
 
+    @Setter
+    private static boolean runtimeLog = false;
+
+    @Setter
+    private static boolean paramLog = false;
+
+    @Setter
+    private static boolean bindLog = false;
+
+
     /**
      * 拦截的validator异常
      *
@@ -25,8 +36,9 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(BindException.class)
     public RespResult handleBindException(BindException e) {
-        log.error("handleBindException：{}", e.getMessage());
-
+        if (bindLog) {
+            log.error("handleBindException：{}", e.getMessage());
+        }
         StringBuilder msg = new StringBuilder();
         List<FieldError> fieldErrors = e.getFieldErrors();
         for (FieldError fieldError : fieldErrors) {
@@ -44,7 +56,20 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(ParamException.class)
     public RespResult paramException(ParamException e) {
-        log.error("paramException :{}", e.getMessage(), e);
+        if (paramLog) {
+            log.error("paramException :{}", e.getMessage(), e);
+        }
+        return RespResult.error(e.getMessage());
+    }
+
+    /**
+     * 运行异常
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public RespResult runtimeException(RuntimeException e) {
+        if (runtimeLog) {
+            log.error("runtimeException :{}", e.getMessage(), e);
+        }
         return RespResult.error(e.getMessage());
     }
 }

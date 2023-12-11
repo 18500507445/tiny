@@ -25,7 +25,7 @@ public class CommonInit {
     void initIp() {
         INTERNET_IP = IpUtils.getInternetIp("curl cip.cc");
         log.warn("获取公网ip后2位，初始化RespResult.IP");
-        RespResult.IP = INTERNET_IP;
+        RespResult.setIp(INTERNET_IP);
     }
 
 }
