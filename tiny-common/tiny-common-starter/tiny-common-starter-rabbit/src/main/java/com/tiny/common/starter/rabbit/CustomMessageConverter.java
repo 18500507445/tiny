@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
  * @date: 2023/11/30 11:18
  */
 @Component
+@SuppressWarnings("NullableProblems")
 public class CustomMessageConverter implements MessageConverter {
 
     /**

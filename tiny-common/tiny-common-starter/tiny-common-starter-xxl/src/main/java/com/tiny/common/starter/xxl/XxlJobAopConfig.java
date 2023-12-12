@@ -27,14 +27,12 @@ public class XxlJobAopConfig {
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) {
         String traceId = TraceContext.getTraceId();
-        //透传traceId，没有就生成一个
         try {
-            if (StrUtil.isNotEmpty(traceId)) {
-                MDC.put(Trace.TRACE_ID, traceId);
-            } else {
+            //透传traceId，没有就生成一个
+            if (StrUtil.isBlank(traceId)) {
                 traceId = TraceContext.getCurrentTrace().getTraceId();
-                MDC.put(Trace.TRACE_ID, traceId);
             }
+            MDC.put(Trace.TRACE_ID, traceId);
             return point.proceed();
         } catch (Throwable e) {
             throw new RuntimeException(e);

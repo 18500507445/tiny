@@ -33,7 +33,10 @@ public class TraceFilter extends GenericFilterBean {
             long start = System.currentTimeMillis();
             HttpServletRequest request = (HttpServletRequest) req;
             String traceId = request.getHeader(Trace.TRACE_ID);
-            //正常启动单服务可能拿不到，需要生成一个，如果网关进行设置了直接放入Trace对象
+            /**
+             * （1）正常启动单服务可能拿不到，需要生成一个，如果网关进行设置了直接放入Trace对象
+             * （2）OpenFeign调用，需要设置traceId（FeignRequestInterceptor），设置到header里，这里能拿到继续透传
+             */
             if (StrUtil.isNotEmpty(traceId)) {
                 TraceContext.setCurrentTrace(traceId);
             } else {
