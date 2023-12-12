@@ -1,10 +1,8 @@
 package com.tiny.gateway.filter;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -131,11 +129,7 @@ public class AccessFilter implements GlobalFilter {
         }
         String userContext = parse.get("json").asString();
         if (StrUtil.isNotBlank(userContext)) {
-            //todo redis缓存失效判断
-
-            //todo 用户状态判断
-
-            //todo 成功后放行
+            //todo redis缓存失效判断，用户状态判断，成功后放行
 
             //写到header里 userContext
             setHeaderInfo(build, request, userContext, httpHeaders);
@@ -162,7 +156,8 @@ public class AccessFilter implements GlobalFilter {
 
     /**
      * 处理请求
-     * 开启慢日志，并且超过1000ms，从header里面取出来放入当前的MDC中，方便日志打印的时候展示traceId、spanId
+     * （1）放行的url，如果有authorization但是没有userContext，那么也进行解析后放入header里
+     * （2）开启慢日志，并且超过1000ms，从header里面取出来放入当前的MDC中，方便日志打印的时候展示traceId、spanId
      *
      * @param chain
      * @param build
@@ -170,6 +165,29 @@ public class AccessFilter implements GlobalFilter {
      * @param url
      */
     private Mono<Void> filter(GatewayFilterChain chain, ServerWebExchange build, ServerWebExchange exchange, String url) {
+        //1.放行的url，header进行特殊处理
+        ServerHttpRequest request = exchange.getRequest();
+        String authorization = request.getHeaders().getFirst("Authorization");
+        String userContext = request.getHeaders().getFirst(Constants.USER_CONTEXT);
+
+        //2.有token但是没有进行解析进行处理
+        if (StrUtil.isNotBlank(authorization) && StrUtil.isBlank(userContext)) {
+            Map<String, Claim> parse = null;
+            try {
+                parse = JwtUtils.parse(authorization);
+            } finally {
+                assert parse != null;
+                userContext = parse.get("json").asString();
+                if (StrUtil.isNotBlank(userContext)) {
+                    //todo redis缓存失效判断，用户状态判断，成功后放行
+
+                    //写到header里 userContext
+                    setHeaderInfo(build, request, userContext, HttpHeaders.writableHttpHeaders(request.getHeaders()));
+                }
+            }
+        }
+
+        //3.判断是否开启慢log打印
         return chain.filter(build).then(Mono.fromRunnable(() -> {
             if (gatewayConfig.getSlowEnable()) {
                 Long startTime = exchange.getAttribute(Constants.START_TIME);
