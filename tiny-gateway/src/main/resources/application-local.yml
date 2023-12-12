@@ -22,7 +22,7 @@ spring:
         group: DEFAULT_GROUP
 
     gateway:
-      # 全局http超时 10s
+      # 全局http超时 response单位：秒，connect单位：毫秒
       httpclient:
         response-timeout: 10s
         connect-timeout: 10000
@@ -41,7 +41,8 @@ spring:
           uri: lb://tiny-example  # 路由的地址，lb表示使用负载均衡到微服务，也可以使用http正常转发
           predicates: # 路由规则，断言什么请求会被路由
             - Path=/tiny-example/api/**,/tiny-example/api-b/**,/tiny-example/api-c/** # 只要是访问的这个路径，一律都被路由到上面指定的服务
-          #局部http超时
+
+          #局部http超时，单位：毫秒
           metadata:
             response-timeout: 10s
             connect-timeout: 10000
