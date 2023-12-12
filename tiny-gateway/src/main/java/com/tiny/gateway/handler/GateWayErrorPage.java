@@ -1,12 +1,13 @@
 package com.tiny.gateway.handler;
 
+import cn.hutool.core.map.MapUtil;
+import com.tiny.common.core.result.RespResult;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
@@ -41,10 +42,11 @@ public class GateWayErrorPage extends AbstractErrorWebExceptionHandler {
     private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         // 获取异常信息
         Map<String, Object> map = getErrorAttributes(request, ErrorAttributeOptions.defaults());
-        map.put("message", "找不到当前服务~~！");
         // 构建响应
-        return ServerResponse.status(HttpStatus.NOT_FOUND)   // 404状态码
-                .contentType(MediaType.APPLICATION_JSON)     // 以JSON格式显示响应
-                .body(BodyInserters.fromValue(map));         // 响应体(响应内容)
+        return ServerResponse.status(MapUtil.getInt(map, "status"))   // 状态码
+                // 以JSON格式显示响应
+                .contentType(MediaType.APPLICATION_JSON)
+                // 响应体(响应内容，包装RespResult)
+                .body(BodyInserters.fromValue(RespResult.error(MapUtil.getStr(map, "error"), map)));
     }
 }
