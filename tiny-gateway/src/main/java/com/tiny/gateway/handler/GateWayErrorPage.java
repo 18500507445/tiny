@@ -39,6 +39,9 @@ public class GateWayErrorPage extends AbstractErrorWebExceptionHandler {
         return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);
     }
 
+    /**
+     * 拦截到例如超时、404、502这些异常，返回自定义的响应
+     */
     private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         // 获取异常信息
         Map<String, Object> map = getErrorAttributes(request, ErrorAttributeOptions.defaults());
