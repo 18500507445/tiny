@@ -4,6 +4,7 @@ import com.tiny.common.core.exception.GlobalExceptionAdvice;
 import com.tiny.common.core.result.RespResult;
 import com.tiny.common.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -12,6 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +29,14 @@ import java.util.concurrent.CompletableFuture;
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
 //开启feign客户端支持
 @EnableFeignClients(basePackages = "com.tiny.api")
+//开启spring重试
+@EnableRetry
 //开启spring异步支持
 @EnableAsync
 //实现配置的动态刷新功能
 @RefreshScope
+//mapper组件扫描，自定义路径，等价于@Mapper注解
+@MapperScan(basePackages = {"com.tiny.example"})
 public class ExampleApplication {
 
     /**
