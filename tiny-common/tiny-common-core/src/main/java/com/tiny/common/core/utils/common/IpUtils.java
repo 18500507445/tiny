@@ -207,13 +207,13 @@ public final class IpUtils {
         return "未知";
     }
 
-    public static String getInternetIp(String command) {
+    public static String getInternetIp() {
         TimeInterval timer = DateUtil.timer();
         String ip = "";
         String result = "";
         String line;
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "curl cip.cc");
             Process process = processBuilder.start();
             // 获取命令输出
             InputStream inputStream = process.getInputStream();

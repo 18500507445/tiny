@@ -21,36 +21,13 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitConfig {
 
-    @Value("${spring.rabbitmq.addresses}")
-    private String addresses;
-
-    @Value("${spring.rabbitmq.username}")
-    private String username;
-
-    @Value("${spring.rabbitmq.password}")
-    private String password;
-
-    @Value("${spring.rabbitmq.virtual-host}")
-    private String virtualHost;
-
-    @Bean(name = "connectionFactory")
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.getRabbitConnectionFactory().setRequestedChannelMax(4095);
-        connectionFactory.setAddresses(addresses);
-        connectionFactory.setUsername(username);
-        connectionFactory.setPassword(password);
-        connectionFactory.setVirtualHost(virtualHost);
-        return connectionFactory;
-    }
-
     /**
      * 生产者设置
      * （1）添加消息转换器
      */
     @Bean
-    public RabbitTemplate rabbitTemplate(@Qualifier("connectionFactory") ConnectionFactory connectionFactory) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+    public RabbitTemplate rabbitTemplate(@Qualifier("primaryConnectionFactory") ConnectionFactory primaryConnectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(primaryConnectionFactory);
         rabbitTemplate.setMessageConverter(new CustomMessageConverter());
         return rabbitTemplate;
     }
@@ -60,9 +37,9 @@ public class RabbitConfig {
      * （1）添加消息转换器MessageConverter
      */
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(@Qualifier("connectionFactory") ConnectionFactory connectionFactory) {
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(@Qualifier("primaryConnectionFactory") ConnectionFactory primaryConnectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
+        factory.setConnectionFactory(primaryConnectionFactory);
         factory.setMessageConverter(new CustomMessageConverter());
         return factory;
     }

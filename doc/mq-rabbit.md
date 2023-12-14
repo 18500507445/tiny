@@ -16,7 +16,14 @@ spring:
           max-attempts: 3 #传递消息的最大尝试次数
           max-interval: 10000 #尝试的最大时间间隔
           multiplier: 1.0 #应用于先前传递重试时间间隔的乘数
+
+    cache:
+      channel:
+        size: 5
 ~~~
+
+### 说明
+目前rabbit-starter（ParentRabbitConfig）可以装配2个数据源，第二个需要enable:true开启
 
 ### 代码
 ~~~java

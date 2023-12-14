@@ -1,10 +1,15 @@
 package com.tiny.common.generator;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 
 /**
@@ -54,13 +59,15 @@ public abstract class AbstractGenerator {
 
     /**
      * mybatisplus代码生成器
+     *
      * @see <a href="https://baomidou.com/pages/981406/#%E7%AD%96%E7%95%A5%E9%85%8D%E7%BD%AE-strategyconfig">官方配置文档</a>
      */
     protected void mybatisPlus() {
+        String userName = executeLinux("git config user.name");
         FastAutoGenerator.create(getUrl(), getUserName(), getPassword())
                 .globalConfig(builder -> builder
                         // 设置作者
-                        .author(System.getProperty("user.name"))
+                        .author(StringUtils.isNotBlank(userName) ? userName : System.getProperty("user.name"))
                         // 开启 swagger 模式
 //                        .enableSwagger()
                         // 指定输出目录
@@ -129,10 +136,21 @@ public abstract class AbstractGenerator {
                 .execute();
     }
 
-    /**
-     * 普通的代码生成器，带有基础的增删改查和xml文件
-     */
-    protected void mybatis() {
+    private static String executeLinux(String command) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
+            Process process = processBuilder.start();
+            // 获取命令输出
+            InputStream inputStream = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException ignored) {
 
+        }
+        return sb.toString();
     }
 }

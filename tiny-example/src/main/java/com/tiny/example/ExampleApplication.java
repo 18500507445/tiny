@@ -57,7 +57,7 @@ public class ExampleApplication {
         log.warn("profile :{}，name :{}，serverAddr :{}，redis :{}，mongo :{}", profile, name, serverAddr, redis, mongo);
 
         //异步执行
-        CompletableFuture.supplyAsync(() -> IpUtils.getInternetIp("curl cip.cc")).thenAccept(s -> {
+        CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {
             //公网ip 后两位初始化ResultVO
             RespResult.setIp(s);
             log.warn("【example】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
