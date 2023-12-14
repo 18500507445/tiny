@@ -20,6 +20,12 @@ spring:
     cache:
       channel:
         size: 5
+
+  rabbitmq2:
+    addresses: xx.xxx.xxx.xxx:5672
+    username: root
+    password: password
+    virtual-host: /
 ~~~
 
 ### 说明
