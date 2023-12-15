@@ -55,7 +55,7 @@ public class RedisAutoConfiguration {
     /**
      * 创建 RedisTemplate Bean，使用 JSON 序列化方式
      */
-    @Bean
+    @Bean(name = "primaryRedisTemplate")
     public RedisTemplate<String, Object> redisTemplate(@Qualifier("primaryRedisProperties") RedisProperties primaryRedisProperties) {
         // 创建 RedisTemplate 对象
         RedisTemplate<String, Object> template = new RedisTemplate<>();

@@ -1,5 +1,6 @@
 package com.tiny.common.starter.redis;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -30,8 +31,9 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unchecked")
 public final class RedisService {
 
+    //getter暴露出去，也可以用原生template
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, Object> primaryRedisTemplate;
 
     /**
      * 指定缓存失效时间
@@ -43,7 +45,7 @@ public final class RedisService {
     public Boolean expire(String key, Long time) {
         try {
             if (time > 0) {
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+                primaryRedisTemplate.expire(key, time, TimeUnit.SECONDS);
             }
             return true;
         } catch (Exception e) {
@@ -61,14 +63,14 @@ public final class RedisService {
      * @param timeUnit 过期时间单位
      */
     public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit) {
-        redisTemplate.opsForValue().set(key, value, time, timeUnit);
+        primaryRedisTemplate.opsForValue().set(key, value, time, timeUnit);
     }
 
     public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit, RedisSerializer<Object> valueSerializer) {
         byte[] rawKey = rawKey(key);
         byte[] rawValue = rawValue(value, valueSerializer);
 
-        redisTemplate.execute(new RedisCallback<Object>() {
+        primaryRedisTemplate.execute(new RedisCallback<Object>() {
             @Override
             public Object doInRedis(RedisConnection connection) throws DataAccessException {
                 potentiallyUsePsetEx(connection);
@@ -100,7 +102,7 @@ public final class RedisService {
      * @return 时间(秒) 返回 0代表为永久有效
      */
     public Long getExpire(String key) {
-        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+        return primaryRedisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
     /**
@@ -111,7 +113,7 @@ public final class RedisService {
      */
     public Boolean hasKey(String key) {
         try {
-            return redisTemplate.hasKey(key);
+            return primaryRedisTemplate.hasKey(key);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return false;
@@ -126,10 +128,23 @@ public final class RedisService {
     public void del(String... key) {
         if (key != null && key.length > 0) {
             if (key.length == 1) {
-                redisTemplate.delete(key[0]);
+                primaryRedisTemplate.delete(key[0]);
             } else {
-                redisTemplate.delete(Arrays.asList(key));
+                primaryRedisTemplate.delete(Arrays.asList(key));
             }
+        }
+    }
+
+    /**
+     * 模糊删除，右匹配
+     */
+    public void containsDel(String key) {
+        if (StrUtil.isBlank(key)) {
+            return;
+        }
+        Set<String> keys = primaryRedisTemplate.keys(key + ":*");
+        if (keys != null) {
+            primaryRedisTemplate.delete(keys);
         }
     }
 
@@ -140,7 +155,7 @@ public final class RedisService {
      * @return 值
      */
     public Object get(String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
+        return key == null ? null : primaryRedisTemplate.opsForValue().get(key);
     }
 
     /**
@@ -152,7 +167,7 @@ public final class RedisService {
      */
     public Object get(final String key, RedisSerializer<Object> valueSerializer) {
         byte[] rawKey = rawKey(key);
-        return redisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
+        return primaryRedisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
     }
 
     /**
@@ -164,7 +179,7 @@ public final class RedisService {
      */
     public Boolean set(String key, Object value) {
         try {
-            redisTemplate.opsForValue().set(key, value);
+            primaryRedisTemplate.opsForValue().set(key, value);
             return true;
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
@@ -183,7 +198,7 @@ public final class RedisService {
     public Boolean set(String key, Object value, Long time) {
         try {
             if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+                primaryRedisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
             } else {
                 set(key, value);
             }
@@ -205,9 +220,9 @@ public final class RedisService {
         try {
             Assert.notNull(timeout, "Timeout must not be null!");
             if (TimeoutUtils.hasMillis(timeout)) {
-                redisTemplate.opsForValue().set(key, value, timeout.toMillis(), TimeUnit.MILLISECONDS);
+                primaryRedisTemplate.opsForValue().set(key, value, timeout.toMillis(), TimeUnit.MILLISECONDS);
             } else {
-                redisTemplate.opsForValue().set(key, value, timeout.getSeconds(), TimeUnit.SECONDS);
+                primaryRedisTemplate.opsForValue().set(key, value, timeout.getSeconds(), TimeUnit.SECONDS);
             }
             return true;
         } catch (Exception e) {
@@ -227,7 +242,7 @@ public final class RedisService {
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
-        return redisTemplate.opsForValue().increment(key, delta);
+        return primaryRedisTemplate.opsForValue().increment(key, delta);
     }
 
     /**
@@ -241,7 +256,7 @@ public final class RedisService {
         if (delta < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
-        return redisTemplate.opsForValue().decrement(key, delta);
+        return primaryRedisTemplate.opsForValue().decrement(key, delta);
     }
 
     /**
@@ -252,7 +267,7 @@ public final class RedisService {
      * @return 值
      */
     public Object getHashValue(String key, String item) {
-        return redisTemplate.opsForHash().get(key, item);
+        return primaryRedisTemplate.opsForHash().get(key, item);
     }
 
     /**
@@ -262,7 +277,7 @@ public final class RedisService {
      * @return 对应的多个键值
      */
     public Map<Object, Object> getHash(String key) {
-        return redisTemplate.opsForHash().entries(key);
+        return primaryRedisTemplate.opsForHash().entries(key);
     }
 
     /**
@@ -274,7 +289,7 @@ public final class RedisService {
      */
     public Boolean setHash(String key, Map<String, Object> map) {
         try {
-            redisTemplate.opsForHash().putAll(key, map);
+            primaryRedisTemplate.opsForHash().putAll(key, map);
             return true;
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
@@ -292,7 +307,7 @@ public final class RedisService {
      */
     public Boolean setHash(String key, Map<String, Object> map, Long time) {
         try {
-            redisTemplate.opsForHash().putAll(key, map);
+            primaryRedisTemplate.opsForHash().putAll(key, map);
             if (time > 0) {
                 expire(key, time);
             }
@@ -313,7 +328,7 @@ public final class RedisService {
      */
     public Boolean setHash(String key, String item, Object value) {
         try {
-            redisTemplate.opsForHash().put(key, item, value);
+            primaryRedisTemplate.opsForHash().put(key, item, value);
             return true;
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
@@ -332,7 +347,7 @@ public final class RedisService {
      */
     public Boolean setHash(String key, String item, Object value, Long time) {
         try {
-            redisTemplate.opsForHash().put(key, item, value);
+            primaryRedisTemplate.opsForHash().put(key, item, value);
             if (time > 0) {
                 expire(key, time);
             }
@@ -350,7 +365,7 @@ public final class RedisService {
      * @param item 项 可以使多个不能为 null
      */
     public void delHash(String key, Object... item) {
-        redisTemplate.opsForHash().delete(key, item);
+        primaryRedisTemplate.opsForHash().delete(key, item);
     }
 
     /**
@@ -361,7 +376,7 @@ public final class RedisService {
      * @return true 存在 false不存在
      */
     public Boolean hHasKey(String key, String item) {
-        return redisTemplate.opsForHash().hasKey(key, item);
+        return primaryRedisTemplate.opsForHash().hasKey(key, item);
     }
 
     /**
@@ -373,7 +388,7 @@ public final class RedisService {
      * @return Double
      */
     public Double hashIncr(String key, String item, Double by) {
-        return redisTemplate.opsForHash().increment(key, item, by);
+        return primaryRedisTemplate.opsForHash().increment(key, item, by);
     }
 
     /**
@@ -385,7 +400,7 @@ public final class RedisService {
      * @return Double
      */
     public Double hashDecr(String key, String item, Double by) {
-        return redisTemplate.opsForHash().increment(key, item, -by);
+        return primaryRedisTemplate.opsForHash().increment(key, item, -by);
     }
 
     /**
@@ -396,7 +411,7 @@ public final class RedisService {
      */
     public Set<Object> getSet(String key) {
         try {
-            return redisTemplate.opsForSet().members(key);
+            return primaryRedisTemplate.opsForSet().members(key);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -412,7 +427,7 @@ public final class RedisService {
      */
     public Boolean containsSet(String key, Object value) {
         try {
-            return redisTemplate.opsForSet().isMember(key, value);
+            return primaryRedisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return false;
@@ -428,7 +443,7 @@ public final class RedisService {
      */
     public Long setSet(String key, Object... values) {
         try {
-            return redisTemplate.opsForSet().add(key, values);
+            return primaryRedisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return 0L;
@@ -445,7 +460,7 @@ public final class RedisService {
      */
     public Long setSet(String key, Long time, Object... values) {
         try {
-            Long count = redisTemplate.opsForSet().add(key, values);
+            Long count = primaryRedisTemplate.opsForSet().add(key, values);
             if (time > 0) {
                 expire(key, time);
             }
@@ -464,7 +479,7 @@ public final class RedisService {
      */
     public Long getSetSize(String key) {
         try {
-            return redisTemplate.opsForSet().size(key);
+            return primaryRedisTemplate.opsForSet().size(key);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return 0L;
@@ -480,7 +495,7 @@ public final class RedisService {
      */
     public Long setRemove(String key, Object... values) {
         try {
-            return redisTemplate.opsForSet().remove(key, values);
+            return primaryRedisTemplate.opsForSet().remove(key, values);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return 0L;
@@ -497,7 +512,7 @@ public final class RedisService {
      */
     public List<Object> getList(String key, Long start, Long end) {
         try {
-            return redisTemplate.opsForList().range(key, start, end);
+            return primaryRedisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -512,7 +527,7 @@ public final class RedisService {
      */
     public Long getListSize(String key) {
         try {
-            return redisTemplate.opsForList().size(key);
+            return primaryRedisTemplate.opsForList().size(key);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return 0L;
@@ -529,7 +544,7 @@ public final class RedisService {
      */
     public Object getListByIndex(String key, Long index) {
         try {
-            return redisTemplate.opsForList().index(key, index);
+            return primaryRedisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -545,7 +560,7 @@ public final class RedisService {
      */
     public Boolean setList(String key, Object value) {
         try {
-            redisTemplate.opsForList().rightPush(key, value);
+            primaryRedisTemplate.opsForList().rightPush(key, value);
             return true;
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
@@ -558,7 +573,7 @@ public final class RedisService {
      */
     public Object listPop(String key) {
         try {
-            return redisTemplate.opsForList().leftPop(key);
+            return primaryRedisTemplate.opsForList().leftPop(key);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -575,7 +590,7 @@ public final class RedisService {
      */
     public Boolean setList(String key, Object value, Long time) {
         try {
-            redisTemplate.opsForList().rightPush(key, value);
+            primaryRedisTemplate.opsForList().rightPush(key, value);
             if (time > 0) {
                 expire(key, time);
             }
@@ -595,7 +610,7 @@ public final class RedisService {
      */
     public Boolean setList(String key, List<Object> value) {
         try {
-            redisTemplate.opsForList().rightPushAll(key, value);
+            primaryRedisTemplate.opsForList().rightPushAll(key, value);
             return true;
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
@@ -613,7 +628,7 @@ public final class RedisService {
      */
     public Boolean setList(String key, List<Object> value, Long time) {
         try {
-            redisTemplate.opsForList().rightPushAll(key, value);
+            primaryRedisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0) {
                 expire(key, time);
             }
@@ -634,7 +649,7 @@ public final class RedisService {
      */
     public Boolean updateListByIndex(String key, Long index, Object value) {
         try {
-            redisTemplate.opsForList().set(key, index, value);
+            primaryRedisTemplate.opsForList().set(key, index, value);
             return true;
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
@@ -652,7 +667,7 @@ public final class RedisService {
      */
     public Long listRemove(String key, Long count, Object value) {
         try {
-            return redisTemplate.opsForList().remove(key, count, value);
+            return primaryRedisTemplate.opsForList().remove(key, count, value);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return 0L;
@@ -670,11 +685,11 @@ public final class RedisService {
      */
     public List<Object> getList(String key, int start, int end, RedisSerializer<Object> valueSerializer) {
         byte[] rawKey = rawKey(key);
-        return redisTemplate.execute(connection -> deserializeValues(connection.lRange(rawKey, start, end), valueSerializer), true);
+        return primaryRedisTemplate.execute(connection -> deserializeValues(connection.lRange(rawKey, start, end), valueSerializer), true);
     }
 
     public Double setZSet(String key, String value, double delta) {
-        return redisTemplate.opsForZSet().incrementScore(key, value, delta);
+        return primaryRedisTemplate.opsForZSet().incrementScore(key, value, delta);
     }
 
     /**
@@ -685,7 +700,7 @@ public final class RedisService {
      * @param target
      */
     public void unionZSet(String key, String otherKey, String target) {
-        redisTemplate.opsForZSet().unionAndStore(key, otherKey, target);
+        primaryRedisTemplate.opsForZSet().unionAndStore(key, otherKey, target);
     }
 
     /**
@@ -695,7 +710,7 @@ public final class RedisService {
      * @param target
      */
     public void unionZSetList(String key, List<String> keys, String target) {
-        redisTemplate.opsForZSet().unionAndStore(key, keys, target);
+        primaryRedisTemplate.opsForZSet().unionAndStore(key, keys, target);
     }
 
     /**
@@ -709,7 +724,7 @@ public final class RedisService {
      */
     public boolean lock(String key, String value, int expireTime) {
         while (true) {
-            if (Boolean.TRUE.equals(redisTemplate.boundValueOps(value).
+            if (Boolean.TRUE.equals(primaryRedisTemplate.boundValueOps(value).
                     setIfAbsent(key, expireTime, TimeUnit.SECONDS))) {
                 return true;
             }
@@ -731,7 +746,7 @@ public final class RedisService {
                 "return redis.call('del', KEYS[1]) " +
                 "else return 0 end";
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>(script, Long.class);
-        Long res = redisTemplate.execute(redisScript, Collections.singletonList(value), key);
+        Long res = primaryRedisTemplate.execute(redisScript, Collections.singletonList(value), key);
         return new Long(1).equals(res);
     }
 
@@ -744,7 +759,7 @@ public final class RedisService {
      * @return
      */
     public <T> T execute(RedisScript<T> script, String key) {
-        return redisTemplate.execute(script, Collections.singletonList(key), Collections.EMPTY_LIST);
+        return primaryRedisTemplate.execute(script, Collections.singletonList(key), Collections.EMPTY_LIST);
     }
 
     /**
@@ -754,7 +769,7 @@ public final class RedisService {
      * @return List
      */
     public Set<String> getKeys(String key) {
-        return redisTemplate.keys(key + "*");
+        return primaryRedisTemplate.keys(key + "*");
     }
 
     private byte[] rawKey(Object key) {
@@ -763,7 +778,7 @@ public final class RedisService {
         if (key instanceof byte[]) {
             return (byte[]) key;
         }
-        RedisSerializer<Object> redisSerializer = (RedisSerializer<Object>) redisTemplate.getKeySerializer();
+        RedisSerializer<Object> redisSerializer = (RedisSerializer<Object>) primaryRedisTemplate.getKeySerializer();
         return redisSerializer.serialize(key);
     }
 
