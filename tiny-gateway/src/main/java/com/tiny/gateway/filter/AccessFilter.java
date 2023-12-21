@@ -3,7 +3,6 @@ package com.tiny.gateway.filter;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
@@ -81,11 +80,17 @@ public class AccessFilter implements GlobalFilter {
         String url = request.getURI().getPath();
         String method = request.getMethodValue();
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(request.getHeaders());
-        log.info("请求url：{}，method：{}，header：{}，ip：{}", url, method, JSONUtil.toJsonStr(httpHeaders), ip);
+        log.info("请求url：{}，method：{}，header：{}，ip：{}", url, method, JSONObject.toJSONString(httpHeaders), ip);
 
-        //请求url鉴权判断
+        //请求url是否开启鉴权
         if (!gatewayConfig.getAuthEnable()) {
             log.info("网关不启用鉴权，所有请求直接放行");
+            return filter(chain, build, exchange, url);
+        }
+
+        //放行的url
+        if (checkReleaseUrls(url)) {
+            log.info("网关配置放行的url:{}", url);
             return filter(chain, build, exchange, url);
         }
 
@@ -93,12 +98,6 @@ public class AccessFilter implements GlobalFilter {
         if (checkForbiddenUrls(url)) {
             log.error("网关配置禁止访问的url：{}", url);
             return responseErrorMsg(exchange, 403, "forbidden request url!");
-        }
-
-        //放行的url
-        if (checkReleaseUrls(url)) {
-            log.info("网关配置放行的url:{}", url);
-            return filter(chain, build, exchange, url);
         }
 
         //禁止的ip访问
@@ -121,18 +120,18 @@ public class AccessFilter implements GlobalFilter {
         }
 
         //解析authorization
-        Map<String, Claim> parse;
         try {
-            parse = JwtUtils.parse(authorization);
+            Map<String, Claim> parse = JwtUtils.parse(authorization);
+            String userContext = parse.get("json").asString();
+            if (StrUtil.isNotBlank(userContext)) {
+                //todo redis缓存失效判断、用户状态判断，最后都没问题再放行
+
+
+                //写到header里 userContext
+                setHeaderInfo(build, request, userContext, httpHeaders);
+            }
         } catch (Exception e) {
             return responseErrorMsg(exchange, 401, "token invalid");
-        }
-        String userContext = parse.get("json").asString();
-        if (StrUtil.isNotBlank(userContext)) {
-            //todo redis缓存失效判断，用户状态判断，成功后放行
-
-            //写到header里 userContext
-            setHeaderInfo(build, request, userContext, httpHeaders);
         }
         return filter(chain, build, exchange, url);
     }
@@ -176,18 +175,16 @@ public class AccessFilter implements GlobalFilter {
             try {
                 parse = JwtUtils.parse(authorization);
             } finally {
+                //3.放行进来的url，不用判断用户状态什么的，直接放行，将userContext写到header里
                 assert parse != null;
                 userContext = parse.get("json").asString();
                 if (StrUtil.isNotBlank(userContext)) {
-                    //todo redis缓存失效判断，用户状态判断，成功后放行
-
-                    //写到header里 userContext
                     setHeaderInfo(build, request, userContext, HttpHeaders.writableHttpHeaders(request.getHeaders()));
                 }
             }
         }
 
-        //3.判断是否开启慢log打印
+        //4.判断是否开启慢log打印
         return chain.filter(build).then(Mono.fromRunnable(() -> {
             if (gatewayConfig.getSlowEnable()) {
                 Long startTime = exchange.getAttribute(Constants.START_TIME);
@@ -197,7 +194,7 @@ public class AccessFilter implements GlobalFilter {
                         HttpHeaders headers = exchange.getRequest().getHeaders();
                         MDC.put(Trace.TRACE_ID, headers.getFirst(Trace.TRACE_ID));
                         MDC.put(Trace.SPAN_ID, headers.getFirst(Trace.SPAN_ID));
-                        log.info("响应url：{}，耗时：{} ms", url, executeTime);
+                        log.error("响应url：{}，耗时：{} ms", url, executeTime);
                     }
                 }
             }
@@ -225,8 +222,8 @@ public class AccessFilter implements GlobalFilter {
     private boolean checkReleaseUrls(String url) {
         String[] releaseUrls = gatewayConfig.getReleaseUrls();
         if (ArrayUtil.isNotEmpty(releaseUrls)) {
-            for (String authIgnoreUrl : releaseUrls) {
-                if (PATH_MATCHER.match(authIgnoreUrl, url)) {
+            for (String releaseUrl : releaseUrls) {
+                if (PATH_MATCHER.match(releaseUrl, url)) {
                     return true;
                 }
             }
@@ -240,15 +237,14 @@ public class AccessFilter implements GlobalFilter {
     private boolean checkIpBlackList(String ip) {
         String[] ipBlackList = gatewayConfig.getIpBlackList();
         if (ArrayUtil.isNotEmpty(ipBlackList)) {
-            for (String authIgnoreUrl : ipBlackList) {
-                if (PATH_MATCHER.match(authIgnoreUrl, ip)) {
+            for (String match : ipBlackList) {
+                if (PATH_MATCHER.match(match, ip)) {
                     return true;
                 }
             }
         }
         return false;
     }
-
 
     /**
      * 返回错误的信息

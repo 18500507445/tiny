@@ -1,7 +1,7 @@
 package com.tiny.common.core.user;
 
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.tiny.common.core.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class UserFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) {
         HttpServletRequest request = (HttpServletRequest) req;
         String userContext = URLUtil.decode(request.getHeader(Constants.USER_CONTEXT));
-        UserContext.UserToken userToken = JSONUtil.toBean(userContext, UserContext.UserToken.class);
+        UserContext.UserToken userToken = JSONObject.parseObject(userContext, UserContext.UserToken.class);
         try {
             UserContext.set(userToken);
             filterChain.doFilter(req, resp);

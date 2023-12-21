@@ -1,6 +1,6 @@
 package com.tiny.common.core.utils.common;
 
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -82,7 +82,7 @@ public final class JwtUtils {
         hashMap.put("id", "1");
         hashMap.put("name", "wzh");
 
-        String jsonStr = JSONUtil.toJsonStr(hashMap);
+        String jsonStr = JSONObject.toJSONString(hashMap);
 
         String token = sign(jsonStr);
         System.err.println("token：" + token);
