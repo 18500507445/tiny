@@ -33,6 +33,7 @@ public class CustomMessageConverter implements MessageConverter {
 
     @Override
     public Message toMessage(Object o, MessageProperties messageProperties) throws MessageConversionException {
+        //获取MDC中的traceId，没有就生成一个
         String traceId = TraceContext.getTraceId();
         if (StrUtil.isEmpty(traceId)) {
             traceId = TraceContext.getCurrentTrace().getTraceId();

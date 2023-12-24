@@ -61,7 +61,7 @@ public final class TraceContext {
      */
     public static Trace getCurrentTrace() {
         Trace trace = TRACE_CONTEXT.get();
-        if (trace == null) {
+        if (null == trace) {
             //如果为空，从新设置一次
             trace = setCurrentTrace("");
         }

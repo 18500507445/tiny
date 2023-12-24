@@ -13,6 +13,7 @@ import org.springframework.core.NamedThreadLocal;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserContext {
 
+    //ThreadLocal是与线程绑定的，在并发情况下，使用ThreadLocal存储用户信息通常是安全的，不会发生数据串行的问题，因为每个线程都有独立的数据副本
     public static final ThreadLocal<UserToken> USER_CONTEXT = new NamedThreadLocal<>("User Context");
 
     @Data

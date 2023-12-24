@@ -141,7 +141,7 @@ public class AccessFilter implements GlobalFilter {
      */
     private ServerWebExchange buildGlobalTraceId(ServerWebExchange exchange) {
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(exchange.getRequest().getHeaders());
-        //先清除，防止有残留的trace对象
+        //先清除，防止有残留的trace对象，再从新生成一个
         TraceContext.removeTrace();
         Trace trace = TraceContext.getCurrentTrace();
         //放入header

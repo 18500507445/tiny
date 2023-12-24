@@ -1,13 +1,11 @@
 package com.tiny.common.starter.xxl;
 
 import cn.hutool.core.util.StrUtil;
-import com.tiny.common.core.trace.Trace;
 import com.tiny.common.core.trace.TraceContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,18 +24,17 @@ public class XxlJobAopConfig {
 
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) {
+        //获取MDC中的traceId，没有就生成一个
         String traceId = TraceContext.getTraceId();
         try {
-            //透传traceId，没有就生成一个
             if (StrUtil.isBlank(traceId)) {
-                traceId = TraceContext.getCurrentTrace().getTraceId();
+                TraceContext.getCurrentTrace();
             }
-            MDC.put(Trace.TRACE_ID, traceId);
             return point.proceed();
         } catch (Throwable e) {
             throw new RuntimeException(e);
         } finally {
-            MDC.clear();
+            TraceContext.removeTrace();
         }
     }
 

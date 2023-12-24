@@ -36,12 +36,9 @@ public class TraceFilter extends GenericFilterBean {
             /**
              * （1）正常启动单服务可能拿不到，需要生成一个，如果网关进行设置了直接放入Trace对象
              * （2）OpenFeign调用，需要设置traceId（FeignRequestInterceptor），设置到header里，这里能拿到继续透传
+             * （3）todo 有就复用，没有就生成，这里traceId是null还是有值，不需要管，哈哈
              */
-            if (StrUtil.isNotEmpty(traceId)) {
-                TraceContext.setCurrentTrace(traceId);
-            } else {
-                TraceContext.getCurrentTrace();
-            }
+            TraceContext.setCurrentTrace(traceId);
             RequestWrapper requestWrapper = printAccessLog(request);
             filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
             log.error("当前请求总耗时：{} ms", System.currentTimeMillis() - start);

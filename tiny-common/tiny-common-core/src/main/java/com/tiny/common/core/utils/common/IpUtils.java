@@ -207,31 +207,29 @@ public final class IpUtils {
         return "未知";
     }
 
+    /**
+     * 执行linux命令curl ifconfig.co获取公网ip
+     */
     public static String getInternetIp() {
         TimeInterval timer = DateUtil.timer();
-        String ip = "";
         String result = "";
         String line;
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "curl cip.cc");
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "curl ifconfig.co");
             Process process = processBuilder.start();
             // 获取命令输出
             InputStream inputStream = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = reader.readLine()) != null) {
-                if (StrUtil.containsAnyIgnoreCase(line, "ip", ":")) {
-                    List<String> split = StrUtil.split(line, ":");
-                    if (split.size() > 1) {
-                        ip = split.get(1);
+                if (StrUtil.containsAnyIgnoreCase(line, ".")) {
+                    List<String> split = StrUtil.split(line, ".");
+                    if (split.size() > 3) {
+                        result = split.get(3);
                     }
                     break;
                 }
             }
-            List<String> split = StrUtil.split(ip, ".");
-            if (split.size() > 3) {
-                result = split.get(3);
-            }
-            log.warn("getInternetIp--ip：{}，result：{}，耗时：{} ms", ip, result, timer.interval());
+            log.warn("getInternetIp：result：{}，耗时：{} ms", result, timer.interval());
             return result;
         } catch (IOException e) {
             throw new RuntimeException(e);

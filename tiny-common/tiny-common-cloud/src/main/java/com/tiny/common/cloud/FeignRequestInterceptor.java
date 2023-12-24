@@ -24,12 +24,13 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        //MDC获取traceId
+        //MDC获取traceId，没有就生成一个
         String traceId = TraceContext.getTraceId();
-        if (StrUtil.isNotEmpty(traceId)) {
-            // 传递traceId
-            requestTemplate.header(Trace.TRACE_ID, traceId);
+        if (StrUtil.isEmpty(traceId)) {
+            traceId = TraceContext.getCurrentTrace().getTraceId();
         }
+        // 传递traceId
+        requestTemplate.header(Trace.TRACE_ID, traceId);
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes == null) {
             return;
