@@ -1,0 +1,45 @@
+package com.tiny.example.manager.listener;
+
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
+import com.tiny.api.pay.client.PayFeignClient;
+import com.tiny.common.core.result.RespResult;
+import com.tiny.example.config.RabbitConfig;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+
+/**
+ * @author: wzh
+ * @description rabbitMQ监听
+ * @date: 2023/12/25 13:18
+ */
+@Component
+@Slf4j(topic = "RabbitMQListener")
+@RequiredArgsConstructor
+public class RabbitMQListener {
+
+    private final PayFeignClient payFeignClient;
+
+    /**
+     * 直连模式
+     *
+     * @param message
+     */
+    @RabbitHandler
+    @RabbitListener(queuesToDeclare = @Queue(RabbitConfig.EXAMPLE_QUEUE))
+    public void one(Message message) {
+        long tag = message.getMessageProperties().getDeliveryTag();
+        log.error("直连模式one,消息id:" + tag + ",消息内容：" + JSONUtil.toJsonStr(new String(message.getBody())));
+
+        RespResult result = payFeignClient.getPayOrderId();
+        Map<String, Object> hashMap = MapUtil.of("payOrder", result.get("data"));
+        log.error("userInfo:" + JSONUtil.toJsonStr(hashMap));
+    }
+}

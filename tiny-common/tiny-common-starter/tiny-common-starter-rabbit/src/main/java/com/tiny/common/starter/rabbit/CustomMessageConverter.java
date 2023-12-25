@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.tiny.common.core.trace.Trace;
 import com.tiny.common.core.trace.TraceContext;
-import org.slf4j.MDC;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConversionException;
@@ -40,10 +39,12 @@ public class CustomMessageConverter implements MessageConverter {
         }
         messageProperties.setHeader(Trace.TRACE_ID, traceId);
         try {
+            //转javaBean对象
             Object parse = JSON.parse(Convert.toStr(o));
             return new Message(JSON.toJSONBytes(parse), messageProperties);
         } catch (Exception e) {
-            return new Message(JSON.toJSONBytes(o));
+            //转message对象
+            return new Message(JSON.toJSONBytes(o), messageProperties);
         }
     }
 
@@ -52,13 +53,12 @@ public class CustomMessageConverter implements MessageConverter {
      * 支持的有（1）jsonString转Message对象（2）对象转对象
      *
      * @param message the message to convert
-     * @return
      * @throws MessageConversionException
      */
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         MessageProperties messageProperties = message.getMessageProperties();
-        MDC.put(Trace.TRACE_ID, messageProperties.getHeader(Trace.TRACE_ID));
+        TraceContext.setCurrentTrace(messageProperties.getHeader(Trace.TRACE_ID));
         return JSON.parseObject(message.getBody(), messageProperties.getInferredArgumentType());
     }
 }

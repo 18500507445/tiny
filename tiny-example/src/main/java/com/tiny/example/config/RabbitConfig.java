@@ -4,11 +4,9 @@ import com.tiny.common.starter.rabbit.CustomMessageConverter;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -44,12 +42,19 @@ public class RabbitConfig {
         return factory;
     }
 
+    //直连交换机(自带)
+    public static final String EXCHANGE_DIRECT = "amq.direct";
+
+    public static final String EXAMPLE_QUEUE = "exampleQueue";
+
+    public static final String ROUTING_KEY = "exampleRoutingKey";
+
     /**
-     * topic交换机
+     * 直连交换机
      */
     @Bean
-    public Exchange exampleTopicExchange() {
-        return ExchangeBuilder.topicExchange("amq.topic").build();
+    public Exchange exampleDirectExchange() {
+        return ExchangeBuilder.directExchange(EXCHANGE_DIRECT).build();
     }
 
     /**
@@ -57,15 +62,18 @@ public class RabbitConfig {
      */
     @Bean
     public Queue exampleQueue() {
-        return new Queue("exampleQueue");
+        return new Queue(EXAMPLE_QUEUE);
     }
 
     /**
-     * 绑定队列到topic交换机
+     * 绑定队列到direct交换机
      */
     @Bean
     public Binding exampleBindingProduct() {
-        return BindingBuilder.bind(exampleQueue()).to(exampleTopicExchange()).with("exampleRoutingKey").noargs();
+        return BindingBuilder
+                .bind(exampleQueue())
+                .to(exampleDirectExchange())
+                .with(ROUTING_KEY).noargs();
     }
 
 

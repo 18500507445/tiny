@@ -39,7 +39,8 @@ public class ExecutorConfig {
 
     /**
      * jdk线程池
-     * todo java中自带的线程池(ThreadPoolExecutor)没有提供TaskDecorator这个方法。
+     * todo java中自带的线程池(ThreadPoolExecutor)没有提供TaskDecorator这个方法
+     * todo 如果使用想进行TraceId透传，需要进行包装，使用ThreadWrap进行处理，poolExecutor.execute(ThreadWrap.runnableWrap(() -> log.error("pool-sub")))
      */
     @Bean(name = "jdkExecutor")
     public Executor jdkExecutor() {
