@@ -31,8 +31,6 @@ public class GlobalExceptionAdvice {
 
     /**
      * 拦截的validator异常
-     *
-     * @param e
      */
     @ExceptionHandler(BindException.class)
     public RespResult handleBindException(BindException e) {
@@ -50,9 +48,6 @@ public class GlobalExceptionAdvice {
 
     /**
      * 自定义参数异常
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(ParamException.class)
     public RespResult paramException(ParamException e) {

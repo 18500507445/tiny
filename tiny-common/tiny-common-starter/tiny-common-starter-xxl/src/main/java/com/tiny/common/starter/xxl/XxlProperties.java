@@ -1,6 +1,7 @@
 package com.tiny.common.starter.xxl;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author: wzh
  * @date: 2023/4/22 22:10
  */
+@Setter
 @Getter
 @ConfigurationProperties("xxl.job")
 public final class XxlProperties {
@@ -32,25 +34,11 @@ public final class XxlProperties {
      */
     private ExecutorProperties executor;
 
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public void setAdmin(AdminProperties admin) {
-        this.admin = admin;
-    }
-
-    public void setExecutor(ExecutorProperties executor) {
-        this.executor = executor;
-    }
-
     /**
      * XXL-Job 调度器配置类
      */
+    @Setter
+    @Getter
     public static class AdminProperties {
 
         /**
@@ -58,18 +46,13 @@ public final class XxlProperties {
          */
         private String addresses;
 
-        public void setAddresses(String addresses) {
-            this.addresses = addresses;
-        }
-
-        public String getAddresses() {
-            return addresses;
-        }
     }
 
     /**
      * XXL-Job 执行器配置类
      */
+    @Setter
+    @Getter
     public static class ExecutorProperties {
 
         /**
@@ -111,44 +94,5 @@ public final class XxlProperties {
          */
         private Integer logRetentionDays = LOG_RETENTION_DAYS_DEFAULT;
 
-        public void setAppName(String appName) {
-            this.appName = appName;
-        }
-
-        public void setIp(String ip) {
-            this.ip = ip;
-        }
-
-        public void setPort(Integer port) {
-            this.port = port;
-        }
-
-        public void setLogPath(String logPath) {
-            this.logPath = logPath;
-        }
-
-        public void setLogRetentionDays(Integer logRetentionDays) {
-            this.logRetentionDays = logRetentionDays;
-        }
-
-        public String getAppName() {
-            return appName;
-        }
-
-        public String getIp() {
-            return ip;
-        }
-
-        public Integer getPort() {
-            return port;
-        }
-
-        public String getLogPath() {
-            return logPath;
-        }
-
-        public Integer getLogRetentionDays() {
-            return logRetentionDays;
-        }
     }
 }
