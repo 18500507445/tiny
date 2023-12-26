@@ -21,7 +21,7 @@ logback，spring默认集成。命名规范：logback-spring.xml最后加载的�
     <!-- 异步日志输出 -->
     <appender name="async_info" class="ch.qos.logback.classic.AsyncAppender">
         <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
-        <discardingThreshold >0</discardingThreshold>
+        <discardingThreshold>0</discardingThreshold>
         <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
         <queueSize>256</queueSize>
         <!-- 添加附加的appender,最多只能添加一个 -->
@@ -33,6 +33,11 @@ logback，spring默认集成。命名规范：logback-spring.xml最后加载的�
     </root>
 </configuration>
 ~~~
+
+### 当前日志打印策略
+* 系统info采取异步打印，提高性能
+* error和debug采取同步打印，开启`方法`和`行号`
+* warn日志只有本地输出，没有配置，采取丢弃，不进行打印
 
 
 ### 全局异常捕获，方法中抛出运行异常GlobalExceptionAdvice进行捕获

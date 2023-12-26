@@ -4,16 +4,22 @@
     <springProperty scope="context" name="logPath" source="logging.file.path" defaultValue="logging.file.path"/>
     <property name="log.path" value="${logPath}" />
     <property name="log.maxHistory" value="15"/>
-    <property name="log.pattern" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%X{traceId}] [spanId:%X{spanId}] %-5level %logger{20} - %msg%n"/>
+
+    <!-- 同步打，带方法和行号 -->
+    <property name="log.pattern" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%X{traceId}] [spanId:%X{spanId}] %-5level %logger{20} - [%method,%line] - %msg%n"/>
+
+    <!-- 异步打，无法带行号 -->
+    <property name="log.pattern.async" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%X{traceId}] [spanId:%X{spanId}] %-5level %logger{20} - %msg%n"/>
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <!-- 系统日志输出 -->
+    <!-- 系统info日志输出 -->
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -23,7 +29,8 @@
             <maxHistory>${log.maxHistory}</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${log.pattern}</pattern>
+            <pattern>${log.pattern.async}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
@@ -32,9 +39,9 @@
         </filter>
     </appender>
 
-    <!-- 系统日志输出 -->
-    <appender name="file_debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/debug.log</file>
+    <!-- 系统warn日志输出 -->
+    <appender name="file_warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
             <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/debug.log</fileNamePattern>
@@ -43,14 +50,16 @@
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>DEBUG</level>
+            <level>WARN</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
+    <!-- 系统error日志输出 -->
     <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -60,6 +69,7 @@
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
@@ -68,17 +78,13 @@
         </filter>
     </appender>
 
-    <!-- 异步日志输出  -->
-    <appender name="async_console" class="ch.qos.logback.classic.AsyncAppender">
+    <!-- 异步日志输出 -->
+    <appender name="async_info" class="ch.qos.logback.classic.AsyncAppender">
         <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
         <discardingThreshold>0</discardingThreshold>
         <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-        <queueSize>512</queueSize>
+        <queueSize>256</queueSize>
         <!-- 添加附加的appender,最多只能添加一个 -->
-        <appender-ref ref="console" />
-    </appender>
-
-    <appender name="async_info" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="file_info" />
     </appender>
 
@@ -86,13 +92,13 @@
     <logger name="org.springframework" level="warn"/>
 
     <root level="debug">
-        <appender-ref ref="async_console"/>
+        <appender-ref ref="console"/>
     </root>
 
     <!--系统操作日志-->
     <root level="info">
         <appender-ref ref="async_info"/>
-        <appender-ref ref="file_debug"/>
+        <appender-ref ref="file_warn"/>
         <appender-ref ref="file_error"/>
     </root>
 
