@@ -23,7 +23,7 @@ import java.time.Duration;
  * @author: wzh
  * @date: 2023/8/22 20:08
  */
-@Slf4j(topic = "tiny-common-starter ==> RedisAutoConfiguration")
+@Slf4j(topic = "tiny-framework-starter ==> RedisAutoConfiguration")
 @Configuration
 public class RedisAutoConfiguration {
 

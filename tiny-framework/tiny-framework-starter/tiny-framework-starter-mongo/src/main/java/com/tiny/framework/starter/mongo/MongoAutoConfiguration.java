@@ -20,7 +20,7 @@ import java.util.Arrays;
  * @author: wzh
  * @date: 2023/8/22 20:53
  */
-@Slf4j(topic = "tiny-common-starter ==> MongoAutoConfiguration")
+@Slf4j(topic = "tiny-framework-starter ==> MongoAutoConfiguration")
 @Configuration
 public class MongoAutoConfiguration {
 

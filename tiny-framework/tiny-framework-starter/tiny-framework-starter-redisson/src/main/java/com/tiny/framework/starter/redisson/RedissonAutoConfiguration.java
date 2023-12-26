@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @description redisson自动装配类
  * @date: 2023/11/02 15:14
  */
-@Slf4j(topic = "tiny-common-starter ==> RedissonAutoConfiguration")
+@Slf4j(topic = "tiny-framework-starter ==> RedissonAutoConfiguration")
 @Configuration
 public class RedissonAutoConfiguration {
 

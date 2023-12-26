@@ -104,12 +104,6 @@
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.tiny</groupId>
                 <artifactId>tiny-framework-starter-mongo</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -141,6 +135,12 @@
             <!-- 业务组件 start -->
             <dependency>
                 <groupId>com.tiny</groupId>
+                <artifactId>tiny-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tiny</groupId>
                 <artifactId>tiny-api-pay</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -150,7 +150,6 @@
                 <artifactId>tiny-api-order</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- common件 start -->
 
 
             <!-- 数据库 start -->

@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * @author: wzh
  * @date: 2023/09/20 11:16
  */
-@Slf4j(topic = "tiny-common-core ==> TraceConfig")
+@Slf4j(topic = "tiny-framework-starter ==> TraceConfig")
 @Configuration
 public class TraceConfig {
 

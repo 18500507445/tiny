@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author: wzh
  * @date: 2023/8/19 15:40
  */
-@Slf4j(topic = "tiny-common-starter ==> RedisService")
+@Slf4j(topic = "tiny-framework-starter ==> RedisService")
 @Getter
 @Component
 @SuppressWarnings("unchecked")

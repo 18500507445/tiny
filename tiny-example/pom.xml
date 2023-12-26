@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-framework-cloud</artifactId>
+            <artifactId>tiny-common</artifactId>
         </dependency>
 
         <dependency>
@@ -41,11 +41,6 @@
         <dependency>
             <groupId>com.tiny</groupId>
             <artifactId>tiny-framework-starter-rabbit</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tiny</groupId>
-            <artifactId>tiny-framework-generator</artifactId>
         </dependency>
 
         <dependency>

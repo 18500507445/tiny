@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @Slf4j(topic = "OrderApplication")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
+@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.framework.starter.*")})
 @EnableFeignClients(basePackages = "com.tiny.api")
 public class OrderApplication {
 

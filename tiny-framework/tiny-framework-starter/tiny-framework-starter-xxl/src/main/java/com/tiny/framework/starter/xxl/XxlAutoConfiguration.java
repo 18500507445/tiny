@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author: wzh
  * @date: 2023/8/23 22:12
  */
-@Slf4j(topic = "tiny-common-starter ==> XxlAutoConfiguration")
+@Slf4j(topic = "tiny-framework-starter ==> XxlAutoConfiguration")
 @Configuration
 @EnableConfigurationProperties({XxlProperties.class})
 public class XxlAutoConfiguration {

@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 //springboot启动类注解，排除掉数据库自动配置
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 //组件扫描因为模块的原因需要手动设置，并且把starter已经装配的排除掉
-@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})
+@ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.framework.starter.*")})
 //开启feign客户端支持
 @EnableFeignClients(basePackages = "com.tiny.api")
 //开启spring重试
