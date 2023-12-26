@@ -1,8 +1,8 @@
 package com.tiny.example;
 
-import com.tiny.common.core.exception.GlobalExceptionAdvice;
-import com.tiny.common.core.result.RespResult;
-import com.tiny.common.core.utils.common.IpUtils;
+import com.tiny.framework.core.exception.GlobalExceptionAdvice;
+import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

@@ -2,10 +2,10 @@ package com.tiny.example.web.controller;
 
 import cn.hutool.core.map.MapUtil;
 import com.tiny.api.pay.client.PayFeignClient;
-import com.tiny.common.core.result.BaseController;
-import com.tiny.common.core.result.RespResult;
-import com.tiny.common.core.thread.ThreadWrap;
-import com.tiny.common.core.user.UserContext;
+import com.tiny.framework.core.result.BaseController;
+import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.thread.ThreadWrap;
+import com.tiny.framework.core.user.UserContext;
 import com.tiny.example.enums.ExampleEventEnum;
 import com.tiny.example.manager.bean.ExampleEvent;
 import lombok.RequiredArgsConstructor;

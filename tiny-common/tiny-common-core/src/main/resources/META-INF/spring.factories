@@ -1,6 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.tiny.common.core.exception.GlobalExceptionAdvice,\
-com.tiny.common.core.trace.TraceConfig,\
-com.tiny.common.core.trace.TraceFilter,\
-com.tiny.common.core.user.UserConfig,\
-com.tiny.common.core.user.UserFilter

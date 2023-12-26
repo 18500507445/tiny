@@ -1,6 +1,6 @@
 package com.tiny.example.config;
 
-import com.tiny.common.starter.rabbit.CustomMessageConverter;
+import com.tiny.framework.starter.rabbit.CustomMessageConverter;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;

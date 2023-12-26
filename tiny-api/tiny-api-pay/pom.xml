@@ -22,7 +22,7 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-cloud</artifactId>
+            <artifactId>tiny-framework-cloud</artifactId>
         </dependency>
 
     </dependencies>

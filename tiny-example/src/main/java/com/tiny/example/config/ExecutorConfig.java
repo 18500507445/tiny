@@ -1,6 +1,6 @@
 package com.tiny.example.config;
 
-import com.tiny.common.core.thread.MdcTaskDecorator;
+import com.tiny.framework.core.thread.MdcTaskDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;

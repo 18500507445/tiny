@@ -15,37 +15,37 @@
     <dependencies>
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-cloud</artifactId>
+            <artifactId>tiny-framework-cloud</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-xxl</artifactId>
+            <artifactId>tiny-framework-starter-xxl</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-mongo</artifactId>
+            <artifactId>tiny-framework-starter-mongo</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-redis</artifactId>
+            <artifactId>tiny-framework-starter-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-redisson</artifactId>
+            <artifactId>tiny-framework-starter-redisson</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-starter-rabbit</artifactId>
+            <artifactId>tiny-framework-starter-rabbit</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-generator</artifactId>
+            <artifactId>tiny-framework-generator</artifactId>
         </dependency>
 
         <dependency>

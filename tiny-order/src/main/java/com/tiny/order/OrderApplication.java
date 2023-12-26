@@ -1,7 +1,7 @@
 package com.tiny.order;
 
-import com.tiny.common.core.result.RespResult;
-import com.tiny.common.core.utils.common.IpUtils;
+import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

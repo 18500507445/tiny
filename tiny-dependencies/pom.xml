@@ -80,25 +80,25 @@
             <!-- common组件 start -->
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-cloud</artifactId>
+                <artifactId>tiny-framework-cloud</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-core</artifactId>
+                <artifactId>tiny-framework-core</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-generator</artifactId>
+                <artifactId>tiny-framework-generator</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter</artifactId>
+                <artifactId>tiny-framework-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -110,31 +110,31 @@
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-mongo</artifactId>
+                <artifactId>tiny-framework-starter-mongo</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-rabbit</artifactId>
+                <artifactId>tiny-framework-starter-rabbit</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-redis</artifactId>
+                <artifactId>tiny-framework-starter-redis</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-redisson</artifactId>
+                <artifactId>tiny-framework-starter-redisson</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.tiny</groupId>
-                <artifactId>tiny-common-starter-xxl</artifactId>
+                <artifactId>tiny-framework-starter-xxl</artifactId>
                 <version>${revision}</version>
             </dependency>
 

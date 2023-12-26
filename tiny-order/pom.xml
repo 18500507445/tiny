@@ -20,12 +20,12 @@
     <dependencies>
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-cloud</artifactId>
+            <artifactId>tiny-framework-cloud</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-generator</artifactId>
+            <artifactId>tiny-framework-generator</artifactId>
         </dependency>
 
         <dependency>

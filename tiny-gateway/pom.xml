@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-common-cloud</artifactId>
+            <artifactId>tiny-framework-cloud</artifactId>
             <exclusions>
                 <!-- 网关不需要boot-web排除掉 -->
                 <exclusion>

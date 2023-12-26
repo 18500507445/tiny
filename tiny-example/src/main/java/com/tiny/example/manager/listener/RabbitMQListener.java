@@ -3,7 +3,7 @@ package com.tiny.example.manager.listener;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import com.tiny.api.pay.client.PayFeignClient;
-import com.tiny.common.core.result.RespResult;
+import com.tiny.framework.core.result.RespResult;
 import com.tiny.example.config.RabbitConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

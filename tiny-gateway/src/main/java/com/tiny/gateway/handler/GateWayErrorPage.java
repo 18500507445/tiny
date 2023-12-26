@@ -1,7 +1,7 @@
 package com.tiny.gateway.handler;
 
 import cn.hutool.core.map.MapUtil;
-import com.tiny.common.core.result.RespResult;
+import com.tiny.framework.core.result.RespResult;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;

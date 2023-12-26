@@ -1,7 +1,7 @@
 package com.tiny.example;
 
 import cn.hutool.core.util.StrUtil;
-import com.tiny.common.generator.AbstractGenerator;
+import com.tiny.framework.generator.AbstractGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

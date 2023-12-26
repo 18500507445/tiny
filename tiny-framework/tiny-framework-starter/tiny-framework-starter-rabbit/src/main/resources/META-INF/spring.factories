@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.tiny.framework.starter.rabbit.CustomMessageConverter,\
+com.tiny.framework.starter.rabbit.ParentRabbitConfig

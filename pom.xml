@@ -16,8 +16,8 @@
         <!-- 依赖管理在此模块 -->
         <module>tiny-dependencies</module>
 
-        <!-- 公共组件模块 -->
-        <module>tiny-common</module>
+        <!-- 公共组件架构模块 -->
+        <module>tiny-framework</module>
         <module>tiny-gateway</module>
         <module>tiny-example</module>
         <module>tiny-api</module>
