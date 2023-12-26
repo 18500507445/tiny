@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
  * @date: 2023/08/29 14:45
  */
 @Slf4j(topic = "ExampleApplication")
+//springboot启动类注解，排除掉数据库自动配置
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 //组件扫描因为模块的原因需要手动设置，并且把starter已经装配的排除掉
 @ComponentScan(basePackages = {"com.tiny"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.tiny.common.starter.*")})

@@ -50,4 +50,16 @@ tiny
 > （2）访问url需要Header里添加Authorization，工具类JwtUtils.main方法生成
 > （3）主pom进行打包，进入样例服务jar包目录，执行`java -jar -Dspring.profiles.active=local tiny-example-1.0-SNAPSHOT.jar`可以正常启动
 
+## 规范、配置、工具、问题相关文档
+* [编码规范](doc/规范/编码规范.md)
+* [hutool、guava工具类如何使用](doc/工具/工具类.md)
+* [日志使用和书写规范](doc/规范/log.md)
+* [常见问题](doc/问题/常见问题.md)
+* [mybatis-plus配置](doc/工具/mybatisplus.md)
+* [openfeign配置](doc/架构/openfeign.md)
+* [cloud搭建](doc/架构/cloud搭建.md)
+* [pagehelper配置](doc/工具/pagehelper.md)
+* [redis多数据源](doc/中间件/redis.md)
+* [validate参数校验](doc/工具/validate.md)
+
 
