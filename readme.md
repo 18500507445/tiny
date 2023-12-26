@@ -10,18 +10,23 @@
 ```
 tiny
 │
-├─tiny-framework               -- 公共组件包
+├─tiny-dependencies         -- 统一管理依赖，版本锁死
+│
+├─tiny-framework            -- 公共架构模块
 │  ├─tiny-framework-cloud      -- spring-cloud核心依赖（nacos、openfegin、loadbalancer、cloud环境上下文、限流sentinel（待完成）、分布式事务seata（待完成） ）
 │  ├─tiny-framework-core       -- spring-boot核心依赖、常量类、通用返回类，工具类（各种工具类，hutool、guava），Body请求加密和响应处理、全局log（待完成）、全局接口耗时(待完成)
 │  ├─tiny-framework-genertor   -- 代码生成器（mybatisplus模板、mybatis模板）
-│  └──tiny-framework-starter    -- 开胃菜，自定义starter
+│  └──tiny-framework-starter   -- 开胃菜，自定义starter
 │      ├─tiny-framework-starter-redis          -- redis-单数据源
 │      ├─tiny-framework-starter-rabbit         -- rabbit依赖
 │      ├─tiny-framework-starter-redisson       -- 封装redisson工具类
 │      ├─tiny-framework-starter-mongo          -- mongo-单数据源，如果配置多个，在写一套就行了
 │      └─tiny-framework-starter-xxl            -- xxl 
 │
-├─tiny-dependencies         -- 统一管理依赖，版本锁死
+├─tiny-common              -- 公共业务模块（包含了core和业务的常量、枚举、通用repository）
+│
+├─tiny-api                 -- 公共api模块
+│
 ├─tiny-gateway              -- 网关服务，路由规则、跨域、空白页改造，header解析token，token失效判断-redis（待完成），用户状态判断-fegin调用（待完成）
 │  ├─xxx                    -- xxx
 │  └─xxx                    -- xxx
@@ -38,6 +43,8 @@ tiny
 |:-------:|:-----:|:--:|
 | gateway | 8080  | xx |
 | example | 10000 | xx |
+|  order  | 10200 | xx |
+|   pay   | 10100 | xx |
 
 ## 环境准备
 本地添加nacos，如图 [访问地址](http://localhost:8848/nacos/)
