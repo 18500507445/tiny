@@ -36,8 +36,8 @@ logback，spring默认集成。命名规范：logback-spring.xml最后加载的�
 
 ### 当前日志打印策略
 * 系统info采取异步打印，提高性能
-* error和debug采取同步打印，开启`方法`和`行号`
-* warn日志只有本地输出，没有配置，采取丢弃，不进行打印
+* error和warn采取同步打印，开启`方法`和`行号`
+* debug没有进行配置，直接丢弃，不进行打印
 
 
 ### 全局异常捕获，方法中抛出运行异常GlobalExceptionAdvice进行捕获
