@@ -3,8 +3,9 @@ package com.tiny.example.manager.listener;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import com.tiny.api.pay.client.PayFeignClient;
-import com.tiny.framework.core.result.RespResult;
 import com.tiny.example.config.RabbitConfig;
+import com.tiny.example.manager.bean.ExampleEvent;
+import com.tiny.framework.core.result.RespResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -34,10 +35,9 @@ public class RabbitMQListener {
      */
     @RabbitHandler
     @RabbitListener(queuesToDeclare = @Queue(RabbitConfig.EXAMPLE_QUEUE))
-    public void one(Message message) {
+    public void one(Message message, ExampleEvent.MessageDO messageDO) {
         long tag = message.getMessageProperties().getDeliveryTag();
-        log.error("直连模式one,消息id:" + tag + ",消息内容：" + JSONUtil.toJsonStr(new String(message.getBody())));
-
+        log.error("直连模式one，消息id：{}，消息内容：{}，messageDO：{}", tag, JSONUtil.toJsonStr(new String(message.getBody())), JSONUtil.toJsonStr(messageDO));
         RespResult result = payFeignClient.getPayOrderId();
         Map<String, Object> hashMap = MapUtil.of("payOrder", result.get("data"));
         log.error("userInfo:" + JSONUtil.toJsonStr(hashMap));
