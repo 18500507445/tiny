@@ -63,11 +63,11 @@ public class ExampleController extends BaseController {
      */
     @RequestMapping(value = "/finalTraceId", method = RequestMethod.GET, name = "测试traceId透传")
     public RespResult finalTraceId() {
-        log.info("finalTraceId-start");
+        log.error("finalTraceId-start");
 
         //1. 首先开启一个普通线程
         new Thread(ThreadWrap.runnableWrap(() -> {
-            log.info("finalTraceId-普通线程");
+            log.error("finalTraceId-普通线程");
 
             //2. 发送spring事件
             ExampleEvent.MessageDO messageDO = ExampleEvent.MessageDO.builder()

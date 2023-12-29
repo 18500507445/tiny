@@ -34,7 +34,7 @@ public class ExampleEventListener {
         try {
             rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_DIRECT, RabbitConfig.ROUTING_KEY, messageDO);
         } finally {
-            log.info("事件，名称：{}，事件：{}", exampleEvent.getExampleEventEnum().getName(), JSONObject.toJSONString(messageDO));
+            log.error("事件，名称：{}，事件：{}", exampleEvent.getExampleEventEnum().getName(), JSONObject.toJSONString(messageDO));
         }
     }
 
