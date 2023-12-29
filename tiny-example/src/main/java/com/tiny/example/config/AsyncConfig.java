@@ -21,11 +21,11 @@ public class AsyncConfig extends AsyncConfigurerSupport {
      * 使用spring的线程池
      */
     @Override
-    @Bean
+    @Bean("getAsyncExecutor")
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(5);
-        threadPoolTaskExecutor.setMaxPoolSize(20);
+        threadPoolTaskExecutor.setCorePoolSize(1);
+        threadPoolTaskExecutor.setMaxPoolSize(1);
         threadPoolTaskExecutor.setQueueCapacity(20);
         threadPoolTaskExecutor.setKeepAliveSeconds(60);
         threadPoolTaskExecutor.setThreadNamePrefix("ThreadPoolTaskExecutor");

@@ -45,11 +45,14 @@ public class MdcTaskDecorator implements TaskDecorator {
         };
     }
 
+    /**
+     * spring线程池进行装饰
+     */
     public static void main(String[] args) {
-        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(5);
-        threadPoolTaskExecutor.setMaxPoolSize(20);
+        ThreadPoolTaskExecutor springPool = new ThreadPoolTaskExecutor();
+        springPool.setCorePoolSize(5);
+        springPool.setMaxPoolSize(20);
         //这里是重点，设置线程池的装饰器，将traceId进行透传
-        threadPoolTaskExecutor.setTaskDecorator(new MdcTaskDecorator());
+        springPool.setTaskDecorator(new MdcTaskDecorator());
     }
 }

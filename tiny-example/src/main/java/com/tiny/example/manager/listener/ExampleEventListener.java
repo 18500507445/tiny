@@ -25,9 +25,11 @@ public class ExampleEventListener {
 
     /**
      * one-事件监听
+     * 备注：Async使用名称，会自动注入线程池，如果不写那就是默认的Thread
+     * 下面我的用的是getAsyncExecutor线程池，我就配置1个核心，1最大，多次调用线程id都是一个，哈哈
      * {@link ExampleEventEnum#ONE}
      */
-    @Async
+    @Async("getAsyncExecutor")
     @EventListener(condition = "#exampleEvent.exampleEventEnum.id == 1")
     public void oneEvent(ExampleEvent<ExampleEvent.MessageDO> exampleEvent) {
         ExampleEvent.MessageDO messageDO = exampleEvent.getT();
