@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.system.SystemUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -214,7 +215,12 @@ public final class IpUtils {
         TimeInterval timer = DateUtil.timer();
         String result = "";
         String line;
+        String osInfo = SystemUtil.getOsInfo().getName();
         try {
+            // 只有linux和mac电脑执行
+            if (StrUtil.containsAnyIgnoreCase(osInfo, "windows")) {
+                return result;
+            }
             ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "curl ifconfig.co");
             Process process = processBuilder.start();
             // 获取命令输出
@@ -229,10 +235,11 @@ public final class IpUtils {
                     break;
                 }
             }
-            log.warn("getInternetIp：result：{}，耗时：{} ms", result, timer.interval());
             return result;
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            log.warn("getInternetIp：result：{}，耗时：{} ms", result, timer.interval());
         }
     }
 }
