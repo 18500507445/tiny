@@ -1,5 +1,6 @@
 package com.tiny.order;
 
+import com.tiny.framework.core.exception.GlobalExceptionAdvice;
 import com.tiny.framework.core.result.RespResult;
 import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,9 @@ public class OrderApplication {
     public static void main(String[] args) {
         System.setProperty("pagehelper.banner", "false");
         SpringApplication.run(OrderApplication.class, args);
+
+        GlobalExceptionAdvice.setRuntimeLog(true);
+        log.warn("【order】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
 
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {

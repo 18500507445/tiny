@@ -1,5 +1,6 @@
 package com.tiny.pay;
 
+import com.tiny.framework.core.exception.GlobalExceptionAdvice;
 import com.tiny.framework.core.result.RespResult;
 import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,14 @@ public class PayApplication {
         System.setProperty("pagehelper.banner", "false");
         SpringApplication.run(PayApplication.class, args);
 
+        GlobalExceptionAdvice.setRuntimeLog(true);
+        log.warn("【pay】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
+
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {
             //公网ip 后两位初始化ResultVO
             RespResult.setIp(s);
-            log.warn("【order】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
+            log.warn("【pay】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
         });
     }
 }

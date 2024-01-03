@@ -57,14 +57,14 @@ public class ExampleApplication {
 
         log.warn("profile :{}，name :{}，serverAddr :{}，redis :{}，mongo :{}", profile, name, serverAddr, redis, mongo);
 
+        GlobalExceptionAdvice.setRuntimeLog(true);
+        log.warn("【example】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
+
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {
             //公网ip 后两位初始化ResultVO
             RespResult.setIp(s);
             log.warn("【example】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
-
-            GlobalExceptionAdvice.setRuntimeLog(true);
-            log.warn("【example】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
         });
     }
 

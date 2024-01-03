@@ -28,8 +28,8 @@ public class TraceFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+        long start = System.currentTimeMillis();
         try {
-            long start = System.currentTimeMillis();
             HttpServletRequest request = (HttpServletRequest) req;
             String traceId = request.getHeader(Trace.TRACE_ID);
             /**
@@ -40,9 +40,9 @@ public class TraceFilter extends GenericFilterBean {
             TraceContext.setCurrentTrace(traceId);
             RequestWrapper requestWrapper = printAccessLog(request);
             filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
-            log.error("当前请求总耗时：{} ms", System.currentTimeMillis() - start);
         } finally {
             TraceContext.removeTrace();
+            log.warn("当前请求总耗时：{} ms", System.currentTimeMillis() - start);
         }
     }
 
