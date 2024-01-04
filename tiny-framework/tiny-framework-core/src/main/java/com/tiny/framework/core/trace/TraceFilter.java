@@ -29,8 +29,8 @@ public class TraceFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
         long start = System.currentTimeMillis();
+        HttpServletRequest request = (HttpServletRequest) req;
         try {
-            HttpServletRequest request = (HttpServletRequest) req;
             String traceId = request.getHeader(Trace.TRACE_ID);
             /**
              * （1）正常启动单服务可能拿不到，需要生成一个，如果网关进行设置了直接放入Trace对象
@@ -42,7 +42,7 @@ public class TraceFilter extends GenericFilterBean {
             filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
         } finally {
             TraceContext.removeTrace();
-            log.warn("当前请求总耗时：{} ms", System.currentTimeMillis() - start);
+            log.info("请求apiName：{}：耗时：{} ms", request.getRequestURI(), System.currentTimeMillis() - start);
         }
     }
 

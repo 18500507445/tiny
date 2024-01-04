@@ -4,13 +4,17 @@ import com.tiny.framework.core.exception.GlobalExceptionAdvice;
 import com.tiny.framework.core.result.RespResult;
 import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.retry.annotation.EnableRetry;
@@ -43,6 +47,8 @@ public class ExampleApplication {
     /**
      * ComponentScan 组件扫描指定路径，因为例如SpringUtils打上组件注解，但是跨包扩这项目了，不会自己注册为bean
      * 除非starter这种自动装配的，所以还需要把starter路径下已经装配手动排除掉
+     *
+     * 经过测试，如果spring.factories里面配置了，那么不需要扫描就装配进来了，可以观察启动，并且@ComponentScan排除也不管用
      */
     public static void main(String[] args) {
         //关闭 pageHelper启动banner
@@ -66,6 +72,23 @@ public class ExampleApplication {
             RespResult.setIp(s);
             log.warn("【example】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
         });
+    }
+
+    @Bean
+    public BeanPostProcessor beanPostProcessor() {
+        System.out.println("初始化 bean BeanPostProcessor");
+        return new BeanPostProcessor() {
+            @Override
+            public Object postProcessBeforeInitialization(@NotNull Object bean, @NotNull String beanName) throws BeansException {
+                System.out.println("加载bean -> " + beanName);
+                return bean;
+            }
+
+            @Override
+            public Object postProcessAfterInitialization(@NotNull Object bean, @NotNull String beanName) throws BeansException {
+                return bean;
+            }
+        };
     }
 
 }

@@ -23,8 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     //是否开启响应log
-    @Value("${spring.response.enableLog}")
-    private boolean enableLog = false;
+    @Value("${spring.response.enableLog:false}")
+    private boolean enableLog;
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
