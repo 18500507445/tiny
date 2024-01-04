@@ -1,6 +1,7 @@
 package com.tiny.gateway.filter;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import com.alibaba.fastjson2.JSON;
@@ -82,6 +83,18 @@ public class AccessFilter implements GlobalFilter {
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(request.getHeaders());
         log.info("请求url：{}，method：{}，header：{}，ip：{}", url, method, JSONObject.toJSONString(httpHeaders), ip);
 
+        //判断url是否禁止访问
+        if (checkForbiddenUrls(url)) {
+            log.error("网关配置禁止访问的url：{}", url);
+            return responseErrorMsg(exchange, 403, "forbidden request url!");
+        }
+
+        //禁止的ip访问
+        if (checkIpBlackList(ip)) {
+            log.error("网关配置禁止访问的ip：{}", ip);
+            return responseErrorMsg(exchange, 403, "forbidden request ip!");
+        }
+
         //请求url是否开启鉴权
         if (!gatewayConfig.getAuthEnable()) {
             log.info("网关不启用鉴权，所有请求直接放行");
@@ -92,18 +105,6 @@ public class AccessFilter implements GlobalFilter {
         if (checkReleaseUrls(url)) {
             log.info("网关配置放行的url:{}", url);
             return filter(chain, build, exchange, url);
-        }
-
-        //判断是否禁止访问
-        if (checkForbiddenUrls(url)) {
-            log.error("网关配置禁止访问的url：{}", url);
-            return responseErrorMsg(exchange, 403, "forbidden request url!");
-        }
-
-        //禁止的ip访问
-        if (checkIpBlackList(ip)) {
-            log.error("网关配置禁止访问的ip：{}", ip);
-            return responseErrorMsg(exchange, 403, "forbidden request ip!");
         }
 
         // 从header Authorization中获取
@@ -169,22 +170,25 @@ public class AccessFilter implements GlobalFilter {
         String authorization = request.getHeaders().getFirst("Authorization");
         String userContext = request.getHeaders().getFirst(Constants.USER_CONTEXT);
 
-        //2.有token但是没有进行解析进行处理
+        //2.有token但是没有进行解析进行处理，注意：token别过期
         if (StrUtil.isNotBlank(authorization) && StrUtil.isBlank(userContext)) {
-            Map<String, Claim> parse = null;
-            try {
-                parse = JwtUtils.parse(authorization);
-            } finally {
-                //3.放行进来的url，不用判断用户状态什么的，直接放行，将userContext写到header里
-                assert parse != null;
-                userContext = parse.get("json").asString();
-                if (StrUtil.isNotBlank(userContext)) {
-                    setHeaderInfo(build, request, userContext, HttpHeaders.writableHttpHeaders(request.getHeaders()));
+            if (!JwtUtils.isTokenExpired(authorization)) {
+                Map<String, Claim> parse = JwtUtils.parse(authorization);
+                try {
+                    parse = JwtUtils.parse(authorization);
+                } finally {
+                    //3.放行进来的url，不用判断用户状态什么的，直接放行，将userContext写到header里
+                    if (ObjectUtil.isNotNull(parse)) {
+                        userContext = parse.get("json").asString();
+                        if (StrUtil.isNotBlank(userContext)) {
+                            setHeaderInfo(build, request, userContext, HttpHeaders.writableHttpHeaders(request.getHeaders()));
+                        }
+                    }
                 }
             }
         }
 
-        //4.判断是否开启慢log打印
+        //4.判断是否开启慢log打印，超过界限值默认1000毫秒
         return chain.filter(build).then(Mono.fromRunnable(() -> {
             if (gatewayConfig.getSlowEnable()) {
                 Long startTime = exchange.getAttribute(Constants.START_TIME);

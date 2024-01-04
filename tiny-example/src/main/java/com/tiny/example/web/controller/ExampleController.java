@@ -1,16 +1,20 @@
 package com.tiny.example.web.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
 import com.tiny.api.pay.client.PayFeignClient;
+import com.tiny.example.enums.ExampleEventEnum;
+import com.tiny.example.manager.bean.ExampleEvent;
+import com.tiny.example.web.dto.ExampleDTO;
 import com.tiny.framework.core.result.BaseController;
 import com.tiny.framework.core.result.RespResult;
 import com.tiny.framework.core.thread.ThreadWrap;
 import com.tiny.framework.core.user.UserContext;
-import com.tiny.example.enums.ExampleEventEnum;
-import com.tiny.example.manager.bean.ExampleEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +41,12 @@ public class ExampleController extends BaseController {
     @RequestMapping(value = "/traceId", method = RequestMethod.GET, name = "测试traceId透传")
     public RespResult traceId() {
         return RespResult.success("Hello tiny spring-cloud");
+    }
+
+    @RequestMapping(value = "/testRequestBody", method = RequestMethod.POST, name = "测试@RequestBody")
+    public RespResult testRequestBody(ExampleDTO exampleDTO) {
+        String jsonStr = JSONUtil.toJsonStr(exampleDTO);
+        return RespResult.success(jsonStr);
     }
 
     @RequestMapping(value = "/testLog", method = RequestMethod.GET, name = "测试异步log")
@@ -80,5 +90,6 @@ public class ExampleController extends BaseController {
 
         return RespResult.success("finalTraceId");
     }
+
 
 }

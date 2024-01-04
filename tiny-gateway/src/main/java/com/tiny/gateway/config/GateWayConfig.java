@@ -38,12 +38,12 @@ public class GateWayConfig {
     private String[] ipBlackList;
 
     /**
-     * 网关配置，慢接展示开关，默认打开
+     * 网关配置，慢接展示开关，默认关闭
      */
-    private Boolean slowEnable = true;
+    private Boolean slowEnable = false;
 
     /**
-     * 网关配置，慢接口毫秒界限值，默认1000
+     * 网关配置，慢接口毫秒界限值，默认1000ms
      */
     private Long slowMillisecond = 1000L;
 

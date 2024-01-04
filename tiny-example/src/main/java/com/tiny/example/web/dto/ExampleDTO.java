@@ -19,5 +19,8 @@ import java.util.Date;
 @Builder
 @Accessors(chain = true)
 public class ExampleDTO {
+
     private Date createTime;
+
+    private String id;
 }
