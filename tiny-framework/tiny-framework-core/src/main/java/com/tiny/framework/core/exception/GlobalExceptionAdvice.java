@@ -15,7 +15,7 @@ import java.util.List;
  * @description 全局异常拦截器
  * @date: 2023/11/02 09:46
  */
-@Slf4j(topic = "GlobalExceptionAdvice")
+@Slf4j(topic = "tiny-framework-starter ==> GlobalExceptionAdvice")
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
 

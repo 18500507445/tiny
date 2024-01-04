@@ -42,5 +42,11 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- 德鲁伊连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

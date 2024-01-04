@@ -23,7 +23,7 @@ import java.util.TreeMap;
  * @date: 2023/09/20 11:16
  */
 @Component
-@Slf4j(topic = "TraceFilter")
+@Slf4j(topic = "tiny-framework-starter ==> TraceFilter")
 public class TraceFilter extends GenericFilterBean {
 
     @Override

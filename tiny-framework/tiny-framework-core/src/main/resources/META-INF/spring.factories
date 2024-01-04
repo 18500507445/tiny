@@ -3,4 +3,5 @@ com.tiny.framework.core.exception.GlobalExceptionAdvice,\
 com.tiny.framework.core.trace.TraceConfig,\
 com.tiny.framework.core.trace.TraceFilter,\
 com.tiny.framework.core.user.UserConfig,\
-com.tiny.framework.core.user.UserFilter
+com.tiny.framework.core.user.UserFilter,\
+com.tiny.framework.core.interceptor.ResponseAdvice

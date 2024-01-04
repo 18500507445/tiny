@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
-            <artifactId>tiny-framework-cloud</artifactId>
+            <artifactId>tiny-common</artifactId>
             <exclusions>
                 <!-- 网关不需要boot-web排除掉 -->
                 <exclusion>
@@ -25,10 +25,10 @@
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
 
-                <!-- 不需要德鲁伊连接池 -->
+                <!-- 不需要generator模块 -->
                 <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>druid-spring-boot-starter</artifactId>
+                    <groupId>com.tiny</groupId>
+                    <artifactId>tiny-framework-generator</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
