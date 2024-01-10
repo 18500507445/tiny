@@ -5,8 +5,8 @@
     <property name="log.path" value="${logPath}" />
     <property name="log.maxHistory" value="15"/>
 
-    <property name="log.pattern" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%X{traceId}] [spanId:%X{spanId}] %-5level %logger{20} - [%method,%line] - %msg%n"/>
-    <property name="log.pattern.async" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%X{traceId}] [spanId:%X{spanId}] %-5level %logger{20} - %msg%n"/>
+    <property name="log.pattern" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%red(%X{traceId})] [spanId:%red(%X{spanId})] %-5level %logger{20} - [%method,%line] - %msg%n"/>
+    <property name="log.pattern.async" value="%d{MM-dd HH:mm:ss-SSS} [%t] [traceId:%red(%X{traceId})] [spanId:%red(%X{spanId})] %-5level %logger{20} - %msg%n"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
