@@ -49,8 +49,8 @@ public class TraceFilter extends GenericFilterBean {
                 this.errorResponse(resp, "POST请求，后端开启@RequestBody注解，请传入参数进行json对象进行字符串处理，例如h5的JSON.stringify");
             }
         } finally {
-            TraceContext.removeTrace();
             log.info("请求apiName：{}：耗时：{} ms", request.getRequestURI(), System.currentTimeMillis() - start);
+            TraceContext.removeTrace();
         }
     }
 
