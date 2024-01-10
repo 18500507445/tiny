@@ -1,5 +1,7 @@
 package com.tiny.example.manager.listener;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
 import com.alibaba.fastjson2.JSONObject;
 import com.tiny.example.config.RabbitConfig;
 import com.tiny.example.enums.ExampleEventEnum;
@@ -32,11 +34,12 @@ public class ExampleEventListener {
     @Async("getAsyncExecutor")
     @EventListener(condition = "#exampleEvent.exampleEventEnum.id == 1")
     public void oneEvent(ExampleEvent<ExampleEvent.MessageDO> exampleEvent) {
+        TimeInterval timer = DateUtil.timer();
         ExampleEvent.MessageDO messageDO = exampleEvent.getT();
         try {
             rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_DIRECT, RabbitConfig.ROUTING_KEY, messageDO);
         } finally {
-            log.error("事件，名称：{}，事件：{}", exampleEvent.getExampleEventEnum().getName(), JSONObject.toJSONString(messageDO));
+            log.error("事件：{}，oneEvent：{}，耗时：{} ms", exampleEvent.getExampleEventEnum().getName(), JSONObject.toJSONString(messageDO), timer.interval());
         }
     }
 
