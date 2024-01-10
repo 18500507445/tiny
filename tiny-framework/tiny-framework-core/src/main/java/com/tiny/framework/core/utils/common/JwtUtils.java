@@ -22,9 +22,9 @@ import java.util.Map;
 public final class JwtUtils {
 
     /**
-     * 缓存时间 1天
+     * 缓存时间 365天
      */
-    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 365L * 24 * 60 * 60 * 1000;
 
     public static final String SECRET = "tiny";
 

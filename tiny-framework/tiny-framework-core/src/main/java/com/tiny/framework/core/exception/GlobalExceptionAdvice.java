@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author: wzh
- * @description 全局异常拦截器
+ * @description: 全局异常拦截器
  * @date: 2023/11/02 09:46
  */
 @Slf4j(topic = "tiny-framework-starter ==> GlobalExceptionAdvice")
@@ -20,14 +20,10 @@ import java.util.List;
 public class GlobalExceptionAdvice {
 
     @Setter
-    private static boolean runtimeLog = false;
-
-    @Setter
-    private static boolean paramLog = false;
+    private static boolean businessLog = false;
 
     @Setter
     private static boolean bindLog = false;
-
 
     /**
      * 拦截的validator异常
@@ -47,24 +43,14 @@ public class GlobalExceptionAdvice {
     }
 
     /**
-     * 自定义参数异常
+     * 业务异常
      */
-    @ExceptionHandler(ParamException.class)
-    public RespResult paramException(ParamException e) {
-        if (paramLog) {
-            log.error("paramException :{}", e.getMessage(), e);
+    @ExceptionHandler(BusinessException.class)
+    public RespResult businessException(BusinessException e) {
+        if (businessLog) {
+            log.error("businessException :{}", e.getMessage(), e);
         }
-        return RespResult.error(e.getMessage());
+        return RespResult.error(e.getMessage(), null);
     }
 
-    /**
-     * 运行异常
-     */
-    @ExceptionHandler(RuntimeException.class)
-    public RespResult runtimeException(RuntimeException e) {
-        if (runtimeLog) {
-            log.error("runtimeException :{}", e.getMessage(), e);
-        }
-        return RespResult.error(e.getMessage());
-    }
 }

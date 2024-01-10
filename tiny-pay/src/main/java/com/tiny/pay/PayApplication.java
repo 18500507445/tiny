@@ -28,8 +28,8 @@ public class PayApplication {
         System.setProperty("pagehelper.banner", "false");
         SpringApplication.run(PayApplication.class, args);
 
-        GlobalExceptionAdvice.setRuntimeLog(true);
-        log.warn("【pay】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
+        GlobalExceptionAdvice.setBusinessLog(true);
+        log.warn("【pay】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
 
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {

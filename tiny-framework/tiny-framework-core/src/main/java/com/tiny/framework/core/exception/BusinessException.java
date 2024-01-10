@@ -8,27 +8,27 @@ import lombok.NoArgsConstructor;
  * @date: 2023/08/29 14:33
  */
 @NoArgsConstructor
-public class ParamException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public ParamException(String message) {
+    public BusinessException(String message) {
         super(message);
     }
 
-    public ParamException(int code, String message) {
+    public BusinessException(int code, String message) {
         super(message);
     }
 
-    public ParamException(Throwable cause) {
+    public BusinessException(Throwable cause) {
         super(cause);
     }
 
-    public ParamException(String message, Throwable cause) {
+    public BusinessException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ParamException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

@@ -28,8 +28,8 @@ public class OrderApplication {
         System.setProperty("pagehelper.banner", "false");
         SpringApplication.run(OrderApplication.class, args);
 
-        GlobalExceptionAdvice.setRuntimeLog(true);
-        log.warn("【order】模块，开启GlobalExceptionAdvice ==> RuntimeException errorLog");
+        GlobalExceptionAdvice.setBusinessLog(true);
+        log.warn("【order】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
 
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {

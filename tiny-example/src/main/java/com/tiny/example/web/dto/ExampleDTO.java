@@ -20,7 +20,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ExampleDTO {
 
-    private Date createTime;
-
     private String id;
+
+    private String name;
 }

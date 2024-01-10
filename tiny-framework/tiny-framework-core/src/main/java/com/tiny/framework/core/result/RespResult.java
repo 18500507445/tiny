@@ -255,7 +255,7 @@ public class RespResult extends HashMap<String, Object> {
      * @return 警告消息
      */
     public static RespResult error(String msg) {
-        return RespResult.error(Type.ERROR.value, msg);
+        return RespResult.error(msg, null);
     }
 
     /**

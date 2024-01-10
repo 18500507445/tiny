@@ -6,6 +6,7 @@ import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.example.enums.ExampleEventEnum;
 import com.tiny.example.manager.bean.ExampleEvent;
 import com.tiny.example.web.dto.ExampleDTO;
+import com.tiny.framework.core.exception.BusinessException;
 import com.tiny.framework.core.result.BaseController;
 import com.tiny.framework.core.result.RespResult;
 import com.tiny.framework.core.thread.ThreadWrap;
@@ -43,10 +44,14 @@ public class ExampleController extends BaseController {
         return RespResult.success("Hello tiny spring-cloud");
     }
 
+    @RequestMapping(value = "/testException", method = RequestMethod.GET, name = "测试运行异常")
+    public RespResult testException() {
+        throw new BusinessException("测试运行异常");
+    }
+
     @RequestMapping(value = "/testRequestBody", method = RequestMethod.POST, name = "测试@RequestBody")
-    public RespResult testRequestBody(ExampleDTO exampleDTO) {
-        String jsonStr = JSONUtil.toJsonStr(exampleDTO);
-        return RespResult.success(jsonStr);
+    public RespResult testRequestBody(@RequestBody ExampleDTO exampleDTO) {
+        return RespResult.success(exampleDTO);
     }
 
     @RequestMapping(value = "/testLog", method = RequestMethod.GET, name = "测试异步log")

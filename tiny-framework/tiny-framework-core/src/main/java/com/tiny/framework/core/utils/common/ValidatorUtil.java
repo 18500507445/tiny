@@ -1,7 +1,7 @@
 package com.tiny.framework.core.utils.common;
 
 
-import com.tiny.framework.core.exception.ParamException;
+import com.tiny.framework.core.exception.BusinessException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -25,14 +25,14 @@ public final class ValidatorUtil {
         VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
-    public static void validate(Object object, Class<?>... groups) throws ParamException {
+    public static void validate(Object object, Class<?>... groups) throws BusinessException {
         Set<ConstraintViolation<Object>> constraintViolations = VALIDATOR.validate(object, groups);
         if (!constraintViolations.isEmpty()) {
             StringBuilder msg = new StringBuilder();
             for (ConstraintViolation<Object> constraint : constraintViolations) {
                 msg.append(constraint.getMessage()).append(";");
             }
-            throw new ParamException(1000, msg.toString());
+            throw new BusinessException(1000, msg.toString());
         }
     }
 

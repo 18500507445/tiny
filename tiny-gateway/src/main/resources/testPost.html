@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+    function success() {
+        var data = JSON.parse(this.responseText);
+        console.log(data);
+        alert(data.data);
+    }
+
+    function error(err) {
+        console.log('Error Occurred :', err);
+    }
+
+    function testPost(){
+        var xhr = new XMLHttpRequest();
+        xhr.onload = success;
+        xhr.onerror = error;
+        xhr.open("POST", "http://localhost:8080/tiny-example/api/testRequestBody");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        xhr.setRequestHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqc29uIjoie1wibmFtZVwiOlwid3poXCIsXCJpZFwiOlwiMVwifSIsImV4cCI6MTczNjIxOTY0NCwiaWF0IjoxNzA0NjgzNjQ0fQ.x9-tK5tfelSzICY0gWnCqELu2aoXOesYzlbFZ33thN0");
+        // xhr.send(JSON.stringify({id: "1", name: "2"}));
+        xhr.send({id: "1", name: "2"});
+    }
+</script>
+
+<body>
+<input type="button" value="测试Post" onclick="testPost()">
+</body>
+
+</html>
