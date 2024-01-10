@@ -46,6 +46,10 @@ public final class RequestParamsUtil {
         String[] params = param.split("&");
         for (String s : params) {
             int index = s.indexOf('=');
+            //处理url&id=123，请求入参 不加=123的情况
+            if (0 > index) {
+                continue;
+            }
             result.put(s.substring(0, index), s.substring(index + 1));
         }
         return result;

@@ -1,8 +1,11 @@
 package com.tiny.framework.core.trace;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONException;
 import com.alibaba.fastjson2.JSONObject;
 import com.tiny.framework.core.request.RequestWrapper;
+import com.tiny.framework.core.result.RespResult;
 import com.tiny.framework.core.utils.common.RequestParamsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -40,6 +44,10 @@ public class TraceFilter extends GenericFilterBean {
             TraceContext.setCurrentTrace(traceId);
             RequestWrapper requestWrapper = printAccessLog(request);
             filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
+        } catch (Exception e) {
+            if (e instanceof JSONException) {
+                this.errorResponse(resp, "POST请求，后端开启@RequestBody注解，请传入参数进行json对象进行字符串处理，例如h5的JSON.stringify");
+            }
         } finally {
             TraceContext.removeTrace();
             log.info("请求apiName：{}：耗时：{} ms", request.getRequestURI(), System.currentTimeMillis() - start);
@@ -87,5 +95,19 @@ public class TraceFilter extends GenericFilterBean {
             log.error(e.getMessage(), e);
         }
         return body;
+    }
+
+    /**
+     * 响应错误输出
+     */
+    private void errorResponse(ServletResponse resp, String msg) throws IOException {
+        HttpServletResponse httpResponse = (HttpServletResponse) resp;
+        httpResponse.setStatus(HttpServletResponse.SC_OK);
+        httpResponse.setContentType("application/json");
+        // 设置响应的字符编码为 UTF-8
+        httpResponse.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        RespResult error = RespResult.error(msg);
+        httpResponse.getWriter().write(JSON.toJSONString(error));
+        httpResponse.getWriter().flush();
     }
 }
