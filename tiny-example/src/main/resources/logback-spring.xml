@@ -44,7 +44,7 @@
         <file>${log.path}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/debug.log</fileNamePattern>
+            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/warn.log</fileNamePattern>
             <!-- 日志最大的历史 -->
             <maxHistory>${log.maxHistory}</maxHistory>
         </rollingPolicy>

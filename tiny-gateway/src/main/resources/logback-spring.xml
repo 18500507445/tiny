@@ -35,7 +35,7 @@
     <appender name="file_warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/debug.log</fileNamePattern>
+            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/warn.log</fileNamePattern>
             <maxHistory>${log.maxHistory}</maxHistory>
         </rollingPolicy>
         <encoder>
