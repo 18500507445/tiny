@@ -31,8 +31,8 @@
         <pagehelper.boot.version>2.0.0</pagehelper.boot.version>
 
         <!-- 工具版本 -->
-        <fastjson.version>2.0.44</fastjson.version>
-        <hutool.version>5.8.24</hutool.version>
+        <fastjson.version>2.0.45</fastjson.version>
+        <hutool.version>5.8.25</hutool.version>
         <guava.version>33.0.0-jre</guava.version>
         <guava.retry.version>2.0.0</guava.retry.version>
         <xxljob.version>2.4.0</xxljob.version>

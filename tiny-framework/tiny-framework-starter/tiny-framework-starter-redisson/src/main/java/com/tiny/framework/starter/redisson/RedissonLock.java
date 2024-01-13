@@ -1,13 +1,13 @@
 package com.tiny.framework.starter.redisson;
 
+import cn.hutool.core.util.ArrayUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RLock;
-import org.redisson.api.RReadWriteLock;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,40 +24,62 @@ public final class RedissonLock {
     @Resource
     private RedissonClient redissonClient;
 
-    /**
-     * 加锁操作
-     *
-     * @return boolean
-     */
-    public boolean lock(LockType lockType, String lockName, long expireSeconds) {
+    private RLock getLock(LockType lockType, String key) {
         RLock rLock;
         switch (lockType) {
             case FAIR:
-                rLock = redissonClient.getFairLock(lockName);
+                rLock = redissonClient.getFairLock(key);
                 break;
             case READ:
-                RReadWriteLock readWriteLock = redissonClient.getReadWriteLock(lockName);
+                RReadWriteLock readWriteLock = redissonClient.getReadWriteLock(key);
                 rLock = readWriteLock.readLock();
                 break;
             case WRITE:
-                RReadWriteLock rwLock = redissonClient.getReadWriteLock(lockName);
+                RReadWriteLock rwLock = redissonClient.getReadWriteLock(key);
                 rLock = rwLock.writeLock();
                 break;
             default:
                 //默认可重入锁
-                rLock = redissonClient.getLock(lockName);
+                rLock = redissonClient.getLock(key);
         }
-        boolean flag;
+        return rLock;
+    }
+
+    /**
+     * 加锁操作，时间单位：秒
+     *
+     * @return boolean
+     */
+    public boolean lock(LockType lockType, String key, long expireSeconds) {
+        boolean flag = false;
+        RLock rLock = getLock(lockType, key);
         try {
             flag = rLock.tryLock(0, expireSeconds, TimeUnit.SECONDS);
-            if (flag) {
-                log.info("获取Redisson分布式锁[成功]，lockName={}", lockName);
-            } else {
-                log.info("获取Redisson分布式锁[失败]，lockName={}", lockName);
-            }
         } catch (InterruptedException e) {
-            log.error("获取Redisson分布式锁[异常]，lockName=" + lockName, e);
-            return false;
+            log.error("Redisson分布式锁【异常】，key = " + key, e);
+        } finally {
+            if (flag) {
+                log.info("Redisson分布式锁【成功】，key = {}", key);
+            } else {
+                log.info("Redisson分布式锁【失败】，key = {}", key);
+            }
+        }
+        return flag;
+    }
+
+    public boolean asyncLock(LockType lockType, String key, long expireSeconds) {
+        boolean flag = false;
+        RLock rLock = getLock(lockType, key);
+        try {
+            flag = rLock.tryLockAsync(0, expireSeconds, TimeUnit.SECONDS).get();
+        } catch (Exception e) {
+            log.error("Redisson分布式锁【异步加锁异常】，key = " + key, e);
+        } finally {
+            if (flag) {
+                log.info("Redisson分布式锁【异步加锁成功】，key = {}", key);
+            } else {
+                log.info("Redisson分布式锁【异步加锁失败】，key = {}", key);
+            }
         }
         return flag;
     }
@@ -65,11 +87,46 @@ public final class RedissonLock {
     /**
      * 解锁
      *
-     * @param lockName 锁名称
+     * @param key 锁名称
      */
-    public void release(String lockName) {
-        log.info("获取Redisson分布式锁[解锁]，lockName={}", lockName);
-        redissonClient.getLock(lockName).unlock();
+    public void release(String key) {
+        log.info("Redisson分布式锁【解锁】，key = {}", key);
+        redissonClient.getLock(key).unlock();
+    }
+
+    /**
+     * 异步解锁
+     *
+     * @param key
+     */
+    public void asyncRelease(String key, Long... threadId) {
+        log.info("Redisson分布式锁【异步解锁】，key = {}", key);
+        if (ArrayUtil.isNotEmpty(threadId)) {
+            redissonClient.getLock(key).unlockAsync(threadId[0]);
+        } else {
+            redissonClient.getLock(key).unlockAsync();
+        }
+    }
+
+    /**
+     * 查询是否有锁
+     */
+    public boolean isLocked(String key) {
+        return redissonClient.getLock(key).isLocked();
+    }
+
+    /**
+     * 查询是否有异步锁
+     */
+    public boolean isAsyncLocked(String lockName) {
+        Boolean isLocked = Boolean.FALSE;
+        RFuture<Boolean> lockedAsync = redissonClient.getLock(lockName).isLockedAsync();
+        try {
+            isLocked = lockedAsync.get();
+        } catch (InterruptedException | ExecutionException e) {
+            log.info("Redisson分布式锁【是否有异步锁失败】", e);
+        }
+        return isLocked;
     }
 
     /**
@@ -85,10 +142,13 @@ public final class RedissonLock {
     }
 
     /**
-     * 查询是否有锁
+     * 获取过期时间
+     *
+     * @param key
      */
-    public boolean isLocked(String lockName) {
-        return redissonClient.getLock(lockName).isLocked();
+    public Long getExpire(String key) {
+        RKeys rKeys = redissonClient.getKeys();
+        return rKeys.remainTimeToLive(key);
     }
 
 }
