@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * @author: wzh
- * @description 返回实体类
+ * @description: 返回实体类
  * @date: 2023/09/21 14:33
  */
 @EqualsAndHashCode(callSuper = true)

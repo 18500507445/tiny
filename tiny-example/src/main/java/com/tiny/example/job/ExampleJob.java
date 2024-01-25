@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author: wzh
- * @description 样例job
+ * @description: 样例job
  * @date: 2023/11/29 15:43
  */
 @Slf4j(topic = "ExampleJob")

@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * @author: wzh
- * @description 网关自定义空白页
+ * @description: 网关自定义空白页
  * @date: 2023/08/29 16:24
  */
 @Component

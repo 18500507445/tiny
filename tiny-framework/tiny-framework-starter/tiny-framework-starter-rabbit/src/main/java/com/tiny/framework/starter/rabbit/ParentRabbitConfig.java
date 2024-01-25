@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Primary;
 
 /**
  * @author: wzh
- * @description 父类Rabbit配置类
+ * @description: 父类Rabbit配置类
  * <p>
  * @date: 2023/12/14 13:43
  */

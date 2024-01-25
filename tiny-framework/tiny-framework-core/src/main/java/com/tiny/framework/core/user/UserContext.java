@@ -7,7 +7,7 @@ import org.springframework.core.NamedThreadLocal;
 
 /**
  * @author: wzh
- * @description 用户上下文
+ * @description: 用户上下文
  * @date: 2023/10/12 13:43
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

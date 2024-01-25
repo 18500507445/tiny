@@ -6,6 +6,7 @@
 spring:
   datasource:
     dynamic:
+      #主数据源
       primary: master
       strict: false
       datasource:
@@ -14,6 +15,22 @@ spring:
           password: password
           url: jdbc:mysql://xx.xxx.xxx.xxx:3306/study?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
           driver-class-name: com.mysql.cj.jdbc.Driver
+          #设置连接池参数
+          druid:
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+            maxWait: 6000
+            timeBetweenEvictionRunsMillis: 60000
+            minEvictableIdleTimeMillis: 300000
+            validationQuery: SELECT 1 FROM DUAL
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            poolPreparedStatements: true
+            maxPoolPreparedStatementPerConnectionSize: 20
+            filters: stat,wall
+            connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
         second:
           username: username
           password: password

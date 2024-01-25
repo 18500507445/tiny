@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author: wzh
- * @description xxlJob切面
+ * @description: xxlJob切面
  * @date: 2023/11/30 19:12
  */
 @Aspect

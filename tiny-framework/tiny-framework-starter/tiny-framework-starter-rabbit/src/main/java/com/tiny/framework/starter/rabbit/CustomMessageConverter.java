@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author: wzh
- * @description 自定义消息转换器 + 透传TraceId
+ * @description: 自定义消息转换器 + 透传TraceId
  * @date: 2023/11/30 11:18
  */
 @Component

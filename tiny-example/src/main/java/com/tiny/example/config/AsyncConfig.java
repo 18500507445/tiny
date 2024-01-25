@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author: wzh
- * @description 异步注解配置类
+ * @description: 异步注解配置类
  * @date: 2023/12/24 20:13
  */
 @Configuration

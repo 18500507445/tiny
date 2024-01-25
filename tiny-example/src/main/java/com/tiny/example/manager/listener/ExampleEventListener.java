@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author: wzh
- * @description 样例时间监听
+ * @description: 样例时间监听
  * @date: 2023/12/25 13:17
  */
 @Slf4j(topic = "ExampleEventListener")

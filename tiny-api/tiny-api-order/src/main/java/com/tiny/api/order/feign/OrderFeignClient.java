@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author: wzh
- * @description order-api-feign
+ * @description: order-api-feign
  * @date: 2023/10/11 19:18
  */
 @FeignClient(name = "tiny-order", path = "tiny-order/api")

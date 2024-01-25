@@ -5,7 +5,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 /**
  * @author: wzh
- * @description 样例测试类
+ * @description: 样例测试类
  * @date: 2023/08/29 14:22
  */
 @ActiveProfiles("local")

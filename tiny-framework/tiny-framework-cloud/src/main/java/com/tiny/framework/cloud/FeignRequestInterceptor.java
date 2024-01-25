@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * @author: wzh
- * @description 全局openFeign拦截器，处理traceId
+ * @description: 全局openFeign拦截器，处理traceId
  * @date: 2023/09/25 17:10
  */
 @Slf4j(topic = "FeignRequestInterceptor")

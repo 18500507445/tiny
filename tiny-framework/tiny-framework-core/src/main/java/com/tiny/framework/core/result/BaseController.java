@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author: wzh
- * @description 通用Controller
+ * @description: 通用Controller
  * @date: 2023/08/29 10:56
  */
 @RefreshScope

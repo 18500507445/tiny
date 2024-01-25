@@ -39,7 +39,6 @@ logback，spring默认集成。命名规范：logback-spring.xml最后加载的�
 * error和warn采取同步打印，开启`方法`和`行号`
 * debug没有进行配置，直接丢弃，不进行打印
 
-
 ### 全局异常捕获，方法中抛出运行异常GlobalExceptionAdvice进行捕获
 如果需要打印error日志，需要手动开启，最好在启动类进行初始化
 ~~~java

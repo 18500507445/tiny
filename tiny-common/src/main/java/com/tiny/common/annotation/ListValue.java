@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * @author: wzh
- * @description 只能提交指定的值, 自定义校验
+ * @description: 只能提交指定的值, 自定义校验
  * @date: 2023/01/03 10:15
  */
 @Documented

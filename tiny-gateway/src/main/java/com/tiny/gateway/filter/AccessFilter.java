@@ -38,7 +38,7 @@ import java.util.function.Consumer;
 
 /**
  * @author: wzh
- * @description 网关全局过滤器，例如token处理，白名单处理
+ * @description: 网关全局过滤器，例如token处理，白名单处理
  * @date: 2023/08/29 14:20
  */
 @Component

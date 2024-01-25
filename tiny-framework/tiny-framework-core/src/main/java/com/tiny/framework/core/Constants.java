@@ -5,7 +5,7 @@ import cn.hutool.http.ContentType;
 
 /**
  * @author: wzh
- * @description 通用常量类
+ * @description: 通用常量类
  * @date: 2023/08/29 11:02
  */
 public class Constants {

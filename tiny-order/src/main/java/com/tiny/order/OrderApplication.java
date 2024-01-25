@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @author: wzh
- * @description 订单应用启动类
+ * @description: 订单应用启动类
  * @date: 2023/10/11 19:12
  */
 @Slf4j(topic = "OrderApplication")

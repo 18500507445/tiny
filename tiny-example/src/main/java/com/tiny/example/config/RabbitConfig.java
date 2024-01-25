@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author: wzh
- * @description rabbit配置类
+ * @description: rabbit配置类
  * @date: 2023/11/20 10:41
  */
 @Configuration

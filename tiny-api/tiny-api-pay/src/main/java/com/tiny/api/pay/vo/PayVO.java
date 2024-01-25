@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @author: wzh
- * @description 支付订单VO
+ * @description: 支付订单VO
  * @date: 2023/10/11 19:47
  */
 @Data

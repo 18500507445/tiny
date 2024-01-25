@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /**
  * @author: wzh
- * @description example项目生成器
+ * @description: example项目生成器
  * @date: 2023/08/25 17:40
  */
 @ActiveProfiles("local")

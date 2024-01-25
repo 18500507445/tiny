@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 
 /**
  * @author: wzh
- * @description 渠道事件通用类
+ * @description: 渠道事件通用类
  * @date: 2023/11/21 17:03
  */
 @Getter

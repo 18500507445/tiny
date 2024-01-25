@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @author: wzh
- * @description 样例工程启动类
+ * @description: 样例工程启动类
  * @date: 2023/08/29 14:45
  */
 @Slf4j(topic = "ExampleApplication")

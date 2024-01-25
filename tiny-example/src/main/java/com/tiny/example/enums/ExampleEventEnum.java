@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @author: wzh
- * @description 样例事件枚举类
+ * @description: 样例事件枚举类
  * @date: 2023/11/29 15:40
  */
 @Getter

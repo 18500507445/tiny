@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author: wzh
- * @description redisson自动装配类
+ * @description: redisson自动装配类
  * @date: 2023/11/02 15:14
  */
 @Slf4j(topic = "tiny-framework-starter ==> RedissonAutoConfiguration")

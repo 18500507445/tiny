@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * @author: wzh
- * @description rabbitMQ监听
+ * @description: rabbitMQ监听
  * @date: 2023/12/25 13:18
  */
 @Component

@@ -4,7 +4,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author: wzh
- * @description 参数校验异常
+ * @description: 参数校验异常
  * @date: 2023/08/29 14:33
  */
 @NoArgsConstructor

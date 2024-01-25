@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * @author: wzh
- * @description 样例Controller
+ * @description: 样例Controller
  * <p>
  * todo「/tiny-example/」可以放到配置文件中设置：server.servlet.context-path:/tiny-example/
  * @date: 2023/08/29 12:41

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author: wzh
- * @description 全局线程池配置类
+ * @description: 全局线程池配置类
  * @date: 2023/12/24 20:17
  */
 @Configuration

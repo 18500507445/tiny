@@ -14,7 +14,7 @@ import java.util.Collections;
 
 /**
  * @author: wzh
- * @description 代码生成器抽象类
+ * @description: 代码生成器抽象类
  * @date: 2023/08/29 17:31
  */
 public abstract class AbstractGenerator {

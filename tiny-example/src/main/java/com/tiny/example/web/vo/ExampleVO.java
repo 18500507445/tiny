@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * @author: wzh
- * @description 样例返回VO
+ * @description: 样例返回VO
  * @date: 2023/11/29 15:35
  */
 @Data

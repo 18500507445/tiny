@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author: wzh
- * @description 网关配置类
+ * @description: 网关配置类
  * @date: 2023/09/25 13:42
  */
 
