@@ -1,7 +1,6 @@
 package com.tiny.example.web.controller;
 
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.json.JSONUtil;
 import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.example.enums.ExampleEventEnum;
 import com.tiny.example.manager.bean.ExampleEvent;
@@ -14,7 +13,6 @@ import com.tiny.framework.core.user.UserContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

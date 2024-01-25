@@ -24,11 +24,9 @@
         <spring.cloud.alibaba.version>2021.0.5.0</spring.cloud.alibaba.version>
 
         <!-- 数据库 -->
-        <mybatis.plus.version>3.5.3</mybatis.plus.version>
-        <dynamic.version>4.1.2</dynamic.version>
+        <mybatis.plus.version>3.5.5</mybatis.plus.version>
+        <dynamic.version>4.3.0</dynamic.version>
         <druid.version>1.2.20</druid.version>
-        <!-- 兼容到spring-boot-starter 2.7.17版本，不建议升级了 -->
-        <pagehelper.boot.version>2.0.0</pagehelper.boot.version>
 
         <!-- 工具版本 -->
         <fastjson.version>2.0.45</fastjson.version>
@@ -38,12 +36,14 @@
         <xxljob.version>2.4.0</xxljob.version>
         <easyexcel.verson>3.3.3</easyexcel.verson>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <jwt.version>4.4.0</jwt.version>
 
+        <!-- 兼容到spring-boot-starter 2.7.18版本，不建议升级了 -->
+        <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <!-- 解决loadbalancer缓存问题，jdk1.8版本最高2.9.3，不建议升级 -->
         <caffeine.verson>2.9.3</caffeine.verson>
         <!-- 3.0之前最后一个版本，不建议升级 -->
         <redisson.version>3.18.0</redisson.version>
-        <jwt.version>4.4.0</jwt.version>
 
     </properties>
 

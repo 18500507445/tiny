@@ -28,9 +28,11 @@ public @interface ListValue {
 
     Class<? extends Payload>[] payload() default {};
 
-    int[] intValues() default {}; //数值数组，提交的值只能是数组里面
+    //数值数组，提交的值只能是数组里面
+    int[] intValues() default {};
 
-    String[] strValues() default {}; //字符串数组，提交的值只能是数组里面
+    //字符串数组，提交的值只能是数组里面
+    String[] strValues() default {};
 
     class ListValueConstraintValidator implements ConstraintValidator<ListValue, Integer> {
 

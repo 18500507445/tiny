@@ -45,8 +45,8 @@ public class GateWayErrorPage extends AbstractErrorWebExceptionHandler {
     private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         // 获取异常信息
         Map<String, Object> map = getErrorAttributes(request, ErrorAttributeOptions.defaults());
-        // 构建响应
-        return ServerResponse.status(MapUtil.getInt(map, "status"))   // 状态码
+        // 构建响应，状态码
+        return ServerResponse.status(MapUtil.getInt(map, "status"))
                 // 以JSON格式显示响应
                 .contentType(MediaType.APPLICATION_JSON)
                 // 响应体(响应内容，包装RespResult)
