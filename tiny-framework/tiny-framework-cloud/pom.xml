@@ -73,7 +73,7 @@
             <artifactId>feign-okhttp</artifactId>
         </dependency>
 
-        <!-- 解决loadbalancer缓存问题，jdk1.8版本最高2.9.3不建议升级 -->
+        <!-- 解决loadbalancer缓存问题 -->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>

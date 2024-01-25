@@ -231,13 +231,6 @@
                 <version>${easyexcel.verson}</version>
             </dependency>
 
-            <!-- caffeine -->
-            <dependency>
-                <groupId>com.github.ben-manes.caffeine</groupId>
-                <artifactId>caffeine</artifactId>
-                <version>${caffeine.verson}</version>
-            </dependency>
-
             <!-- redisson -->
             <dependency>
                 <groupId>org.redisson</groupId>
