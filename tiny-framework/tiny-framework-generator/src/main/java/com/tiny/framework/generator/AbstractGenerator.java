@@ -1,5 +1,7 @@
 package com.tiny.framework.generator;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.system.SystemUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
@@ -18,6 +20,11 @@ import java.util.Collections;
  * @date: 2023/08/29 17:31
  */
 public abstract class AbstractGenerator {
+
+    /**
+     * windows电脑需要填写作者，否则执行命令获取不到
+     */
+    protected abstract String getAuthor();
 
     /**
      * 获取数据库连接
@@ -63,7 +70,13 @@ public abstract class AbstractGenerator {
      * @see <a href="https://baomidou.com/pages/981406/#%E7%AD%96%E7%95%A5%E9%85%8D%E7%BD%AE-strategyconfig">官方配置文档</a>
      */
     protected void mybatisPlus() {
-        String userName = executeLinux("git config user.name");
+        String userName;
+        //根据系统判断，获取用户名
+        if (isMac()) {
+            userName = executeLinux("git config user.name");
+        } else {
+            userName = getAuthor();
+        }
         FastAutoGenerator.create(getUrl(), getUserName(), getPassword())
                 .globalConfig(builder -> builder
                         // 设置作者
@@ -134,6 +147,14 @@ public abstract class AbstractGenerator {
                 // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .templateEngine(new FreemarkerTemplateEngine())
                 .execute();
+    }
+
+    /**
+     * 是mac系统，还是windows系统
+     */
+    private static boolean isMac() {
+        String osInfo = SystemUtil.getOsInfo().getName();
+        return StrUtil.containsAnyIgnoreCase(osInfo, "mac");
     }
 
     private static String executeLinux(String command) {

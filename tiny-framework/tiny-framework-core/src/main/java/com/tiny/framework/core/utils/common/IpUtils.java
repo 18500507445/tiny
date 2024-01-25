@@ -213,7 +213,7 @@ public final class IpUtils {
      */
     public static String getInternetIp() {
         TimeInterval timer = DateUtil.timer();
-        String result = "";
+        String result = "00";
         String line;
         String osInfo = SystemUtil.getOsInfo().getName();
         try {

@@ -19,6 +19,11 @@ import java.util.Objects;
 public class ExampleGeneratorTest extends AbstractGenerator {
 
     @Override
+    protected String getAuthor() {
+        return null;
+    }
+
+    @Override
     protected String getUrl() {
         return "jdbc:mysql://xx.xxx.xxx.xxx:3306/xxx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8";
     }
