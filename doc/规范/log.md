@@ -64,4 +64,10 @@ throw new RuntimeException("当前sku没有查询到数据");
 }
 ~~~
 
+### 全局响应log打印（ResponseAdvice类）
+~~~java
+//是否开启响应log
+@Value("${spring.response.enableLog:false}")
+private boolean enableLog;
+~~~
 
