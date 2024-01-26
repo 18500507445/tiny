@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * @author: wzh
@@ -23,10 +24,20 @@ public class RabbitConfig {
      * （1）添加消息转换器
      */
     @Bean
+    @Order(1)
     public RabbitTemplate rabbitTemplate(@Qualifier("primaryConnectionFactory") ConnectionFactory primaryConnectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(primaryConnectionFactory);
         rabbitTemplate.setMessageConverter(new CustomMessageConverter());
         return rabbitTemplate;
+    }
+
+    @Bean
+    @Order(2)
+    public RabbitAdmin rabbitAdmin(@Qualifier("rabbitTemplate") RabbitTemplate rabbitTemplate) {
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(rabbitTemplate);
+        //开启自动创建队列
+        rabbitAdmin.setAutoStartup(true);
+        return rabbitAdmin;
     }
 
     /**
@@ -34,20 +45,12 @@ public class RabbitConfig {
      * （1）添加消息转换器MessageConverter
      */
     @Bean
+    @Order(3)
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(@Qualifier("primaryConnectionFactory") ConnectionFactory primaryConnectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(primaryConnectionFactory);
         factory.setMessageConverter(new CustomMessageConverter());
         return factory;
-    }
-
-
-    @Bean
-    public RabbitAdmin rabbitAdmin(@Qualifier("rabbitTemplate") RabbitTemplate rabbitTemplate) {
-        RabbitAdmin rabbitAdmin = new RabbitAdmin(rabbitTemplate);
-        //开启自动创建队列
-        rabbitAdmin.setAutoStartup(true);
-        return rabbitAdmin;
     }
 
     //直连交换机(自带)

@@ -69,7 +69,6 @@ public class ExampleController extends BaseController {
         return ResResult.success(hashMap);
     }
 
-
     /**
      * 终极traceId链路测试
      * 普通线程 --> 事件（spring-async自定义线程）--> rabbitMQ --> openFeign
