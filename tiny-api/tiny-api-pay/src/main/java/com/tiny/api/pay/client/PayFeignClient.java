@@ -1,9 +1,11 @@
 package com.tiny.api.pay.client;
 
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Map;
 
 /**
  * @author: wzh
@@ -16,5 +18,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface PayFeignClient {
 
     @RequestMapping(value = "/getPayOrderId", method = RequestMethod.GET, name = "获取支付订单流水id")
-    RespResult getPayOrderId();
+    ResResult<Map<String, String>> getPayOrderId();
 }

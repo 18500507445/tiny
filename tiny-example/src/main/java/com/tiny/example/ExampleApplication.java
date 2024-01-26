@@ -1,7 +1,7 @@
 package com.tiny.example;
 
 import com.tiny.framework.core.exception.GlobalExceptionAdvice;
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
 import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +69,7 @@ public class ExampleApplication {
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {
             //公网ip 后两位初始化ResultVO
-            RespResult.setIp(s);
+            ResResult.setInternetIp(s);
             log.warn("【example】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
         });
     }

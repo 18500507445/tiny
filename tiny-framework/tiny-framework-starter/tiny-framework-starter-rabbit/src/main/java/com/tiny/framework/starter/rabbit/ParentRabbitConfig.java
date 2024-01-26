@@ -76,6 +76,9 @@ public class ParentRabbitConfig {
         connectionFactory.setUsername(secondProperties.getUsername());
         connectionFactory.setPassword(secondProperties.getPassword());
         connectionFactory.setVirtualHost(secondProperties.getVirtualHost());
+        if (null != secondProperties.getCache().getChannel().getSize()) {
+            connectionFactory.setChannelCacheSize(secondProperties.getCache().getChannel().getSize());
+        }
         log.warn("装配【secondProperties】：第二个数据源配置，【secondConnectionFactory】第二个连接工厂");
         return connectionFactory;
     }

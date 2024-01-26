@@ -1,6 +1,6 @@
 package com.tiny.api.order.feign;
 
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface OrderFeignClient {
 
     @RequestMapping(value = "/getOrderId", method = RequestMethod.GET, name = "获取订单id")
-    RespResult getOrderId();
+    ResResult<String> getOrderId();
 
 }

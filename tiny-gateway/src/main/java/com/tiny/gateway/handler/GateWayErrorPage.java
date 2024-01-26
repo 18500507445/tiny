@@ -1,7 +1,8 @@
 package com.tiny.gateway.handler;
 
 import cn.hutool.core.map.MapUtil;
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.ResultCode;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -50,6 +51,6 @@ public class GateWayErrorPage extends AbstractErrorWebExceptionHandler {
                 // 以JSON格式显示响应
                 .contentType(MediaType.APPLICATION_JSON)
                 // 响应体(响应内容，包装RespResult)
-                .body(BodyInserters.fromValue(RespResult.error(MapUtil.getStr(map, "error"), map)));
+                .body(BodyInserters.fromValue(ResResult.failure(ResultCode.FAILED, map, MapUtil.getStr(map, "error"))));
     }
 }

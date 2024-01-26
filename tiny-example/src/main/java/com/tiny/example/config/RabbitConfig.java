@@ -2,9 +2,9 @@ package com.tiny.example.config;
 
 import com.tiny.framework.starter.rabbit.CustomMessageConverter;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2023/11/20 10:41
  */
 @Configuration
-@EnableRabbit
 public class RabbitConfig {
 
     /**
@@ -40,6 +39,15 @@ public class RabbitConfig {
         factory.setConnectionFactory(primaryConnectionFactory);
         factory.setMessageConverter(new CustomMessageConverter());
         return factory;
+    }
+
+
+    @Bean
+    public RabbitAdmin rabbitAdmin(@Qualifier("rabbitTemplate") RabbitTemplate rabbitTemplate) {
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(rabbitTemplate);
+        //开启自动创建队列
+        rabbitAdmin.setAutoStartup(true);
+        return rabbitAdmin;
     }
 
     //直连交换机(自带)

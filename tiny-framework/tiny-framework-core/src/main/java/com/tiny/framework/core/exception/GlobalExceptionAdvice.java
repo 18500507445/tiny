@@ -1,6 +1,7 @@
 package com.tiny.framework.core.exception;
 
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.ResultCode;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -29,7 +30,7 @@ public class GlobalExceptionAdvice {
      * 拦截的validator异常
      */
     @ExceptionHandler(BindException.class)
-    public RespResult handleBindException(BindException e) {
+    public ResResult<Void> handleBindException(BindException e) {
         if (bindLog) {
             log.error("handleBindException：{}", e.getMessage());
         }
@@ -39,18 +40,18 @@ public class GlobalExceptionAdvice {
             String message = fieldError.getDefaultMessage();
             msg.append(message);
         }
-        return RespResult.error(msg.toString());
+        return ResResult.failure(ResultCode.VALIDATE_FAILED, msg.toString());
     }
 
     /**
      * 业务异常
      */
     @ExceptionHandler(BusinessException.class)
-    public RespResult businessException(BusinessException e) {
+    public ResResult<Void> businessException(BusinessException e) {
         if (businessLog) {
             log.error("businessException :{}", e.getMessage(), e);
         }
-        return RespResult.error(e.getMessage(), null);
+        return ResResult.failure(ResultCode.FAILED, e.getMessage());
     }
 
 }

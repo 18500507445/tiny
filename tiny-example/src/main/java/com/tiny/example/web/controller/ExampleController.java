@@ -7,7 +7,7 @@ import com.tiny.example.manager.bean.ExampleEvent;
 import com.tiny.example.web.dto.ExampleDTO;
 import com.tiny.framework.core.exception.BusinessException;
 import com.tiny.framework.core.result.BaseController;
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
 import com.tiny.framework.core.thread.ThreadWrap;
 import com.tiny.framework.core.user.UserContext;
 import lombok.RequiredArgsConstructor;
@@ -38,35 +38,35 @@ public class ExampleController extends BaseController {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @RequestMapping(value = "/traceId", method = RequestMethod.GET, name = "测试traceId透传")
-    public RespResult traceId() {
-        return RespResult.success("Hello tiny spring-cloud");
+    public ResResult<String> traceId() {
+        return ResResult.success("Hello tiny spring-cloud");
     }
 
     @RequestMapping(value = "/testException", method = RequestMethod.GET, name = "测试运行异常")
-    public RespResult testException() {
+    public ResResult<Void> testException() {
         throw new BusinessException("测试运行异常");
     }
 
     @RequestMapping(value = "/testRequestBody", method = RequestMethod.POST, name = "测试@RequestBody")
-    public RespResult testRequestBody(@RequestBody ExampleDTO exampleDTO) {
-        return RespResult.success(exampleDTO);
+    public ResResult<ExampleDTO> testRequestBody(@RequestBody ExampleDTO exampleDTO) {
+        return ResResult.success(exampleDTO);
     }
 
     @RequestMapping(value = "/testLog", method = RequestMethod.GET, name = "测试异步log")
-    public RespResult testLog() {
+    public ResResult<String> testLog() {
         for (int i = 0; i < 500000; i++) {
             log.info("这是{}条日志！", i);
         }
-        return RespResult.success("测试异步log");
+        return ResResult.success("测试异步log");
     }
 
     @RequestMapping(value = "/getPayOrderId", method = RequestMethod.GET)
-    public RespResult getPayOrderId() {
+    public ResResult<Map<String, Object>> getPayOrderId() {
         UserContext.UserToken userToken = UserContext.get();
-        RespResult result = payFeignClient.getPayOrderId();
-        Map<String, Object> hashMap = MapUtil.of("payOrder", result.get("data"));
+        ResResult<Map<String, String>> result = payFeignClient.getPayOrderId();
+        Map<String, Object> hashMap = MapUtil.of("payOrder", result.getData().get("data"));
         hashMap.put("userInfo", userToken);
-        return RespResult.success(hashMap);
+        return ResResult.success(hashMap);
     }
 
 
@@ -75,7 +75,7 @@ public class ExampleController extends BaseController {
      * 普通线程 --> 事件（spring-async自定义线程）--> rabbitMQ --> openFeign
      */
     @RequestMapping(value = "/finalTraceId", method = RequestMethod.GET, name = "测试traceId透传")
-    public RespResult finalTraceId() {
+    public ResResult<String> finalTraceId() {
         log.error("finalTraceId-start");
 
         //1. 首先开启一个普通线程
@@ -91,7 +91,7 @@ public class ExampleController extends BaseController {
             applicationEventPublisher.publishEvent(new ExampleEvent<>(ExampleEventEnum.ONE, messageDO));
         })).start();
 
-        return RespResult.success("finalTraceId");
+        return ResResult.success("finalTraceId");
     }
 
 

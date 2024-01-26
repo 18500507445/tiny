@@ -1,9 +1,9 @@
 package com.tiny.order.controller;
 
-import com.tiny.framework.core.result.BaseController;
-import com.tiny.framework.core.result.RespResult;
-import com.tiny.framework.core.utils.common.IdUtils;
 import com.tiny.api.order.feign.OrderFeignClient;
+import com.tiny.framework.core.result.BaseController;
+import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.utils.common.IdUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ public class OrderController extends BaseController implements OrderFeignClient 
 
     @RequestMapping(value = "/getOrderId", method = RequestMethod.GET, name = "获取订单id")
     @ResponseBody
-    public RespResult getOrderId() {
-        return RespResult.success(IdUtils.fastSimpleUuid());
+    public ResResult<String> getOrderId() {
+        return ResResult.success(IdUtils.fastSimpleUuid());
     }
 }

@@ -5,7 +5,8 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONException;
 import com.alibaba.fastjson2.JSONObject;
 import com.tiny.framework.core.request.RequestWrapper;
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.ResultCode;
 import com.tiny.framework.core.utils.common.RequestParamsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -106,8 +107,8 @@ public class TraceFilter extends GenericFilterBean {
         httpResponse.setContentType("application/json");
         // 设置响应的字符编码为 UTF-8
         httpResponse.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        RespResult error = RespResult.error(msg);
-        httpResponse.getWriter().write(JSON.toJSONString(error));
+        ResResult<Object> failure = ResResult.failure(ResultCode.FAILED, msg);
+        httpResponse.getWriter().write(JSON.toJSONString(failure));
         httpResponse.getWriter().flush();
     }
 }

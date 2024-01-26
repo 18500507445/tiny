@@ -8,7 +8,8 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
 import com.tiny.framework.core.Constants;
-import com.tiny.framework.core.result.RespResult;
+import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.ResultCode;
 import com.tiny.framework.core.trace.Trace;
 import com.tiny.framework.core.trace.TraceContext;
 import com.tiny.framework.core.utils.common.IpUtils;
@@ -86,13 +87,13 @@ public class AccessFilter implements GlobalFilter {
         //判断url是否禁止访问
         if (checkForbiddenUrls(url)) {
             log.error("网关配置禁止访问的url：{}", url);
-            return responseErrorMsg(exchange, 403, "forbidden request url!");
+            return responseErrorMsg(exchange, ResultCode.FORBIDDEN);
         }
 
         //禁止的ip访问
         if (checkIpBlackList(ip)) {
             log.error("网关配置禁止访问的ip：{}", ip);
-            return responseErrorMsg(exchange, 403, "forbidden request ip!");
+            return responseErrorMsg(exchange, ResultCode.FORBIDDEN);
         }
 
         //请求url是否开启鉴权
@@ -111,13 +112,13 @@ public class AccessFilter implements GlobalFilter {
         String authorization = httpHeaders.getFirst(Constants.AUTHORIZATION);
         if (StrUtil.isEmpty(authorization)) {
             log.error("invalid token or not login! authorization：{}", authorization);
-            return responseErrorMsg(exchange, 401, "invalid token or not login");
+            return responseErrorMsg(exchange, ResultCode.TOKEN_EMPTY);
         }
 
         //判断是否过期
         boolean tokenExpired = JwtUtils.isTokenExpired(authorization);
         if (tokenExpired) {
-            return responseErrorMsg(exchange, 200002, "token expired");
+            return responseErrorMsg(exchange, ResultCode.TOKEN_EXPIRATION);
         }
 
         //解析authorization
@@ -132,7 +133,7 @@ public class AccessFilter implements GlobalFilter {
                 setHeaderInfo(build, request, userContext, httpHeaders);
             }
         } catch (Exception e) {
-            return responseErrorMsg(exchange, 401, "token invalid");
+            return responseErrorMsg(exchange, ResultCode.TOKEN_INVALID);
         }
         return filter(chain, build, exchange, url);
     }
@@ -253,8 +254,8 @@ public class AccessFilter implements GlobalFilter {
     /**
      * 返回错误的信息
      */
-    private Mono<Void> responseErrorMsg(ServerWebExchange exchange, Integer code, String errMsg) {
-        DataBuffer buffer = responseMsg(exchange, RespResult.success(code, errMsg));
+    private Mono<Void> responseErrorMsg(ServerWebExchange exchange, ResultCode resultCode) {
+        DataBuffer buffer = responseMsg(exchange, ResResult.failure(resultCode));
         return exchange.getResponse().writeWith(Flux.just(buffer));
     }
 
@@ -264,11 +265,11 @@ public class AccessFilter implements GlobalFilter {
      * （1）DataBuffer wrap = resp.bufferFactory().wrap(bytes);
      * （2）resp.writeWith(Flux.just(wrap));
      */
-    private DataBuffer responseMsg(ServerWebExchange exchange, RespResult respResult) {
+    private DataBuffer responseMsg(ServerWebExchange exchange, ResResult<Void> resResult) {
         ServerHttpResponse resp = exchange.getResponse();
         resp.setStatusCode(HttpStatus.OK);
         resp.getHeaders().add(HttpHeaders.CONTENT_TYPE, Constants.JSON);
-        String jsonString = JSONObject.toJSONString(respResult);
+        String jsonString = JSONObject.toJSONString(resResult);
         byte[] bytes = jsonString.getBytes(StandardCharsets.UTF_8);
         return resp.bufferFactory().wrap(bytes);
     }
@@ -295,7 +296,7 @@ public class AccessFilter implements GlobalFilter {
     private Mono<Void> authError(ServerHttpResponse resp) {
         resp.setStatusCode(HttpStatus.UNAUTHORIZED);
         resp.getHeaders().add("Content-Type", Constants.JSON);
-        RespResult error = RespResult.error(401, "认证错误");
+        ResResult<Void> error = ResResult.failure(ResultCode.FAILED);
         String returnStr = "";
         try {
             returnStr = JSON.toJSONString(error);
