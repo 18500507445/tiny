@@ -50,4 +50,4 @@ spring:
 
 logging:
   file:
-    path: /Users/wangzehui/Documents/Logs/tiny/${spring.application.name}
+    path: /Users/wangzehui/logs/tiny/${spring.application.name}
