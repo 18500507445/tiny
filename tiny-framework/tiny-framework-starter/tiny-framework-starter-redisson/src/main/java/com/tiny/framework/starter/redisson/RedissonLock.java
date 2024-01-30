@@ -52,17 +52,21 @@ public final class RedissonLock {
      */
     public boolean lock(LockType lockType, String key, long expireSeconds) {
         boolean flag = false;
-        RLock rLock = getLock(lockType, key);
         try {
-            flag = rLock.tryLock(0, expireSeconds, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            log.error("Redisson分布式锁【异常】，key = " + key, e);
-        } finally {
-            if (flag) {
-                log.info("Redisson分布式锁【成功】，key = {}", key);
-            } else {
-                log.info("Redisson分布式锁【失败】，key = {}", key);
+            RLock rLock = getLock(lockType, key);
+            try {
+                flag = rLock.tryLock(0, expireSeconds, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                log.error("Redisson分布式锁【异常】，key = " + key, e);
+            } finally {
+                if (flag) {
+                    log.info("Redisson分布式锁【成功】，key = {}", key);
+                } else {
+                    log.info("Redisson分布式锁【失败】，key = {}", key);
+                }
             }
+        } catch (Exception e) {
+            log.error("lock异常", e);
         }
         return flag;
     }
@@ -71,15 +75,19 @@ public final class RedissonLock {
         boolean flag = false;
         RLock rLock = getLock(lockType, key);
         try {
-            flag = rLock.tryLockAsync(0, expireSeconds, TimeUnit.SECONDS).get();
-        } catch (Exception e) {
-            log.error("Redisson分布式锁【异步加锁异常】，key = " + key, e);
-        } finally {
-            if (flag) {
-                log.info("Redisson分布式锁【异步加锁成功】，key = {}", key);
-            } else {
-                log.info("Redisson分布式锁【异步加锁失败】，key = {}", key);
+            try {
+                flag = rLock.tryLockAsync(0, expireSeconds, TimeUnit.SECONDS).get();
+            } catch (Exception e) {
+                log.error("Redisson分布式锁【异步加锁异常】，key = " + key, e);
+            } finally {
+                if (flag) {
+                    log.info("Redisson分布式锁【异步加锁成功】，key = {}", key);
+                } else {
+                    log.info("Redisson分布式锁【异步加锁失败】，key = {}", key);
+                }
             }
+        } catch (Exception e) {
+            log.error("asyncLock异常", e);
         }
         return flag;
     }
@@ -91,7 +99,11 @@ public final class RedissonLock {
      */
     public void release(String key) {
         log.info("Redisson分布式锁【解锁】，key = {}", key);
-        redissonClient.getLock(key).unlock();
+        try {
+            redissonClient.getLock(key).unlock();
+        } catch (Exception e) {
+            log.error("release异常", e);
+        }
     }
 
     /**
@@ -101,10 +113,14 @@ public final class RedissonLock {
      */
     public void asyncRelease(String key, Long... threadId) {
         log.info("Redisson分布式锁【异步解锁】，key = {}", key);
-        if (ArrayUtil.isNotEmpty(threadId)) {
-            redissonClient.getLock(key).unlockAsync(threadId[0]);
-        } else {
-            redissonClient.getLock(key).unlockAsync();
+        try {
+            if (ArrayUtil.isNotEmpty(threadId)) {
+                redissonClient.getLock(key).unlockAsync(threadId[0]);
+            } else {
+                redissonClient.getLock(key).unlockAsync();
+            }
+        } catch (Exception e) {
+            log.error("asyncRelease异常", e);
         }
     }
 

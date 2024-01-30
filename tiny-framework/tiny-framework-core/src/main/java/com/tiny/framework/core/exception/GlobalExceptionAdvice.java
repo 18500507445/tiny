@@ -1,5 +1,6 @@
 package com.tiny.framework.core.exception;
 
+import cn.hutool.core.util.StrUtil;
 import com.tiny.framework.core.result.ResResult;
 import com.tiny.framework.core.result.ResultCode;
 import lombok.Setter;
@@ -38,9 +39,9 @@ public class GlobalExceptionAdvice {
         List<FieldError> fieldErrors = e.getFieldErrors();
         for (FieldError fieldError : fieldErrors) {
             String message = fieldError.getDefaultMessage();
-            msg.append(message);
+            msg.append(message).append("，");
         }
-        return ResResult.failure(ResultCode.VALIDATE_FAILED, msg.toString());
+        return ResResult.failure(ResultCode.VALIDATE_FAILED, StrUtil.subWithLength(msg.toString(), 0, msg.length() - 1));
     }
 
     /**
