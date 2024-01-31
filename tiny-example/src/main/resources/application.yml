@@ -3,3 +3,7 @@ spring:
   config:
     activate:
       on-profile: @environment@
+
+  # 应用名称
+  application:
+    name: @project.artifactId@

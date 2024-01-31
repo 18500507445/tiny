@@ -1,7 +1,4 @@
 spring:
-  # 应用名称
-  application:
-    name: @project.artifactId@
   # 配置导入
   config:
     import:

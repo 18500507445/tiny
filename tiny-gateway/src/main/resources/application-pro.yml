@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: @project.artifactId@
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.config.activate.on-profile}.${spring.cloud.nacos.config.file-extension}

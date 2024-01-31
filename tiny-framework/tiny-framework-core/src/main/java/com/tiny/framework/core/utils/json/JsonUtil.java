@@ -3,6 +3,7 @@ package com.tiny.framework.core.utils.json;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -48,7 +49,8 @@ public final class JsonUtil {
                 break;
         }
         set.addAll(fieldList);
-        String jsonString = JSON.toJSONString(object, filter);
+        //不忽略null值
+        String jsonString = JSON.toJSONString(object, filter, JSONWriter.Feature.WriteNulls);
         String name = clazz.getName();
         if (JSONObject.class.getName().equals(name)) {
             return (T) JSON.parseObject(jsonString);
