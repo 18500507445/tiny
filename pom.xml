@@ -13,23 +13,27 @@
     <description>spring-cloud项目</description>
 
     <modules>
+        <!-- 公共api模块 -->
+        <module>tiny-api</module>
+
+        <!-- 公共业务模块 -->
+        <module>tiny-common</module>
+
         <!-- 依赖管理在此模块 -->
         <module>tiny-dependencies</module>
 
         <!-- 公共架构模块 -->
         <module>tiny-framework</module>
 
-        <!-- 公共业务模块 -->
-        <module>tiny-common</module>
-
-        <!-- 公共api模块 -->
-        <module>tiny-api</module>
-
         <!-- 网关模块 -->
         <module>tiny-gateway</module>
 
+        <!-- 样例模块 -->
         <module>tiny-example</module>
+
+        <!-- 订单模块 -->
         <module>tiny-order</module>
+        <!-- 支付模块 -->
         <module>tiny-pay</module>
     </modules>
 
