@@ -2,6 +2,7 @@ package com.tiny.example.web.controller;
 
 import cn.hutool.core.map.MapUtil;
 import com.tiny.api.pay.client.PayFeignClient;
+import com.tiny.common.annotation.ValidGroup;
 import com.tiny.example.enums.ExampleEventEnum;
 import com.tiny.example.manager.bean.ExampleEvent;
 import com.tiny.example.web.dto.ExampleDTO;
@@ -13,6 +14,7 @@ import com.tiny.framework.core.user.UserContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +50,7 @@ public class ExampleController extends BaseController {
     }
 
     @RequestMapping(value = "/testRequestBody", method = RequestMethod.POST, name = "测试@RequestBody")
-    public ResResult<ExampleDTO> testRequestBody(@RequestBody ExampleDTO exampleDTO) {
+    public ResResult<ExampleDTO> testRequestBody(@RequestBody @Validated({ValidGroup.All.class}) ExampleDTO exampleDTO) {
         return ResResult.success(exampleDTO);
     }
 

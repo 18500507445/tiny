@@ -8,7 +8,7 @@ import javax.validation.groups.Default;
  * @description: 分组校验-定义分组
  * @date: 2024/02/19 09:57
  */
-public class ValidGroup {
+public final class ValidGroup {
 
     // 新增使用(配合spring的@Validated功能分组使用)
     public interface Insert extends Default {
