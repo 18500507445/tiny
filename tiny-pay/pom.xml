@@ -9,7 +9,6 @@
         <version>${revision}</version>
     </parent>
 
-    <groupId>com.nova</groupId>
     <artifactId>tiny-pay</artifactId>
 
     <properties>
