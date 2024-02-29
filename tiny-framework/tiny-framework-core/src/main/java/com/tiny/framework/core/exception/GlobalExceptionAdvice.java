@@ -21,9 +21,11 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
 
+    //参数校验异常log开关
     @Setter
     private static boolean businessLog = false;
 
+    //业务异常log开关
     @Setter
     private static boolean bindLog = false;
 
@@ -33,7 +35,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(BindException.class)
     public ResResult<Void> handleBindException(BindException e) {
         if (bindLog) {
-            log.error("handleBindException：{}", e.getMessage());
+            log.warn("handleBindException：{}", e.getMessage());
         }
         StringBuilder msg = new StringBuilder();
         List<FieldError> fieldErrors = e.getFieldErrors();
