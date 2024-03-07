@@ -32,7 +32,7 @@ import java.util.TreeMap;
 public class TraceFilter extends GenericFilterBean {
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException {
         long start = System.currentTimeMillis();
         HttpServletRequest request = (HttpServletRequest) req;
         try {
