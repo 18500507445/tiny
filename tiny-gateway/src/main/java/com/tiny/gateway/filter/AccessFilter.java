@@ -82,7 +82,7 @@ public class AccessFilter implements GlobalFilter {
         String url = request.getURI().getPath();
         String method = request.getMethodValue();
         HttpHeaders httpHeaders = HttpHeaders.writableHttpHeaders(request.getHeaders());
-        log.info("请求url：{}，method：{}，header：{}，ip：{}", url, method, JSONObject.toJSONString(httpHeaders), ip);
+        log.info("request：{}，method：{}，header：{}，ip：{}", url, method, JSONObject.toJSONString(httpHeaders), ip);
 
         //判断url是否禁止访问
         if (checkForbiddenUrls(url)) {

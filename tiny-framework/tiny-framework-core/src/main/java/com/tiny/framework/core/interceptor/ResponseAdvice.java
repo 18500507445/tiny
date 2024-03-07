@@ -33,7 +33,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        log.info("接口url：{}，响应结果：{}", request.getURI().getPath(), JSONObject.toJSONString(body));
+        log.info("request：{}，response：{}", request.getURI().getPath(), JSONObject.toJSONString(body));
         return body;
     }
 }
