@@ -43,13 +43,14 @@ public class TraceFilter extends GenericFilterBean {
              * （3）todo 有就复用，没有就生成，这里traceId是null还是有值，不需要管，哈哈
              */
             TraceContext.setCurrentTrace(traceId);
-            filterChain.doFilter(request, resp);
+            RequestWrapper requestWrapper = printAccessLog(request);
+            filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
         } catch (Exception e) {
             if (e instanceof JSONException) {
                 this.errorResponse(resp, "POST请求，后端开启@RequestBody注解，请传入参数进行json对象进行字符串处理，例如h5的JSON.stringify");
             }
         } finally {
-            this.printAccessLog(request, start);
+            log.info("request：{}：耗时：{} ms", request.getRequestURI(), System.currentTimeMillis() - start);
             TraceContext.removeTrace();
         }
     }
@@ -60,7 +61,7 @@ public class TraceFilter extends GenericFilterBean {
      * 因为无法控制编程规范问题，所以都需要打印
      */
     @SuppressWarnings({"unchecked"})
-    private RequestWrapper printAccessLog(HttpServletRequest request, long start) throws IOException {
+    private RequestWrapper printAccessLog(HttpServletRequest request) throws IOException {
         RequestWrapper requestWrapper = null;
         String requestUrl = request.getRequestURI();
         SortedMap<String, Object> paramResult = new TreeMap<>(RequestParamsUtil.getUrlParams(request));
@@ -81,7 +82,7 @@ public class TraceFilter extends GenericFilterBean {
                 }
             }
         } finally {
-            log.info("request：{}，method：{}，body：{}，耗时：{} ms", requestUrl, request.getMethod(), JSONObject.toJSONString(paramResult), System.currentTimeMillis() - start);
+            log.info("request：{}，方式：{}，body：{}", requestUrl, request.getMethod(), JSONObject.toJSONString(paramResult));
         }
         return requestWrapper;
     }
