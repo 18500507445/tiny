@@ -1,7 +1,6 @@
 package com.tiny.framework.starter.mongo;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -10,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ import java.util.List;
 @Component
 public class MongoService {
 
-    @Autowired
+    @Resource
     @Qualifier("primaryMongoTemplate")
     private MongoTemplate primaryMongoTemplate;
 
