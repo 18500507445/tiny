@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * （5）远程调用、rpc
  * @date: 2023/11/29 15:41
  */
-@Slf4j(topic = "ExampleManager")
+@Slf4j(topic = "ExampleFacade")
 @Component
 @RequiredArgsConstructor
 public class ExampleFacade {
