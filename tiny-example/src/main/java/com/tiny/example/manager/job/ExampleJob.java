@@ -1,4 +1,4 @@
-package com.tiny.example.job;
+package com.tiny.example.manager.job;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
