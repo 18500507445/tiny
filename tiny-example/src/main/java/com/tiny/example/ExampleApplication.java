@@ -63,6 +63,8 @@ public class ExampleApplication {
 
         log.warn("profile :{}，name :{}，serverAddr :{}，redis :{}，mongo :{}", profile, name, serverAddr, redis, mongo);
 
+        //开启参数校验warn、全局业务运行异常error日志
+        GlobalExceptionAdvice.setBindLog(true);
         GlobalExceptionAdvice.setBusinessLog(true);
         log.warn("【example】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
 

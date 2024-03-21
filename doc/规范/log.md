@@ -39,9 +39,27 @@ logback，spring默认集成。命名规范：logback-spring.xml最后加载的�
 * error和warn采取同步打印，开启`方法`和`行号`
 * debug没有进行配置，直接丢弃，不进行打印
 
+## 打印规范
+1. 日志打印级别： FATAL > ERROR > WARN > INFO > DEBUG > TRACE `当前项目debug级别已关闭`
+2. 请求日志：不需要打印，当前项目网关已进行处理、avic-parent-core的链路追踪拦截器TraceFilter也已经处理请求Log
+3. 响应日志：`暂时没处理`，如果都需要开启打印，那么可以实现一个响应后置拦截器`ResponseBodyAdvice<Object>`，减少业务代码量
+4. 业务代码：尽量使用占位符进行替换，不要多行打印，可以合并就都放一起，多次磁盘IO耗费性能
+~~~java
+log.error("参数错误：{}",params);
+~~~
+
+5. 目前打印日志很少使用LogFactory了，基本都用lombok提供的日志门面，为了减少字节数，降低磁盘IO压力，尽量@Slf4j(topic = "name")
+~~~txt
+（1）LogFactory默认，输出：com.avic.example.log.LogFactoryExample ==> balabalaba
+（2）@Slf4j默认，输出：c.a.e.l LogFactoryExample ==> balabalaba
+（3）@Slf4j(topic = "LogFactoryExample")，输出：LogFactoryExample ==> balabalaba
+~~~
+
 ### 全局异常捕获，方法中抛出运行异常GlobalExceptionAdvice进行捕获
 如果需要打印error日志，需要手动开启，最好在启动类进行初始化
 ~~~java
+//开启参数校验warn、全局业务运行异常error日志
+GlobalExceptionAdvice.setBindLog(true);
 GlobalExceptionAdvice.setBusinessLog(true);
 log.warn("【example】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
 ~~~
