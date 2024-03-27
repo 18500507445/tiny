@@ -1,4 +1,4 @@
-package com.tiny.common.repository;
+package com.tiny.common.repository.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,4 +1,4 @@
-package com.tiny.common.repository;
+package com.tiny.common.manager.bean;
 
 /**
  * @author: wzh

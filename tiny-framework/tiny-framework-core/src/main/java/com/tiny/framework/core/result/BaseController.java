@@ -4,7 +4,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.tiny.framework.core.utils.common.IpUtils;
 import com.tiny.framework.core.utils.common.ServletUtils;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpSession;
  * @description: 通用Controller
  * @date: 2023/08/29 10:56
  */
-@RefreshScope
 public class BaseController {
 
     /**
