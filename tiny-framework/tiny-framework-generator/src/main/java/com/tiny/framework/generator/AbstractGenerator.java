@@ -106,7 +106,6 @@ public abstract class AbstractGenerator {
                         // 设置需要生成的表名
                         .addInclude(getTableName())
 
-
                         // 实体类策略
                         .entityBuilder()
                         // 开启lombok
