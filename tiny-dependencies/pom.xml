@@ -26,15 +26,15 @@
         <!-- 数据库 -->
         <mybatis.plus.version>3.5.5</mybatis.plus.version>
         <dynamic.version>4.3.0</dynamic.version>
-        <druid.version>1.2.20</druid.version>
+        <druid.version>1.2.22</druid.version>
 
         <!-- 工具版本 -->
-        <fastjson.version>2.0.45</fastjson.version>
-        <hutool.version>5.8.25</hutool.version>
-        <guava.version>33.0.0-jre</guava.version>
+        <fastjson.version>2.0.48</fastjson.version>
+        <hutool.version>5.8.27</hutool.version>
+        <guava.version>33.1.0-jre</guava.version>
         <guava.retry.version>2.0.0</guava.retry.version>
         <xxljob.version>2.4.0</xxljob.version>
-        <easyexcel.verson>3.3.3</easyexcel.verson>
+        <easyexcel.verson>3.3.4</easyexcel.verson>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <jwt.version>4.4.0</jwt.version>
 
