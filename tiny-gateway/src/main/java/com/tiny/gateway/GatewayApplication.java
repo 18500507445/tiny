@@ -31,11 +31,11 @@ public class GatewayApplication {
 
     @Bean
     public BeanPostProcessor beanPostProcessor() {
-        System.out.println("初始化 bean BeanPostProcessor");
+        System.err.println("初始化 bean BeanPostProcessor");
         return new BeanPostProcessor() {
             @Override
             public Object postProcessBeforeInitialization(@NotNull Object bean, @NotNull String beanName) throws BeansException {
-                System.out.println("加载bean -> " + beanName);
+                System.err.println("加载bean -> " + beanName);
                 return bean;
             }
 
