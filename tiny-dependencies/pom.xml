@@ -33,10 +33,11 @@
         <hutool.version>5.8.27</hutool.version>
         <guava.version>33.1.0-jre</guava.version>
         <guava.retry.version>2.0.0</guava.retry.version>
-        <xxljob.version>2.4.0</xxljob.version>
         <easyexcel.verson>3.3.4</easyexcel.verson>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <lombok.mapstruct.version>0.2.0</lombok.mapstruct.version>
         <jwt.version>4.4.0</jwt.version>
+        <xxljob.version>2.4.0</xxljob.version>
 
         <!-- 兼容到spring-boot-starter 2.7.18版本，不建议升级了 -->
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
@@ -254,6 +255,12 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${lombok.mapstruct.version}</version>
             </dependency>
 
             <!-- 工具 end-->
