@@ -56,7 +56,7 @@ public class RedisAutoConfiguration {
      * 创建 RedisTemplate Bean，使用 JSON 序列化方式
      */
     @Bean(name = "primaryRedisTemplate")
-    public RedisTemplate<String, Object> redisTemplate(@Qualifier("primaryRedisProperties") RedisProperties primaryRedisProperties) {
+    public RedisTemplate<String, Object> primaryRedisTemplate(@Qualifier("primaryRedisProperties") RedisProperties primaryRedisProperties) {
         // 创建 RedisTemplate 对象
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         // 设置 RedisConnection 工厂。😈 它就是实现多种 Java Redis 客户端接入的秘密工厂。
