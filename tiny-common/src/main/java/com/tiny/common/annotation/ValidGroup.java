@@ -26,7 +26,7 @@ public final class ValidGroup {
     public interface Delete extends Default {
     }
 
-    // 属性必须有这两个分组的才验证
+    // 属性必须有这4个分组的才验证
     @GroupSequence({Insert.class, Update.class, Select.class, Delete.class})
     public interface All {
 
