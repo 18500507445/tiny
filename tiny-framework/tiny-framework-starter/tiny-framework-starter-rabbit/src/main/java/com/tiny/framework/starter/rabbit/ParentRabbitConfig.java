@@ -39,7 +39,7 @@ public class ParentRabbitConfig {
      * 主配置连接工厂
      */
     @Bean(name = "primaryConnectionFactory")
-    public ConnectionFactory connectionFactory(@Qualifier("primaryProperties") RabbitProperties primaryProperties) {
+    public ConnectionFactory primaryConnectionFactory(@Qualifier("primaryProperties") RabbitProperties primaryProperties) {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         //默认2047
         connectionFactory.getRabbitConnectionFactory().setRequestedChannelMax(primaryProperties.getRequestedChannelMax());
