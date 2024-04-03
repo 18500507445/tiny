@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tiny-order/api")
 public class OrderController extends BaseController implements OrderFeignClient {
 
+    @Override
     @RequestMapping(value = "/getOrderId", method = RequestMethod.GET, name = "获取订单id")
     @ResponseBody
     public ResResult<String> getOrderId() {
