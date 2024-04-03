@@ -60,7 +60,7 @@ public class RedisAutoConfiguration {
         // 创建 RedisTemplate 对象
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         // 设置 RedisConnection 工厂。😈 它就是实现多种 Java Redis 客户端接入的秘密工厂。
-        template.setConnectionFactory(connectionFactory(primaryRedisProperties));
+        template.setConnectionFactory(getRedisconnectionFactory(primaryRedisProperties));
         // 使用 String 序列化方式，序列化 KEY 。
         template.setKeySerializer(RedisSerializer.string());
         template.setHashKeySerializer(RedisSerializer.string());
@@ -76,7 +76,7 @@ public class RedisAutoConfiguration {
             return null;
         }
         RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory(secondRedisProperties));
+        template.setConnectionFactory(getRedisconnectionFactory(secondRedisProperties));
         template.setKeySerializer(RedisSerializer.string());
         template.setHashKeySerializer(RedisSerializer.string());
         template.setValueSerializer(RedisSerializer.json());
@@ -85,9 +85,10 @@ public class RedisAutoConfiguration {
     }
 
     /**
+     * 通用获取链接工厂方法
      * 使用lettuce配置Redis连接信息
      */
-    public RedisConnectionFactory connectionFactory(RedisProperties redisProperties) {
+    private static RedisConnectionFactory getRedisconnectionFactory(RedisProperties redisProperties) {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         String host = redisProperties.getHost();
         int port = redisProperties.getPort();

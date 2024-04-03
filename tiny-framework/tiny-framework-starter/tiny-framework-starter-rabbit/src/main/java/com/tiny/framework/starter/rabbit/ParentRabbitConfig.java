@@ -40,16 +40,7 @@ public class ParentRabbitConfig {
      */
     @Bean(name = "primaryConnectionFactory")
     public ConnectionFactory primaryConnectionFactory(@Qualifier("primaryProperties") RabbitProperties primaryProperties) {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        //默认2047
-        connectionFactory.getRabbitConnectionFactory().setRequestedChannelMax(primaryProperties.getRequestedChannelMax());
-        connectionFactory.setAddresses(primaryProperties.getAddresses());
-        connectionFactory.setUsername(primaryProperties.getUsername());
-        connectionFactory.setPassword(primaryProperties.getPassword());
-        connectionFactory.setVirtualHost(primaryProperties.getVirtualHost());
-        if (null != primaryProperties.getCache().getChannel().getSize()) {
-            connectionFactory.setChannelCacheSize(primaryProperties.getCache().getChannel().getSize());
-        }
+        CachingConnectionFactory connectionFactory = getRabbitConnectionFactory(primaryProperties);
         log.warn("装配【primaryProperties】：第一个数据源配置，【primaryConnectionFactory】第一个连接工厂");
         return connectionFactory;
     }
@@ -70,16 +61,25 @@ public class ParentRabbitConfig {
     @Bean(name = "secondConnectionFactory")
     @ConditionalOnProperty(prefix = "spring.rabbitmq2", name = "enabled", havingValue = "true")
     public ConnectionFactory secondConnectionFactory(@Qualifier("secondProperties") RabbitProperties secondProperties) {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.getRabbitConnectionFactory().setRequestedChannelMax(secondProperties.getRequestedChannelMax());
-        connectionFactory.setAddresses(secondProperties.getAddresses());
-        connectionFactory.setUsername(secondProperties.getUsername());
-        connectionFactory.setPassword(secondProperties.getPassword());
-        connectionFactory.setVirtualHost(secondProperties.getVirtualHost());
-        if (null != secondProperties.getCache().getChannel().getSize()) {
-            connectionFactory.setChannelCacheSize(secondProperties.getCache().getChannel().getSize());
-        }
+        CachingConnectionFactory connectionFactory = getRabbitConnectionFactory(secondProperties);
         log.warn("装配【secondProperties】：第二个数据源配置，【secondConnectionFactory】第二个连接工厂");
+        return connectionFactory;
+    }
+
+    // 通用获取链接，设置属性
+    private static CachingConnectionFactory getRabbitConnectionFactory(RabbitProperties properties) {
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.getRabbitConnectionFactory().setRequestedChannelMax(properties.getRequestedChannelMax());
+        connectionFactory.setAddresses(properties.getAddresses());
+        connectionFactory.setUsername(properties.getUsername());
+        connectionFactory.setPassword(properties.getPassword());
+        connectionFactory.setVirtualHost(properties.getVirtualHost());
+        if (null != properties.getCache().getChannel().getSize()) {
+            connectionFactory.setChannelCacheSize(properties.getCache().getChannel().getSize());
+        }
+        if (null != properties.getCache().getConnection().getSize()) {
+            connectionFactory.setConnectionCacheSize(properties.getCache().getConnection().getSize());
+        }
         return connectionFactory;
     }
 }

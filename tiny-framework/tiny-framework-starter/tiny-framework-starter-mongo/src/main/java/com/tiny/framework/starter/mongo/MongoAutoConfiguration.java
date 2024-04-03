@@ -48,7 +48,7 @@ public class MongoAutoConfiguration {
     public MongoTemplate primaryMongoTemplate() throws UnsupportedEncodingException {
         MongoProperties mongoProperties = this.primaryMongoProperties();
         if (null != mongoProperties.getHost()) {
-            MongoTemplate mongoTemplate = new MongoTemplate(primaryMongoFactory(mongoProperties));
+            MongoTemplate mongoTemplate = new MongoTemplate(getMongoFactory(mongoProperties));
             MappingMongoConverter mongoMapping = (MappingMongoConverter) mongoTemplate.getConverter();
             mongoMapping.afterPropertiesSet();
             return mongoTemplate;
@@ -58,12 +58,11 @@ public class MongoAutoConfiguration {
     }
 
     /**
+     * 通用获取链接工厂方法
      * 默认 MongoDatabaseFactory
      * url = 'mongodb://userName:password@ip:port/database?authSource=authentication-database'
      */
-    @Bean
-    @Primary
-    public MongoDatabaseFactory primaryMongoFactory(MongoProperties mongoProperties) throws UnsupportedEncodingException {
+    private static MongoDatabaseFactory getMongoFactory(MongoProperties mongoProperties) throws UnsupportedEncodingException {
         String url;
         if (null != mongoProperties.getUri()) {
             url = mongoProperties.getUri();
