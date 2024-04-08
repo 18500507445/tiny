@@ -35,7 +35,7 @@ public class PayApplication {
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {
             //公网ip 后两位初始化ResultVO
             ResResult.setInternetIp(s);
-            log.warn("【pay】模块启动成功，初始化公网ip：" + s + "，放入RespResult");
+            log.warn("【pay】模块启动成功，初始化公网ip：{}，放入ResultVO", s);
         });
     }
 }
