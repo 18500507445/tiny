@@ -29,7 +29,7 @@ public class OrderApplication {
         SpringApplication.run(OrderApplication.class, args);
 
         GlobalExceptionAdvice.setBusinessLog(true);
-        log.warn("【order】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
+        log.warn("【order】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog、BindException warnLog");
 
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {

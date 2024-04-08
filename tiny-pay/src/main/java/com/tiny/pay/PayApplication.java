@@ -29,7 +29,7 @@ public class PayApplication {
         SpringApplication.run(PayApplication.class, args);
 
         GlobalExceptionAdvice.setBusinessLog(true);
-        log.warn("【pay】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
+        log.warn("【pay】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog、BindException warnLog");
 
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {

@@ -66,7 +66,7 @@ public class ExampleApplication {
         //开启参数校验warn、全局业务运行异常error日志
         GlobalExceptionAdvice.setBindLog(true);
         GlobalExceptionAdvice.setBusinessLog(true);
-        log.warn("【example】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog");
+        log.warn("【example】模块，开启GlobalExceptionAdvice ==> BusinessException errorLog、BindException warnLog");
 
         //异步执行
         CompletableFuture.supplyAsync(IpUtils::getInternetIp).thenAccept(s -> {
