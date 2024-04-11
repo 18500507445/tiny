@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @description: 响应拦截器
  * @date: 2024/01/04 13:08
  */
-@Slf4j(topic = "tiny-framework-starter ==> ResponseAdvice")
+@Slf4j(topic = "tiny-framework-core ==> ResponseAdvice")
 @RefreshScope
 @ControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {

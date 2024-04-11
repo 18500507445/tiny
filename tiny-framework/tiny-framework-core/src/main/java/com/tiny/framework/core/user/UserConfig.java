@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * @description: 用户过滤器配置类
  * @date: 2023/10/12 14:05
  */
-@Slf4j(topic = "tiny-framework-starter ==> UserConfig")
+@Slf4j(topic = "tiny-framework-core ==> UserConfig")
 @Configuration
 public class UserConfig {
 

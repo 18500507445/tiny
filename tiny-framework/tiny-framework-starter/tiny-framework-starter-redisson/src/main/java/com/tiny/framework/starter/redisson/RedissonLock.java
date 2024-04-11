@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @author wzh
  * @date 2023/11/02 20:53
  */
-@Slf4j(topic = "RedissonLock")
+@Slf4j(topic = "tiny-framework-starter ==> RedissonLock")
 @Getter
 @Component
 public final class RedissonLock {
@@ -57,7 +57,7 @@ public final class RedissonLock {
             try {
                 flag = rLock.tryLock(0, expireSeconds, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
-                log.error("Redisson分布式锁【异常】，key = " + key, e);
+                log.error("Redisson分布式锁【异常】，key = {}", key, e);
             } finally {
                 if (flag) {
                     log.info("Redisson分布式锁【成功】，key = {}", key);
@@ -78,7 +78,7 @@ public final class RedissonLock {
             try {
                 flag = rLock.tryLockAsync(0, expireSeconds, TimeUnit.SECONDS).get();
             } catch (Exception e) {
-                log.error("Redisson分布式锁【异步加锁异常】，key = " + key, e);
+                log.error("Redisson分布式锁【异步加锁异常】，key = {}", key, e);
             } finally {
                 if (flag) {
                     log.info("Redisson分布式锁【异步加锁成功】，key = {}", key);
@@ -153,18 +153,26 @@ public final class RedissonLock {
         try {
             rLock.lock();
         } catch (Exception e) {
-            log.error("获取Redisson分布式锁[异常]，lockName=" + lockName, e);
+            log.error("获取Redisson分布式锁[异常]，lockName={}", lockName, e);
         }
     }
 
     /**
      * 获取过期时间
      *
-     * @param key
+     * @param key 参数
      */
     public Long getExpire(String key) {
         RKeys rKeys = redissonClient.getKeys();
         return rKeys.remainTimeToLive(key);
+    }
+
+    /**
+     * 获取限流器
+     * @param key 参数
+     */
+    public RRateLimiter getRateLimiter(String key) {
+        return redissonClient.getRateLimiter(key);
     }
 
 }
