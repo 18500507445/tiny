@@ -3,14 +3,18 @@ package com.tiny.common.web.dto;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author: wzh
@@ -43,6 +47,19 @@ public class BaseReqDTO implements Serializable {
 
     // 分页关键字 特殊处理
     private String keyword;
+
+    // 获取authorization参数
+    @JsonProperty("Authorization")
+    @JSONField(name = "Authorization")
+    private String authorization;
+
+    // 起始时间，页面传字符串后端转Date
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+    // 结束时间，页面传字符串后端转Date
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
 
     // url解码处理
     public void setParams(String params) {
