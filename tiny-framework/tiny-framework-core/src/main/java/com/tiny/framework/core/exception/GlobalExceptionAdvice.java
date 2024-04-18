@@ -57,4 +57,22 @@ public class GlobalExceptionAdvice {
         return ResResult.failure(ResultCode.FAILED, e.getMessage());
     }
 
+    /**
+     * 父类异常
+     */
+    @ExceptionHandler(Exception.class)
+    public ResResult<Void> exception(Exception e) {
+        log.error("exception :", e);
+        return ResResult.failure(ResultCode.FAILED, e.getMessage());
+    }
+
+    public static void main(String[] args) {
+        try {
+            System.out.println("1/0 = " + 1 / 0);
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            System.out.println("m = " + e.getMessage());
+            System.out.println("g = " + e.getCause().getMessage());
+        }
+    }
 }
