@@ -1,4 +1,4 @@
-package com.tiny.common.web.vo;
+package com.tiny.framework.generator;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
