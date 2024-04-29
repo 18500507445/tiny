@@ -97,7 +97,7 @@ public class PageResult<T> {
         }
     }
 
-    private PageResult(List<T> list, int pageIndex, int pageSize, int totalCount) {
+    private PageResult(List<T> list, long pageIndex, long pageSize, long totalCount) {
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
         this.list = list;
@@ -183,7 +183,7 @@ public class PageResult<T> {
      * @param totalCount 总数
      * @return <T>
      */
-    public static <T> PageResult<T> page(List<T> list, int pageIndex, int pageSize, int totalCount) {
+    public static <T> PageResult<T> page(List<T> list, long pageIndex, long pageSize, long totalCount) {
         return new PageResult<>(list, pageIndex, pageSize, totalCount);
     }
 
