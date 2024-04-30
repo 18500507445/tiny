@@ -51,10 +51,9 @@ public final class JsonUtil {
         set.addAll(fieldList);
         //不忽略null值
         String jsonString = JSON.toJSONString(object, filter, JSONWriter.Feature.WriteNulls);
-        String name = clazz.getName();
-        if (JSONObject.class.getName().equals(name)) {
+        if (JSONObject.class.equals(clazz)) {
             return (T) JSON.parseObject(jsonString);
-        } else if (JSONArray.class.getName().equals(name)) {
+        } else if (JSONArray.class.equals(clazz)) {
             return (T) JSON.parseArray(jsonString);
         } else {
             return null;
