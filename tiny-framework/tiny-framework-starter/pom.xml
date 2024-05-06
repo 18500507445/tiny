@@ -19,6 +19,7 @@
         <module>tiny-framework-starter-redis</module>
         <module>tiny-framework-starter-redisson</module>
         <module>tiny-framework-starter-xxl</module>
+        <module>tiny-framework-starter-elasticsearch</module>
     </modules>
 
     <dependencies>
