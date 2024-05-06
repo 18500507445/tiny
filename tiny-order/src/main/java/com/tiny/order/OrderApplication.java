@@ -1,7 +1,7 @@
 package com.tiny.order;
 
 import com.tiny.framework.core.exception.GlobalExceptionAdvice;
-import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.base.ResResult;
 import com.tiny.framework.core.utils.common.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

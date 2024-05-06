@@ -1,4 +1,4 @@
-package com.tiny.framework.core.result;
+package com.tiny.framework.core.result.base;
 
 
 import cn.hutool.extra.spring.SpringUtil;

@@ -1,4 +1,4 @@
-package com.tiny.framework.core.result;
+package com.tiny.framework.core.result.base;
 
 /**
  * @description: 基础的返回码对象(基础的返回码)

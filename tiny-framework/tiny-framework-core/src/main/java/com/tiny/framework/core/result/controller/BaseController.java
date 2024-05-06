@@ -1,4 +1,4 @@
-package com.tiny.framework.core.result;
+package com.tiny.framework.core.result.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -27,7 +27,6 @@ public class BaseController {
      * 获取请求连接参数
      *
      * @param key
-     * @return
      */
     public String getValue(String key) {
         String value = "";

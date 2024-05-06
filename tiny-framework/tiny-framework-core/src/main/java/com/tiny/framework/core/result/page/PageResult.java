@@ -1,4 +1,4 @@
-package com.tiny.framework.generator;
+package com.tiny.framework.core.result.page;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;

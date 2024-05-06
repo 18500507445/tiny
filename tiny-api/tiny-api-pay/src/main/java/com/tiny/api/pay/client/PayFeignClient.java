@@ -1,6 +1,6 @@
 package com.tiny.api.pay.client;
 
-import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.base.ResResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

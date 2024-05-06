@@ -1,8 +1,8 @@
 package com.tiny.framework.core.exception;
 
 import cn.hutool.core.util.StrUtil;
-import com.tiny.framework.core.result.ResResult;
-import com.tiny.framework.core.result.ResultCode;
+import com.tiny.framework.core.result.base.ResResult;
+import com.tiny.framework.core.result.base.ResultCode;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;

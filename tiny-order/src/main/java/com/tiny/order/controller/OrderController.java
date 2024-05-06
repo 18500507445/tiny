@@ -1,8 +1,8 @@
 package com.tiny.order.controller;
 
 import com.tiny.api.order.feign.OrderFeignClient;
-import com.tiny.framework.core.result.BaseController;
-import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.controller.BaseController;
+import com.tiny.framework.core.result.base.ResResult;
 import com.tiny.framework.core.utils.common.IdUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

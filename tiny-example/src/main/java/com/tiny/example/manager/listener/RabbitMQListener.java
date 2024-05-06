@@ -5,7 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.example.config.RabbitConfig;
 import com.tiny.example.manager.bean.ExampleEvent;
-import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.base.ResResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

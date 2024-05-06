@@ -1,4 +1,4 @@
-package com.tiny.framework.core.result;
+package com.tiny.framework.core.result.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

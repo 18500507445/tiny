@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.rholder.retry.*;
-import com.tiny.framework.core.result.ResResult;
+import com.tiny.framework.core.result.base.ResResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.remoting.RemoteAccessException;
