@@ -16,8 +16,8 @@ import java.util.List;
 /**
  * @author: wzh
  * @description: EasyExcel工具类
- * @see <a href="https://blog.csdn.net/weixin_70506521/article/details/132011693">关闭流问题</a>
  * @date: 2023/12/08 11:32
+ * @see <a href="https://blog.csdn.net/weixin_70506521/article/details/132011693">关闭流问题</a>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j(topic = "tiny-framework-core ==> ExcelUtils")
@@ -59,8 +59,10 @@ public final class ExcelUtils {
                                  Class<T> head, List<T> data) throws IOException {
         // 输出 Excel
         EasyExcel.write(response.getOutputStream(), head)
-                .autoCloseStream(true) // 交给工具，自动关闭，有问题在手动吧
-                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()) // 基于 column 长度，自动适配。最大 255 宽度
+                // 交给工具，自动关闭，有问题在手动吧
+                .autoCloseStream(true)
+                // 基于 column 长度，自动适配。最大 255 宽度
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 .sheet(sheetName).doWrite(data);
         // 设置 header 和 contentType。写在最后的原因是，避免报错时，响应 contentType 已经被修改了
         response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
@@ -70,6 +72,7 @@ public final class ExcelUtils {
     /**
      * 读取 Excel 文件
      * 官方：// 不要自动关闭，交给 Servlet 自己处理
+     *
      * @param file 文件
      * @param head 头
      * @param <T>  泛型

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @description: openFeign配置类
  * @date: 2023/09/25 17:09
  */
-@Slf4j(topic = "tiny-common-cloud ==> FeignConfig")
+@Slf4j(topic = "tiny-framework-cloud ==> FeignConfig")
 @Configuration
 public class FeignConfig {
 

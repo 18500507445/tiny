@@ -15,7 +15,6 @@ import java.util.Map;
 @SuppressWarnings("NullableProblems")
 public class MdcTaskDecorator implements TaskDecorator {
 
-
     /**
      * TaskDecorator接口定义了一个方法decorate(Runnable runnable)，它接受一个Runnable任务对象作为参数，
      * 并返回一个被装饰后的Runnable对象。在Spring框架中，当使用ThreadPoolTaskExecutor作为线程池实现时，

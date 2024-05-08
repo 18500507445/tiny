@@ -11,10 +11,9 @@ import javax.validation.Validator;
 import java.util.Set;
 
 /**
- * hibernate-validator 自定义校验工具类
- *
- * @author wzh
- * @date 2023/6/22 21:13
+ * @author: wzh
+ * @date: 2023/6/22 21:13
+ * @description: hibernate-validator 自定义校验工具类
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ValidatorUtil {
