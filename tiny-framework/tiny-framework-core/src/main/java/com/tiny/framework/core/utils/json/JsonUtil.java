@@ -34,7 +34,6 @@ public final class JsonUtil {
      * @param clazz     object.class
      * @param type      枚举INCLUDE包含，EXCLUDE排除
      * @param <T>
-     * @return
      */
     @SuppressWarnings("unchecked")
     public static <T> T fastJsonField(Object object, List<String> fieldList, Class<T> clazz, Type type) {

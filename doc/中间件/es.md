@@ -1,11 +1,68 @@
-package com.tiny.framework.starter.elasticsearch;
+## es学习
 
+### [官方文档](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html)
+
+### 名词解释
+1.索引（Index）：索引是Elasticsearch中存储、搜索和分析数据的地方，类似于关系型数据库中的表。一个索引可以包含多个文档，并且可以分布在一个或多个分片上。
+
+2.类型（Type）：在Elasticsearch6.0版本之前，一个索引可以包含多个类型。类型允许你对索引中的文档进行更细粒度的分类。然而，从Elasticsearch6.0开始，类型被废弃，一个索引只能有一个默认类型"_doc"。
+
+3.文档（Document）：文档是Elasticsearch中的最小数据单元。它是以JSON格式表示的一条记录或一份数据。每个文档都属于一个索引，并具有一个唯一的标识（_id）。
+
+4.分片（Shard）：索引可以被分为多个分片。每个分片是一个独立的索引单元，它包含了完整的索引数据。分片允许数据分布在多个节点上，以提高性能和可扩展性。
+
+5.副本（Replica）：副本是分片的复制。每个分片可以有零个或多个副本。副本用于提供冗余和故障恢复。副本还可以提高搜索性能，因为搜索请求可以并行在主分片和副本上执行。
+
+6.节点（Node）：节点是Elasticsearch集群中的一个服务器，它存储数据并参与集群的索引和搜索操作。一个节点可以是主节点（负责协调集群操作）或数据节点（存储和处理数据）。
+
+7.集群（Cluster）：一个集群由一个或多个节点组成，它们共同协作来存储数据和执行操作。集群提供了高可用性、扩展性和容错能力。
+
+8.查询（Query）：查询是用于从Elasticsearch中检索数据的操作。Elasticsearch提供了丰富的查询语言和API，包括全文搜索、精确匹配、范围查询、聚合等功能。
+
+9.聚合（Aggregation）：聚合是在Elasticsearch中进行数据分析的一种功能。它允许你对数据进行分组、计算统计信息、生成报告等，以获取有关数据的洞察力。
+
+### API说明
+* NativeSearchQuery ：是Spring data中的查询条件
+* NativeSearchQueryBuilder ：建造一个NativeSearchQuery查询对象
+* QueryBuilders ：设置查询条件，是ES中的类，查询条件构构造器
+* SortBuilders ：设置排序条件
+* HighlightBuilder ：设置高亮显示
+
+### 桶的说明
+* Terms Bucket（术语桶）：根据字段值进行分组，类似于SQL中的GROUP BY。可以统计每个术语的文档数量或其他指标。
+* Range Bucket（范围桶）：根据字段值的范围进行分组，可以定义多个范围并统计每个范围内的文档数量或其他指标。
+* Date Histogram Bucket（日期直方图桶）：根据日期字段的时间间隔进行分组，例如按年、月、周等。可以统计每个时间间隔内的文档数量或其他指标。
+* Histogram Bucket（直方图桶）：根据数值字段的间隔进行分组，例如按价格区间、年龄段等。可以统计每个间隔内的文档数量或其他指标。
+* Geo Distance Bucket（地理距离桶）：根据地理位置字段的距离进行分组，例如按半径范围内的位置。可以统计每个距离范围内的文档数量或其他指标。
+* Filter Bucket（过滤桶）：根据给定的过滤条件对文档进行过滤并创建一个桶。可以在桶内统计过滤后的文档数量或其他指标。
+* Nested Bucket（嵌套桶）：用于在嵌套文档结构中进行分组，类似于在嵌套对象上进行递归操作。
+
+### 常见问题
+* [ES查询超过限制，并且NativeSearchQuery设置max数](https://www.cnblogs.com/datangguanjunhou/p/16482242.html)
+
+### 配置文件
+~~~yml
+spring:
+  elasticsearch:
+    uris: http://101.201.74.5:9201
+    #超时时间，单位：秒
+    connection-timeout: 1000
+~~~
+
+### **工具类如何使用**
+>1.实体类打上@EsRepository注解
+> 
+>2.创建索引、判断索引、基础的增删改查、查询结果的聚合拆解都在EsUtils里面
+> 
+>3.EsUtils代码如下
+~~~java
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
-import com.tiny.framework.core.result.page.PageResult;
+import com.nova.search.elasticsearch.annotation.EsRepository;
+import com.nova.search.elasticsearch.entity.PageResult;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -362,7 +419,7 @@ public final class EsUtils {
         if (searchHits != null && searchHits.hasSearchHits()) {
             long totalCount = searchHits.getTotalHits();
             if (totalCount <= 0) {
-                return PageResult.empty();
+                PageResult.empty();
             }
             List<T> content = list(searchHits);
             Page<T> page = new PageImpl<>(content, pageable, totalCount);
@@ -623,3 +680,167 @@ public final class EsUtils {
     }
 
 }
+~~~
+
+
+### 基础查询代码
+~~~java
+    //基础查询
+    @Test
+    public void queryPage() {
+        TimeInterval timer = DateUtil.timer();
+        //⚠️注意：ES页码从0开始
+        int pageIndex = 1;
+
+        // ----------------------------分页条件----------------------------
+
+        //分页 + 排序
+        Pageable page = PageRequest.of(pageIndex - 1, 200, Sort.Direction.ASC, "id");
+        //排序-2
+        FieldSortBuilder sort = new FieldSortBuilder("id").order(SortOrder.ASC);
+        //排序-3
+        FieldSortBuilder sort2 = SortBuilders.fieldSort("id").order(SortOrder.DESC);
+
+        // ----------------------------构造条件----------------------------
+
+        //精准查询-不分词查询。解释：id = 1的文档
+        QueryBuilder equal = QueryBuilders.termQuery("id", 1L);
+        QueryBuilder in = QueryBuilders.termsQuery("id", Arrays.asList(1L, 2L, 3L));
+
+        //精准查询-分词查询
+        QueryBuilder match = QueryBuilders.matchQuery("address", "天台");
+        //精准查询-分词查询-匹配多个
+        QueryBuilder multi = QueryBuilders.multiMatchQuery("安", "username", "address");
+
+        //精准查询-匹配field查询，支持分词，不带field就是查询所有
+        QueryBuilder string = QueryBuilders.queryStringQuery("蓝").field("username").field("address");
+
+        //模糊查询-左右模糊查询，其中fuzziness的参数作用是在查询时，es动态的将查询关键词前后增加或者删除一个词，然后进行匹配
+        QueryBuilder fuzzy = QueryBuilders.fuzzyQuery("idCard", "530").fuzziness(Fuzziness.ONE);
+
+        //模糊查询-前缀
+        QueryBuilder prefix = QueryBuilders.prefixQuery("idCard", "530");
+
+        //模糊查询-通配符，不分词，* 或 ？类比sql like%，不建议做为前缀，效率可能有影响
+        QueryBuilder like = QueryBuilders.wildcardQuery("idCard", "530*");
+
+        //范围查询-闭区间
+        QueryBuilder close = QueryBuilders.rangeQuery("id").from(3).to(5);
+
+        //范围查询-开区间
+        QueryBuilder open = QueryBuilders.rangeQuery("id").from(3).to(5).includeLower(false).includeUpper(false);
+
+        //范围查询-大于等于、小于等于
+        QueryBuilder gtAndLt = QueryBuilders.rangeQuery("id").gte(3).lte(5);
+
+        //组合查询-多个关键字分词查询（type = FieldType.Text）。must(与)、should(或)、mustNot(非)。举例：查找address带有天台和广场，不带有街道的数据
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("address", "天台"))
+                .must(QueryBuilders.termQuery("address", "广场"))
+                .mustNot(QueryBuilders.termQuery("address", "街道"));
+
+
+        //方式1，构建查询
+        Query searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(boolQuery)
+                //分页
+                .withPageable(page)
+                //排序2
+//                .withSorts(sort)
+                .build();
+
+
+        //方式2，构建条件 + 查询
+        Criteria criteria = new Criteria();
+        criteria.and(Criteria.where("id").is(1L));
+        criteria.and(Criteria.where("id").between(3, 5));
+        criteria.and(Criteria.where("id").in(3, 5));
+        Query query = new CriteriaQuery(criteria);
+
+        //执行查询
+        SearchHits<User> searchHits = elasticsearchRestTemplate.search(searchQuery, User.class);
+        PageResult<User> pageResult = EsUtils.page(searchHits, page);
+        Console.error("pageResult：{} ", JSONUtil.toJsonStr(pageResult));
+        Console.error("耗时：{} ", timer.interval());
+    }
+
+    //高亮查询
+    @Test
+    public void highlight() {
+        //根据一个值查询多个字段并高亮显示这里的查询是取并集，即多个字段只需要有一个字段满足即可
+        BoolQueryBuilder match = QueryBuilders.boolQuery()
+                .should(QueryBuilders.matchQuery("username", "马绍*"))
+                .should(QueryBuilders.matchQuery("password", "5c1urru49p8d*"));
+
+        //构建高亮查询
+        Query searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(match)
+                .withHighlightFields(new HighlightBuilder.Field("username"), new HighlightBuilder.Field("password"))
+                .withHighlightBuilder(new HighlightBuilder().preTags("<span style='color:red'>").postTags("</span>"))
+                .build();
+
+        //查询
+        SearchHits<User> search = elasticsearchRestTemplate.search(searchQuery, User.class);
+        List<SearchHit<User>> searchHits = search.getSearchHits();
+
+        //高亮结果处理
+        List<User> userList = new ArrayList<>();
+        for (SearchHit<User> searchHit : searchHits) {
+            //高亮的内容
+            Map<String, List<String>> highlightFields = searchHit.getHighlightFields();
+            //将高亮的内容填充到content中
+            searchHit.getContent().setUserName(highlightFields.get("userName") == null ? searchHit.getContent().getUserName() : highlightFields.get("userName").get(0));
+            searchHit.getContent().setPassword(highlightFields.get("password") == null ? searchHit.getContent().getPassword() : highlightFields.get("password").get(0));
+            userList.add(searchHit.getContent());
+        }
+        Console.error("jsonStr：{} ", JSONUtil.toJsonStr(userList));
+    }
+
+    //分组查询
+    @Test
+    public void groupBy() {
+        String key = "group";
+        NativeSearchQueryBuilder query = new NativeSearchQueryBuilder();
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        query.withQuery(boolQueryBuilder);
+
+        // 添加一个新的聚合，聚合类型为terms，聚合名称为count，聚合字段为sex
+        query.withAggregations(AggregationBuilders.terms(key).field("sex"));
+        // 不需要获取source结果集，在aggregation里可以获取结果
+        query.withSourceFilter(new FetchSourceFilterBuilder().build());
+
+        SearchHits<User> searchHits = elasticsearchRestTemplate.search(query.build(), User.class);
+
+        Aggregation aggregation = EsUtils.getAgg(searchHits, key);
+        Console.error("aggregation：{}", JSONUtil.toJsonStr(aggregation));
+
+        List<Object> keys = EsUtils.getAggKeys(searchHits, key);
+        Console.error("keys：{}", JSONUtil.toJsonStr(keys));
+
+        List<? extends Terms.Bucket> buckets = EsUtils.getBuckets(searchHits, key);
+        Console.error("buckets：{}", JSONUtil.toJsonStr(buckets));
+
+        List<Map<String, Object>> listMap = EsUtils.getBucketsMap(searchHits, key, Terms.class);
+        Console.error("listMap：{}", JSONUtil.toJsonStr(listMap));
+    }
+
+    //嵌套聚合，性别分组后，求平均年龄
+    @Test
+    public void subAgg() {
+        NativeSearchQueryBuilder query = new NativeSearchQueryBuilder();
+        // 不查询任何结果
+        query.withSourceFilter(new FetchSourceFilter(new String[]{""}, null));
+
+        // 1、添加一个新的聚合，聚合类型为terms，聚合名称为count，聚合字段为sex
+        query.withAggregations(
+                AggregationBuilders.terms("group").field("sex")
+                        // 在性别聚合桶内进行嵌套聚合，求平均值
+                        .subAggregation(AggregationBuilders.avg("avg").field("age"))
+        );
+
+        SearchHits<User> searchHits = elasticsearchRestTemplate.search(query.build(), User.class);
+
+        List<? extends Terms.Bucket> buckets = EsUtils.getBuckets(searchHits, "group");
+        Console.error("buckets：{}", JSONUtil.toJsonStr(buckets));
+    }
+~~~
