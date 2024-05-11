@@ -1,9 +1,16 @@
 package com.tiny.framework.core.user;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSONObject;
+import com.auth0.jwt.interfaces.Claim;
+import com.tiny.framework.core.exception.BusinessException;
+import com.tiny.framework.core.utils.common.JwtUtils;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.core.NamedThreadLocal;
+
+import java.util.Map;
 
 /**
  * @author: wzh
@@ -31,7 +38,28 @@ public final class UserContext {
         USER_CONTEXT.remove();
     }
 
+
+    /**
+     * @description: 从threadLocal获取UserToken
+     */
     public static UserToken get() {
         return USER_CONTEXT.get();
+    }
+
+    /**
+     * @description: 手动获取UserToken
+     */
+    public static UserToken getUserToken(String authorization) {
+        boolean tokenExpired = JwtUtils.isTokenExpired(authorization);
+        if (tokenExpired) {
+            throw new BusinessException("token过期");
+        }
+        //解析token
+        Map<String, Claim> parse = JwtUtils.parse(authorization);
+        String userContext = parse.get("json").asString();
+        if (StrUtil.isNotBlank(userContext)) {
+            return JSONObject.parseObject(userContext, UserContext.UserToken.class);
+        }
+        return null;
     }
 }

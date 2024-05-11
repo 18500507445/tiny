@@ -1,6 +1,6 @@
 ## es学习
 
-### [官方文档](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html)
+### [官方文档](https://docs.spring.io/spring-data/elasticsearch/docs/4.1.2/reference/html/#reference)
 
 ### 名词解释
 1.索引（Index）：索引是Elasticsearch中存储、搜索和分析数据的地方，类似于关系型数据库中的表。一个索引可以包含多个文档，并且可以分布在一个或多个分片上。
