@@ -21,3 +21,5 @@
 * @URL 必须是一个URL
 * @Range(min,max) 数字必须在min和max之间
 * @ListValue，自定义注解
+
+## @Valid(Java标准，嵌套校验用)
