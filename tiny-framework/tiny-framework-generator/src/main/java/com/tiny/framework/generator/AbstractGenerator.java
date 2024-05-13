@@ -117,7 +117,7 @@ public abstract class AbstractGenerator {
                         // 关闭序列话
                         .disableSerialVersionUID()
                         // 主键自增
-                        .idType(IdType.AUTO)
+                        .idType(IdType.ASSIGN_ID)
                         //开启覆盖已有文件
                         .enableFileOverride()
 
