@@ -39,6 +39,7 @@ public class ParentRabbitConfig {
      * 主配置连接工厂
      */
     @Bean(name = "primaryConnectionFactory")
+    @Primary
     public ConnectionFactory primaryConnectionFactory(@Qualifier("primaryProperties") RabbitProperties primaryProperties) {
         CachingConnectionFactory connectionFactory = getRabbitConnectionFactory(primaryProperties);
         log.warn("装配【primaryProperties】：第一个数据源配置，【primaryConnectionFactory】第一个连接工厂");

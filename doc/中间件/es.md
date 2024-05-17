@@ -50,11 +50,13 @@ spring:
 ~~~
 
 ### **工具类如何使用**
->1.实体类打上@EsRepository注解
+>1.启动类打上@EnableElasticsearchRepositories(basePackages = "xxx")，扫描ES仓库层
+>
+>2.实体类打上@EsRepository注解
 > 
->2.创建索引、判断索引、基础的增删改查、查询结果的聚合拆解都在EsUtils里面
+>3.创建索引、判断索引、基础的增删改查、查询结果的聚合拆解都在EsUtils里面
 > 
->3.EsUtils代码如下
+>4.EsUtils代码如下
 ~~~java
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
