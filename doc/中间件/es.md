@@ -39,6 +39,7 @@
 
 ### 常见问题
 * [ES查询超过限制，并且NativeSearchQuery设置max数](https://www.cnblogs.com/datangguanjunhou/p/16482242.html)
+* [聚合分页问题](https://www.cnblogs.com/mlzdev/p/11832798.html)
 
 ### 配置文件
 ~~~yml
