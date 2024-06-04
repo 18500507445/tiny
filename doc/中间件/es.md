@@ -40,6 +40,11 @@
 ### 常见问题
 * [ES查询超过限制，并且NativeSearchQuery设置max数](https://www.cnblogs.com/datangguanjunhou/p/16482242.html)
 * [聚合分页问题](https://www.cnblogs.com/mlzdev/p/11832798.html)
+* ES列表查询命中数量
+~~~
+//返回所有命中条数
+new NativeSearchQueryBuilder().withTrackTotalHits(true).build();
+~~~
 
 ### 配置文件
 ~~~yml
@@ -748,6 +753,8 @@ public final class EsUtils {
                 .withQuery(boolQuery)
                 //分页
                 .withPageable(page)
+                //返回所有命中条数
+                .withTrackTotalHits(true)
                 //排序2
 //                .withSorts(sort)
                 .build();
@@ -839,6 +846,8 @@ public final class EsUtils {
                 AggregationBuilders.terms("group").field("sex")
                         // 在性别聚合桶内进行嵌套聚合，求平均值
                         .subAggregation(AggregationBuilders.avg("avg").field("age"))
+                        // 聚合之后返回条数
+                        .size(Integer.MAX_VALUE)
         );
 
         SearchHits<User> searchHits = elasticsearchRestTemplate.search(query.build(), User.class);
