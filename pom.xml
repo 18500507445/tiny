@@ -38,7 +38,10 @@
     </modules>
 
     <properties>
-        <revision>1.0-SNAPSHOT</revision>
+        <!-- tiny 当前服务全局版本控制 -->
+        <revision>0.0.1-RELEASE</revision>
+        <!-- tiny 当前服务common模块版本控制 -->
+        <common.version>0.0.1-RELEASE</common.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
