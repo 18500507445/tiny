@@ -12,7 +12,6 @@
     <packaging>jar</packaging>
     <!-- 公共业务模块 -->
     <artifactId>tiny-common</artifactId>
-    <version>${common.version}</version>
 
     <dependencies>
 
