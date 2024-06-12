@@ -12,7 +12,8 @@
     <description>统一依赖管理</description>
 
     <properties>
-        <revision>1.0-SNAPSHOT</revision>
+        <!-- tiny 当前服务引入framework版本控制 -->
+        <revision>0.0.1-RELEASE</revision>
         <java.version>1.8</java.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

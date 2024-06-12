@@ -38,7 +38,7 @@
     </modules>
 
     <properties>
-        <!-- tiny 当前服务全局版本控制 -->
+        <!-- tiny 当前服务全局版本控制（目前framework与整体项目没有拆开所以与dependencies里面的版本保持一致） -->
         <revision>0.0.1-RELEASE</revision>
         <!-- tiny 当前服务common模块版本控制 -->
         <common.version>0.0.1-RELEASE</common.version>
