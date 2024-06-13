@@ -54,7 +54,12 @@ public class GlobalExceptionAdvice {
         if (businessLog) {
             log.error("businessException :{}", e.getMessage(), e);
         }
-        return ResResult.failure(ResultCode.FAILED, e.getMessage());
+        ResultCode resultCode = e.getResultCode();
+        if (null == resultCode) {
+            return ResResult.failure(ResultCode.FAILED, e.getMessage());
+        } else {
+            return ResResult.failure(e.getResultCode());
+        }
     }
 
     /**
@@ -66,13 +71,4 @@ public class GlobalExceptionAdvice {
         return ResResult.failure(ResultCode.FAILED, e.getMessage());
     }
 
-    public static void main(String[] args) {
-        try {
-            System.out.println("1/0 = " + 1 / 0);
-        } catch (Exception e) {
-            System.out.println("e = " + e);
-            System.out.println("m = " + e.getMessage());
-            System.out.println("g = " + e.getCause().getMessage());
-        }
-    }
 }

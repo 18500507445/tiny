@@ -7,6 +7,7 @@ import com.tiny.example.enums.ExampleEventEnum;
 import com.tiny.example.manager.bean.ExampleEvent;
 import com.tiny.example.web.dto.ExampleDTO;
 import com.tiny.framework.core.exception.BusinessException;
+import com.tiny.framework.core.result.base.ResultCode;
 import com.tiny.framework.core.result.controller.BaseController;
 import com.tiny.framework.core.result.base.ResResult;
 import com.tiny.framework.core.thread.ThreadWrap;
@@ -47,6 +48,11 @@ public class ExampleController extends BaseController {
     @RequestMapping(value = "/testException", method = RequestMethod.GET, name = "测试运行异常")
     public ResResult<Void> testException() {
         throw new BusinessException("测试运行异常");
+    }
+
+    @RequestMapping(value = "/testException2", method = RequestMethod.GET, name = "测试运行异常2")
+    public ResResult<Void> testException2() {
+        throw new BusinessException(ResultCode.CURRENT_LIMITING);
     }
 
     @RequestMapping(value = "/testRequestBody", method = RequestMethod.POST, name = "测试@RequestBody")
