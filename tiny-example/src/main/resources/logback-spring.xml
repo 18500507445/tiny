@@ -90,6 +90,8 @@
 
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="warn"/>
+    <!-- redis-lettuce日志级别控制  -->
+    <logger name="io.lettuce.core.protocol" level="error"/>
 
     <root level="debug">
         <appender-ref ref="console"/>

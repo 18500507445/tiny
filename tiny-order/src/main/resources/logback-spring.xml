@@ -73,6 +73,7 @@
     </appender>
 
     <logger name="org.springframework" level="warn"/>
+    <logger name="io.lettuce.core.protocol" level="error"/>
 
     <root level="debug">
         <appender-ref ref="console"/>
