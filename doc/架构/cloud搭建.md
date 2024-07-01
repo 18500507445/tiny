@@ -69,7 +69,7 @@
 </dependencies>
 ~~~
 
-配置动态刷新注解@RefreshScope，@Value取到的值就是动态改变的
+配置动态刷新注解@RefreshScope，@Value取到的值就是动态改变的。⚠️一定要配合@Component使用
 
 ### 2.Gateway（网关，路由转发到服务）
 ~~~yml
