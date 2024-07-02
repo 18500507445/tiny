@@ -92,6 +92,8 @@
     <logger name="org.springframework" level="warn"/>
     <!-- redis-lettuce日志级别控制  -->
     <logger name="io.lettuce.core.protocol" level="error"/>
+    <!-- es日志级别控制  -->
+    <logger name="org.elasticsearch" level="error"/>
 
     <root level="debug">
         <appender-ref ref="console"/>
