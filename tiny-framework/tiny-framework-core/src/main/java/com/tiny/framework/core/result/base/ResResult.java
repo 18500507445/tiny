@@ -1,6 +1,8 @@
 package com.tiny.framework.core.result.base;
 
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.tiny.framework.core.trace.TraceContext;
 import lombok.Data;
@@ -95,6 +97,20 @@ public class ResResult<T> implements Serializable {
         this.ip = internetIp;
     }
 
+    public ResResult(ResResult<T> resultVO) {
+        if (null != resultVO) {
+            this.bizCode = StrUtil.isEmpty(resultVO.getBizCode()) ? "" : resultVO.getBizCode();
+            this.bizMessage = StrUtil.isEmpty(resultVO.getBizMessage()) ? "" : resultVO.getBizMessage();
+            this.success = ObjectUtil.isNull(resultVO.getSuccess()) ? null : resultVO.getSuccess();
+            this.data = ObjectUtil.isNull(resultVO.getData()) ? null : resultVO.getData();
+        }
+        this.traceId = TraceContext.getCurrentTrace().getTraceId();
+        this.spanId = TraceContext.getCurrentTrace().getSpanId();
+        this.env = SpringUtil.getActiveProfile();
+        this.systemTime = System.currentTimeMillis();
+        this.ip = internetIp;
+    }
+
     public static <T> ResResult<T> success() {
         return new ResResult<>(ResultCode.SUCCESS, true);
     }
@@ -103,44 +119,48 @@ public class ResResult<T> implements Serializable {
         return new ResResult<>(ResultCode.SUCCESS, data, true);
     }
 
-    public static <T> ResResult<T> success(IResultCode resultCode) {
+    public static <T> ResResult<T> success(ResultCode resultCode) {
         return new ResResult<>(resultCode, true);
     }
 
-    public static <T> ResResult<T> success(IResultCode resultCode, T data) {
+    public static <T> ResResult<T> success(ResultCode resultCode, T data) {
         return new ResResult<>(resultCode, data, true);
     }
 
-    public static <T> ResResult<T> success(IResultCode resultCode, String bizMessage) {
+    public static <T> ResResult<T> success(ResultCode resultCode, String bizMessage) {
         return new ResResult<>(resultCode, null, true, bizMessage);
     }
 
-    public static <T> ResResult<T> success(IResultCode resultCode, T data, String bizMessage) {
+    public static <T> ResResult<T> success(ResultCode resultCode, T data, String bizMessage) {
         return new ResResult<>(resultCode, data, true, bizMessage);
     }
 
     public static <T> ResResult<T> failure() {
-        return new ResResult<>(ResultCode.FAILED, true);
+        return new ResResult<>(ResultCode.FAILED, false);
     }
 
-    public static <T> ResResult<T> failure(String bizMessage) {
-        return new ResResult<>(ResultCode.FAILED, null, false, bizMessage);
+    public static <T> ResResult<T> failure(T data) {
+        return new ResResult<>(ResultCode.FAILED, data, false);
     }
 
-    public static <T> ResResult<T> failure(IResultCode resultCode) {
+    public static <T> ResResult<T> failure(ResultCode resultCode) {
         return new ResResult<>(resultCode, false);
     }
 
-    public static <T> ResResult<T> failure(IResultCode resultCode, String bizMessage) {
+    public static <T> ResResult<T> failure(ResultCode resultCode, String bizMessage) {
         return new ResResult<>(resultCode, null, false, bizMessage);
     }
 
-    public static <T> ResResult<T> failure(IResultCode resultCode, T data) {
+    public static <T> ResResult<T> failure(ResultCode resultCode, T data) {
         return new ResResult<>(resultCode, data, false);
     }
 
-    public static <T> ResResult<T> failure(IResultCode resultCode, T data, String bizMessage) {
+    public static <T> ResResult<T> failure(ResultCode resultCode, T data, String bizMessage) {
         return new ResResult<>(resultCode, data, false, bizMessage);
+    }
+
+    public static <T> ResResult<T> build(ResResult<T> result) {
+        return new ResResult<>(result);
     }
 
 }
