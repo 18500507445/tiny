@@ -72,7 +72,7 @@ public class ExampleController extends BaseController {
     public ResResult<Map<String, Object>> getPayOrderId() {
         UserContext.UserToken userToken = UserContext.get();
         ResResult<Map<String, String>> result = payFeignClient.getPayOrderId();
-        Map<String, Object> hashMap = MapUtil.of("payOrder", result.getData().get("data"));
+        Map<String, Object> hashMap = MapUtil.of("payOrder", result.getData());
         hashMap.put("userInfo", userToken);
         return ResResult.success(hashMap);
     }

@@ -1,11 +1,10 @@
 package com.tiny.pay.controller;
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
 import com.tiny.api.order.feign.OrderFeignClient;
 import com.tiny.api.pay.client.PayFeignClient;
-import com.tiny.framework.core.result.controller.BaseController;
 import com.tiny.framework.core.result.base.ResResult;
+import com.tiny.framework.core.result.controller.BaseController;
 import com.tiny.framework.core.utils.common.IdUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class PayController extends BaseController implements PayFeignClient {
     @ResponseBody
     public ResResult<Map<String, String>> getPayOrderId() {
         ResResult<String> result = orderFeignClient.getOrderId();
-        Map<String, String> map = MapUtil.of("orderId", Convert.toStr(result.getData()));
+        Map<String, String> map = MapUtil.of("orderId", result.getData());
         map.put("transactionId", IdUtils.fastSimpleUuid());
         return ResResult.success(map);
     }

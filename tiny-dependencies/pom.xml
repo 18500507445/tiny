@@ -31,7 +31,7 @@
 
         <!-- 工具版本 -->
         <fastjson.version>2.0.52</fastjson.version>
-        <hutool.version>5.8.29</hutool.version>
+        <hutool.version>5.8.30</hutool.version>
         <guava.version>33.2.1-jre</guava.version>
         <guava.retry.version>2.0.0</guava.retry.version>
         <easyexcel.verson>4.0.1</easyexcel.verson>
