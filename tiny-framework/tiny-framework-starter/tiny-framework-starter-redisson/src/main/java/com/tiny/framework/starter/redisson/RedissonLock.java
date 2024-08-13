@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * 分布式锁工具类
  *
  * @author wzh
- * @date 2023/11/02 20:53
+ * @date: 2023/11/02 20:53
  */
 @Slf4j(topic = "tiny-framework-starter ==> RedissonLock")
 @Getter
