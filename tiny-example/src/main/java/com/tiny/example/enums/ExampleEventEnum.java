@@ -13,7 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ExampleEventEnum {
 
-    ONE(1, "【example】模块 - xxx干的事", "发送一个MQ消息"),
+    ONE(1, "【example】模块 - xxx事件", "发送一个MQ消息"),
 
     ;
 

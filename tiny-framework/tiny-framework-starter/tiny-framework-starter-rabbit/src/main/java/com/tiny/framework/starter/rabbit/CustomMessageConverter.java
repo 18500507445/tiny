@@ -26,8 +26,7 @@ public class CustomMessageConverter implements MessageConverter {
      *
      * @param o                 the object to convert
      * @param messageProperties The message properties.
-     * @return
-     * @throws MessageConversionException
+     * @throws MessageConversionException messageConversionException
      */
 
     @Override
@@ -53,12 +52,16 @@ public class CustomMessageConverter implements MessageConverter {
      * 支持的有（1）jsonString转Message对象（2）对象转对象
      *
      * @param message the message to convert
-     * @throws MessageConversionException
+     * @throws MessageConversionException messageConversionException
      */
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {
         MessageProperties messageProperties = message.getMessageProperties();
-        TraceContext.setCurrentTrace(messageProperties.getHeader(Trace.TRACE_ID));
-        return JSON.parseObject(message.getBody(), messageProperties.getInferredArgumentType());
+        if (null == messageProperties || null == messageProperties.getInferredArgumentType()) {
+            return JSON.parseObject(message.getBody(), String.class);
+        } else {
+            TraceContext.setCurrentTrace(messageProperties.getHeader(Trace.TRACE_ID));
+            return JSON.parseObject(message.getBody(), messageProperties.getInferredArgumentType());
+        }
     }
 }

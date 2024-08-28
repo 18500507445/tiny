@@ -1,6 +1,7 @@
 package com.tiny.framework.starter.mongo;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -41,10 +42,12 @@ public class MongoAutoConfiguration {
     }
 
     /**
-     * 默认 MongoTemplate
+     * 默认MongoTemplate，可以起多个名字，name里面可以放数组
+     * ConditionalOnBean 只有当名为primaryMongoProperties的Bean存在于容器中时，才会创建和配置primaryMongoTemplate的bean
      */
-    @Bean(name = "primaryMongoTemplate")
+    @Bean(name = {"primaryMongoTemplate", "mongoTemplate"})
     @Primary
+    @ConditionalOnBean(name = "primaryMongoProperties")
     public MongoTemplate primaryMongoTemplate() throws UnsupportedEncodingException {
         MongoProperties mongoProperties = this.primaryMongoProperties();
         if (null != mongoProperties.getHost()) {

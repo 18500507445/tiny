@@ -73,6 +73,7 @@ public class ExampleApplication {
             //公网ip 后两位初始化ResultVO
             ResResult.setInternetIp(s);
             log.warn("【example】模块启动成功，初始化公网ip：{}，放入ResultVO", s);
+            log.warn("【nacos地址 =====> http://localhost:8848/nacos/#】");
         });
     }
 

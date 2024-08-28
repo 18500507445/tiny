@@ -19,10 +19,10 @@ import org.springframework.context.annotation.Primary;
  * <p>
  * @date: 2023/12/14 13:43
  */
-@Slf4j(topic = "tiny-framework-starter ==> ParentRabbitConfig")
+@Slf4j(topic = "tiny-framework-starter ==> RabbitAutoConfiguration")
 @Configuration
 @EnableRabbit
-public class ParentRabbitConfig {
+public class RabbitAutoConfiguration {
 
     /**
      * 主配置

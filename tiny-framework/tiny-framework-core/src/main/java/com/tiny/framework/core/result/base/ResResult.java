@@ -6,6 +6,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.tiny.framework.core.trace.TraceContext;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ import java.util.HashMap;
  * @date: 2023/09/21 14:33
  */
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class ResResult<T> extends HashMap<String, Object> implements Serializable {
 
     /**

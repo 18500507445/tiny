@@ -30,8 +30,9 @@ public class RabbitMQListener {
 
     /**
      * 直连模式
-     * @param message
-     * @param messageDO
+     *
+     * @param message   message
+     * @param messageDO messageDO
      */
     @RabbitHandler
     @RabbitListener(queuesToDeclare = @Queue(RabbitConfig.EXAMPLE_QUEUE))
@@ -39,7 +40,7 @@ public class RabbitMQListener {
         long tag = message.getMessageProperties().getDeliveryTag();
         log.error("直连模式one，消息id：{}，消息内容：{}，messageDO：{}", tag, JSONUtil.toJsonStr(new String(message.getBody())), JSONUtil.toJsonStr(messageDO));
         ResResult<Map<String, String>> result = payFeignClient.getPayOrderId();
-        Map<String, Object> hashMap = MapUtil.of("payOrder", result.getData().get("data"));
-        log.error("userInfo:" + JSONUtil.toJsonStr(hashMap));
+        Map<String, Object> hashMap = MapUtil.of("payOrder", result.getData());
+        log.error("userInfo:{}", JSONUtil.toJsonStr(hashMap));
     }
 }

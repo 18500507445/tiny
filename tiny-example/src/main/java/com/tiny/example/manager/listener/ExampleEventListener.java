@@ -30,6 +30,7 @@ public class ExampleEventListener {
      * 备注：Async使用名称，会自动注入线程池，如果不写那就是默认的Thread，`但是`AsyncConfig我自动配置了beanName所以不写也是用的getAsyncExecutor这个线程池
      * 下面我的用的是getAsyncExecutor线程池，我就配置1个核心，1最大，多次调用线程id都是一个，哈哈
      * {@link ExampleEventEnum#ONE}
+     * 队列导航 ==> {@link RabbitMQListener#one}
      */
     @Async("getAsyncExecutor")
     @EventListener(condition = "#exampleEvent.exampleEventEnum.id == 1")
