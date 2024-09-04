@@ -6,10 +6,10 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
-        namespace: dc464a71-0f8a-48d6-90f3-6ec7b41e4f48
+        namespace: 05267cb3-9710-4d55-859b-4bb2ec643586
       config:
         server-addr: localhost:8848
-        namespace: dc464a71-0f8a-48d6-90f3-6ec7b41e4f48
+        namespace: 05267cb3-9710-4d55-859b-4bb2ec643586
         file-extension: yml
         refresh-enabled: true
         prefix: ${spring.application.name}
