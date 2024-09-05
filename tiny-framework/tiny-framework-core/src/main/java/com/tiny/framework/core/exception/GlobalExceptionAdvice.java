@@ -58,7 +58,8 @@ public class GlobalExceptionAdvice {
         if (null == resultCode) {
             return ResResult.failure(ResultCode.FAILED, e.getMessage());
         } else {
-            return ResResult.failure(e.getResultCode());
+            //返回传入的枚举
+            return ResResult.failure(resultCode);
         }
     }
 
