@@ -51,13 +51,16 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(BusinessException.class)
     public ResResult<Void> businessException(BusinessException e) {
-        if (businessLog) {
-            log.error("businessException :{}", e.getMessage(), e);
-        }
         ResultCode resultCode = e.getResultCode();
         if (null == resultCode) {
+            if (businessLog) {
+                log.error("businessException :{}", e.getMessage(), e);
+            }
             return ResResult.failure(ResultCode.FAILED, e.getMessage());
         } else {
+            if (businessLog) {
+                log.error("businessException :{}", resultCode.getBizMessage(), e);
+            }
             //返回传入的枚举
             return ResResult.failure(resultCode);
         }
