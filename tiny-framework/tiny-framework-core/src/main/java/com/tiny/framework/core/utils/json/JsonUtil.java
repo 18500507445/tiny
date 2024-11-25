@@ -65,6 +65,20 @@ public final class JsonUtil {
         }
     }
 
+    //判断是否是jsonArray
+    public static boolean isArray(String json) {
+        Object parse = JSON.parse(json);
+        return parse instanceof JSONArray;
+    }
+
+    //判断是否是jsonObject
+    public static boolean isObject(String json) {
+        Object parse = JSON.parse(json);
+        return parse instanceof JSONObject;
+    }
+
+    // ----------------------------------------- jackson方法 -----------------------------------------
+
     /**
      * 定义jackson对象
      */

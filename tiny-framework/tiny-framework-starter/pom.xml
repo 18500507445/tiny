@@ -20,6 +20,7 @@
         <module>tiny-framework-starter-redisson</module>
         <module>tiny-framework-starter-xxl</module>
         <module>tiny-framework-starter-elasticsearch</module>
+        <module>tiny-framework-starter-solr</module>
     </modules>
 
     <dependencies>
