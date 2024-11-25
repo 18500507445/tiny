@@ -18,6 +18,14 @@ spring:
         prefix: ${spring.application.name}
         group: DEFAULT_GROUP
 
+    # sentinel限流配置
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+      web-context-unify: false
+      # 限流跳转到接口的url，SentinelController ==> /sentinel
+      block-page: /${spring.application.name}/api/sentinel
+
 # log路径
 logging:
   file:

@@ -45,6 +45,11 @@
 
         <dependency>
             <groupId>com.tiny</groupId>
+            <artifactId>tiny-framework-starter-sentinel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tiny</groupId>
             <artifactId>tiny-api-order</artifactId>
         </dependency>
 

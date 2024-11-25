@@ -21,6 +21,7 @@
         <module>tiny-framework-starter-xxl</module>
         <module>tiny-framework-starter-elasticsearch</module>
         <module>tiny-framework-starter-solr</module>
+        <module>tiny-framework-starter-sentinel</module>
     </modules>
 
     <dependencies>

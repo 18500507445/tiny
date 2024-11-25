@@ -12,6 +12,7 @@ import com.tiny.framework.core.result.controller.BaseController;
 import com.tiny.framework.core.result.base.ResResult;
 import com.tiny.framework.core.thread.ThreadWrap;
 import com.tiny.framework.core.user.UserContext;
+import com.tiny.framework.starter.sentinel.SentinelApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -34,7 +35,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tiny-example/api")
-public class ExampleController extends BaseController {
+public class ExampleController extends BaseController implements SentinelApi {
 
     private final PayFeignClient payFeignClient;
 
@@ -100,6 +101,5 @@ public class ExampleController extends BaseController {
 
         return ResResult.success("finalTraceId");
     }
-
 
 }
