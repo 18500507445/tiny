@@ -78,10 +78,10 @@ spring:
     gateway:
       # 配置路由列表，每一项都包含了很多信息
       routes:
-      - id: orderServer   # 路由名称
-        uri: lb://orderServer  # 路由的地址，lb表示使用负载均衡到微服务，也可以使用http正常转发
+      - id: tiny-order   # 路由名称
+        uri: lb://tiny-order  # 路由的地址，lb表示使用负载均衡到微服务，也可以使用http正常转发
         predicates: # 路由规则，断言什么请求会被路由
-        - Path=/api/order/**  # 只要是访问的这个路径，一律都被路由到上面指定的服务
+        - Path=/tiny-order/api/**  # 只要是访问的这个路径，一律都被路由到上面指定的服务
 ~~~
 
 ### 3. OpenFeign（远程调用）
@@ -137,17 +137,17 @@ OrderApplication添加@EnableFeignClients注解开启远程调用
 spring:
   cloud:
     sentinel:
-      block-page: /api/order/blocked
+      block-page: /${spring.application.name}/api/sentinel
 ~~~
 
 ~~~java
-@RequestMapping("/blocked")
-JSONObject blocked() {
-    JSONObject object = new JSONObject();
-    object.put("code", 403);
-    object.put("success", false);
-    object.put("massage", "您的请求频率过快，请稍后再试！");
-    return object;
+@RestController
+public interface SentinelApi {
+
+    @RequestMapping("/sentinel")
+    default ResResult<Void> sentinel() {
+        throw new BusinessException("您的请求频率过快，请稍后再试！");
+    }
 }
 ~~~
 
