@@ -2,6 +2,9 @@
 
 ### openfeign和loadbalancer搭配实用
 
+### 相关文章
+#### 1.[深入剖析OpenFeign的应用及源码解析](https://mp.weixin.qq.com/s/3MGAycsXDei-1_6ZB2vAUA)
+
 ### EnableFeignClients注解解释
 ~~~java
 @Retention(RetentionPolicy.RUNTIME)

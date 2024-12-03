@@ -2,15 +2,18 @@ package com.tiny.example.config;
 
 import com.tiny.framework.starter.rabbit.CustomMessageConverter;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 
 /**
  * @author: wzh
@@ -52,7 +55,20 @@ public class RabbitConfig {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(primaryConnectionFactory);
         factory.setMessageConverter(new CustomMessageConverter());
+        factory.setAdviceChain(retries());
         return factory;
+    }
+
+    /**
+     * 消息重试器
+     * @description: 重试完成提示 ==> Retry Policy Exhausted
+     */
+    @Bean
+    public RetryOperationsInterceptor retries() {
+        return RetryInterceptorBuilder.stateless()
+                .maxAttempts(3) //设置最大尝试次数为3（不重试）
+                .backOffOptions(1000, 3.0, 10000)
+                .recoverer(new RejectAndDontRequeueRecoverer()).build();
     }
 
     //直连交换机(自带)
