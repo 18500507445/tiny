@@ -18,3 +18,5 @@ spring:
 logging:
   file:
     path: /Users/wangzehui/logs/tiny/${spring.application.name}
+  level:
+    com.alibaba.nacos: WARN
