@@ -30,14 +30,14 @@
         <druid.version>1.2.24</druid.version>
 
         <!-- 工具版本 -->
-        <fastjson.version>2.0.53</fastjson.version>
-        <hutool.version>5.8.34</hutool.version>
-        <guava.version>33.3.0-jre</guava.version>
+        <fastjson.version>2.0.56</fastjson.version>
+        <hutool.version>5.8.36</hutool.version>
+        <guava.version>33.4.0-jre</guava.version>
         <guava.retry.version>2.0.0</guava.retry.version>
         <easyexcel.verson>4.0.3</easyexcel.verson>
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok.mapstruct.version>0.2.0</lombok.mapstruct.version>
-        <jwt.version>4.4.0</jwt.version>
+        <jwt.version>4.5.0</jwt.version>
         <xxljob.version>2.4.1</xxljob.version>
 
         <!-- 兼容到spring-boot-starter 2.7.18版本，不建议升级了 -->
