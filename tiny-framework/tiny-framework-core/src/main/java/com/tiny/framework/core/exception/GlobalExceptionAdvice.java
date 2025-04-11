@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -30,9 +31,9 @@ public class GlobalExceptionAdvice {
     private static boolean bindLog = false;
 
     /**
-     * 拦截的validator异常
+     * 拦截的validator异常（场景：controller中请求的参数）
      */
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler({BindException.class})
     public ResResult<Void> handleBindException(BindException e) {
         if (bindLog) {
             log.warn("handleBindException：{}", e.getMessage());
@@ -44,6 +45,17 @@ public class GlobalExceptionAdvice {
             msg.append(message).append("，");
         }
         return ResResult.failure(ResultCode.VALIDATE_FAILED, StrUtil.subWithLength(msg.toString(), 0, msg.length() - 1));
+    }
+
+    /**
+     * 拦截接口层validator（场景：接口类上添加@Validated注解，方法参数上添加正常注解）
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResResult<Void> handleConstraintViolationException(ConstraintViolationException e) {
+        if (bindLog) {
+            log.warn("handleConstraintViolationException：{}", e.getMessage());
+        }
+        return ResResult.failure(ResultCode.VALIDATE_FAILED, e.getMessage());
     }
 
     /**
