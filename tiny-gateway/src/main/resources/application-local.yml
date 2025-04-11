@@ -18,51 +18,6 @@ spring:
         prefix: ${spring.application.name}
         group: DEFAULT_GROUP
 
-    gateway:
-      # 全局http超时 response单位：秒，connect单位：毫秒
-      httpclient:
-        response-timeout: 10s
-        connect-timeout: 10000
-
-      # 跨域处理
-      globalcors:
-        # 解决options请求被拦截问题
-        add-to-simple-url-handler-mapping: true
-        corsConfigurations:
-          '[/**]':
-            # 允许跨域的请求，spring boot2.4以后的配置
-            allowedOriginPatterns: "*"
-            # 允许的跨域ajax的请求方式
-            allowedMethods: "*"
-            # 允许在请求中携带的头信息
-            allowedHeaders: "*"
-            # 允许在请求中携带cookie
-            allowCredentials: true
-            # 跨域检测的有效期,单位s
-            maxAge: 36000
-
-      # 配置路由列表
-      routes:
-        - id: tiny-example  # 路由名称
-          uri: lb://tiny-example  # 路由的地址，lb表示使用负载均衡到微服务，也可以使用http正常转发
-          predicates: # 路由规则，断言什么请求会被路由
-            - Path=/tiny-example/api/**,/tiny-example/api-b/**,/tiny-example/api-c/** # 只要是访问的这个路径，一律都被路由到上面指定的服务
-
-          #局部http超时，单位：毫秒
-          metadata:
-            response-timeout: 10s
-            connect-timeout: 10000
-
-        - id: tiny-order
-          uri: lb://tiny-order
-          predicates:
-            - Path=/tiny-order/api/**
-
-        - id: tiny-pay
-          uri: lb://tiny-pay
-          predicates:
-            - Path=/tiny-pay/api/**
-
 # log路径
 logging:
   file:
