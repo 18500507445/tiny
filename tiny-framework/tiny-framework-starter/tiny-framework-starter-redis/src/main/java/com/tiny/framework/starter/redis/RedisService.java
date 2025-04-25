@@ -457,6 +457,15 @@ public final class RedisService {
         }
     }
 
+    public Long setSet(String key, Collection<Object> values) {
+        try {
+            return primaryRedisTemplate.opsForSet().add(key, values.toArray());
+        } catch (Exception e) {
+            extracted(e);
+            return 0L;
+        }
+    }
+
     /**
      * 将set数据放入缓存
      *
