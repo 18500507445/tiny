@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.tiny.framework.starter.redisson.RedissonAutoConfiguration
+com.tiny.framework.starter.redisson.config.RedissonAutoConfiguration,\
+com.tiny.framework.starter.redisson.config.RedissonProperties
