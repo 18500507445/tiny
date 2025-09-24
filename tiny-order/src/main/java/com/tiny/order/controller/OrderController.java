@@ -1,6 +1,6 @@
 package com.tiny.order.controller;
 
-import com.tiny.api.order.feign.OrderFeignClient;
+import com.tiny.api.order.client.OrderFeignClient;
 import com.tiny.framework.core.result.controller.BaseController;
 import com.tiny.framework.core.result.base.ResResult;
 import com.tiny.framework.core.utils.common.IdUtils;

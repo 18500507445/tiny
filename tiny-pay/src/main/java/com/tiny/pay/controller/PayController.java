@@ -1,7 +1,7 @@
 package com.tiny.pay.controller;
 
 import cn.hutool.core.map.MapUtil;
-import com.tiny.api.order.feign.OrderFeignClient;
+import com.tiny.api.order.client.OrderFeignClient;
 import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.framework.core.result.base.ResResult;
 import com.tiny.framework.core.result.controller.BaseController;

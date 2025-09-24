@@ -1,4 +1,4 @@
-package com.tiny.api.order.feign;
+package com.tiny.api.order.client;
 
 import com.tiny.framework.core.result.base.ResResult;
 import org.springframework.cloud.openfeign.FeignClient;
