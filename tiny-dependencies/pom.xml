@@ -27,7 +27,7 @@
         <!-- 数据库 -->
         <mybatis.plus.version>3.5.5</mybatis.plus.version>
         <dynamic.version>4.3.1</dynamic.version>
-        <druid.version>1.2.24</druid.version>
+        <druid.version>1.2.27</druid.version>
 
         <!-- 工具版本 -->
         <fastjson.version>2.0.60</fastjson.version>
