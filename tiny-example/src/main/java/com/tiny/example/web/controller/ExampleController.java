@@ -1,10 +1,14 @@
 package com.tiny.example.web.controller;
 
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.pagehelper.PageHelper;
 import com.tiny.api.pay.client.PayFeignClient;
 import com.tiny.common.annotation.ValidGroup;
 import com.tiny.example.enums.ExampleEventEnum;
 import com.tiny.example.manager.bean.ExampleEvent;
+import com.tiny.example.repository.entity.ExampleEntity;
+import com.tiny.example.repository.mapper.ExampleMapper;
 import com.tiny.example.web.dto.ExampleDTO;
 import com.tiny.framework.core.exception.BusinessException;
 import com.tiny.framework.core.result.base.ResultCode;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +45,17 @@ public class ExampleController extends BaseController implements SentinelApi {
     private final PayFeignClient payFeignClient;
 
     private final ApplicationEventPublisher applicationEventPublisher;
+
+    private final ExampleMapper exampleMapper;
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ResResult<List<ExampleEntity>> list() {
+        PageHelper.startPage(1, 10);
+        LambdaQueryWrapper<ExampleEntity> query = new LambdaQueryWrapper<>();
+        query.orderByAsc(ExampleEntity::getId);
+        List<ExampleEntity> list = exampleMapper.selectList(query);
+        return ResResult.success(list);
+    }
 
     @RequestMapping(value = "/traceId", method = RequestMethod.GET, name = "测试traceId透传")
     public ResResult<String> traceId() {

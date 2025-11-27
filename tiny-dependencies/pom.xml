@@ -25,7 +25,7 @@
         <spring.cloud.alibaba.version>2021.0.5.0</spring.cloud.alibaba.version>
 
         <!-- 数据库 -->
-        <mybatis.plus.version>3.5.5</mybatis.plus.version>
+        <mybatis.plus.version>3.5.14</mybatis.plus.version>
         <dynamic.version>4.3.1</dynamic.version>
         <druid.version>1.2.27</druid.version>
 
@@ -40,8 +40,8 @@
         <jwt.version>4.5.0</jwt.version>
         <xxljob.version>2.5.0</xxljob.version>
 
-        <!-- 兼容到spring-boot-starter 2.7.18版本，不建议升级了（2.1.0不支持mybatis-plus） -->
-        <pagehelper.boot.version>2.0.0</pagehelper.boot.version>
+        <!-- 兼容到spring-boot-starter 2.7.18版本，不建议升级了-->
+        <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <!-- 3.0之前最后一个版本，不建议升级 -->
         <redisson.version>3.18.0</redisson.version>
 
@@ -170,6 +170,12 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
 
