@@ -19,8 +19,8 @@ public class BusinessException extends RuntimeException {
 
     private ResultCode resultCode;
 
-    public BusinessException(String message) {
-        super(message);
+    public BusinessException(CharSequence message) {
+        super(message.toString());
     }
 
     public BusinessException(ResultCode resultCode) {

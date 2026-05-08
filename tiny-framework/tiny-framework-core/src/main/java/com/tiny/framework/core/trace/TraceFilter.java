@@ -72,7 +72,7 @@ public class TraceFilter extends GenericFilterBean {
                 //json
                 if (StrUtil.containsIgnoreCase(contentType, "json")) {
                     String body = getBody(requestWrapper = new RequestWrapper(request));
-                    if (StrUtil.isNotBlank(body)) {
+                    if (StrUtil.isNotBlank(body) && !StrUtil.equals("[]", body)) {
                         paramResult.putAll(JSONObject.parseObject(body, Map.class));
                     }
                 }
