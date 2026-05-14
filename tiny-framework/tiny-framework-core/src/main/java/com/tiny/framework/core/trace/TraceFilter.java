@@ -1,7 +1,9 @@
 package com.tiny.framework.core.trace;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONException;
 import com.alibaba.fastjson2.JSONObject;
 import com.tiny.framework.core.request.RequestWrapper;
@@ -13,7 +15,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,6 +53,8 @@ public class TraceFilter extends GenericFilterBean {
         } catch (Exception e) {
             if (e instanceof JSONException) {
                 this.errorResponse(resp, "POST请求，后端开启@RequestBody注解，请传入参数进行json对象进行字符串处理，例如h5的JSON.stringify");
+            } else {
+                log.error("request：{}：发生错误", request.getRequestURI(), e);
             }
         } finally {
             log.info("request：{}：耗时：{} ms", request.getRequestURI(), System.currentTimeMillis() - start);
@@ -64,25 +71,34 @@ public class TraceFilter extends GenericFilterBean {
     private RequestWrapper printAccessLog(HttpServletRequest request) throws IOException {
         RequestWrapper requestWrapper = null;
         String requestUrl = request.getRequestURI();
+        // get请求已经获取参数
         SortedMap<String, Object> paramResult = new TreeMap<>(RequestParamsUtil.getUrlParams(request));
         String contentType = request.getContentType();
+        JSONArray jsonArray = null;
         try {
-            //get请求，少判断一次，直接return
             if (StrUtil.isNotBlank(contentType)) {
-                //json
+                // json
                 if (StrUtil.containsIgnoreCase(contentType, "json")) {
                     String body = getBody(requestWrapper = new RequestWrapper(request));
-                    if (StrUtil.isNotBlank(body) && !StrUtil.equals("[]", body)) {
-                        paramResult.putAll(JSONObject.parseObject(body, Map.class));
+                    if (StrUtil.isNotBlank(body)) {
+                        if (StrUtil.startWith(body, "[") && StrUtil.endWith(body, "]")) {
+                            jsonArray = JSONArray.parseArray(body);
+                        } else {
+                            paramResult.putAll(JSONObject.parseObject(body, Map.class));
+                        }
                     }
                 }
-                //from
+                // from
                 if (StrUtil.containsIgnoreCase(contentType, "form")) {
                     paramResult.putAll(RequestParamsUtil.getFormParams(request));
                 }
             }
         } finally {
-            log.info("request：{}，方式：{}，body：{}", requestUrl, request.getMethod(), JSONObject.toJSONString(paramResult));
+            if (ObjectUtil.isNotNull(jsonArray)) {
+                log.info("request：{}，方式：{}，body：{}", requestUrl, request.getMethod(), jsonArray.toJSONString());
+            } else {
+                log.info("request：{}，方式：{}，body：{}", requestUrl, request.getMethod(), JSONObject.toJSONString(paramResult));
+            }
         }
         return requestWrapper;
     }
