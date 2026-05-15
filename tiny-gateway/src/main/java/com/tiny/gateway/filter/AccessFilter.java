@@ -166,19 +166,19 @@ public class AccessFilter implements GlobalFilter {
      * @param url
      */
     private Mono<Void> filter(GatewayFilterChain chain, ServerWebExchange build, ServerWebExchange exchange, String url) {
-        //1.放行的url，header进行特殊处理
+        //1. 放行的url，header进行特殊处理
         ServerHttpRequest request = exchange.getRequest();
         String authorization = request.getHeaders().getFirst("Authorization");
         String userContext = request.getHeaders().getFirst(Constants.USER_CONTEXT);
 
-        //2.有token但是没有进行解析进行处理，注意：token别过期
+        //2. 有token但是没有进行解析进行处理，注意：token别过期
         if (StrUtil.isNotBlank(authorization) && StrUtil.isBlank(userContext)) {
             if (!JwtUtils.isTokenExpired(authorization)) {
                 Map<String, Claim> parse = JwtUtils.parse(authorization);
                 try {
                     parse = JwtUtils.parse(authorization);
                 } finally {
-                    //3.放行进来的url，不用判断用户状态什么的，直接放行，将userContext写到header里
+                    //3. 放行进来的url，不用判断用户状态什么的，直接放行，将userContext写到header里
                     if (ObjectUtil.isNotNull(parse)) {
                         userContext = parse.get("json").asString();
                         if (StrUtil.isNotBlank(userContext)) {
@@ -189,7 +189,7 @@ public class AccessFilter implements GlobalFilter {
             }
         }
 
-        //4.判断是否开启慢log打印，超过界限值默认1000毫秒
+        //4. 判断是否开启慢log打印，超过界限值默认1000毫秒
         return chain.filter(build).then(Mono.fromRunnable(() -> {
             if (gatewayConfig.getSlowEnable()) {
                 Long startTime = exchange.getAttribute(Constants.START_TIME);
