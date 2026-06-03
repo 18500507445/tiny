@@ -51,10 +51,9 @@ public class TraceFilter extends GenericFilterBean {
             RequestWrapper requestWrapper = printAccessLog(request);
             filterChain.doFilter(requestWrapper != null ? requestWrapper : request, resp);
         } catch (Exception e) {
+            log.error("request：{}：发生错误", request.getRequestURI(), e);
             if (e instanceof JSONException) {
                 this.errorResponse(resp, "POST请求，后端开启@RequestBody注解，请传入参数进行json对象进行字符串处理，例如h5的JSON.stringify");
-            } else {
-                log.error("request：{}：发生错误", request.getRequestURI(), e);
             }
         } finally {
             log.info("request：{}：耗时：{} ms", request.getRequestURI(), System.currentTimeMillis() - start);
