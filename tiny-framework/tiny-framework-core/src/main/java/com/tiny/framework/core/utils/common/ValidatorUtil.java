@@ -2,6 +2,7 @@ package com.tiny.framework.core.utils.common;
 
 
 import com.tiny.framework.core.exception.BusinessException;
+import com.tiny.framework.core.result.base.ResultCode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +32,7 @@ public final class ValidatorUtil {
             for (ConstraintViolation<Object> constraint : constraintViolations) {
                 msg.append(constraint.getMessage()).append(";");
             }
-            throw new BusinessException(1000, msg.toString());
+            throw new BusinessException(ResultCode.VALIDATE_FAILED, msg.toString());
         }
     }
 
