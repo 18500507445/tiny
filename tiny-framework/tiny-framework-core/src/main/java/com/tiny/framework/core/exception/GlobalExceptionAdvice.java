@@ -64,16 +64,20 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(BusinessException.class)
     public ResResult<Void> businessException(BusinessException e) {
         ResultCode resultCode = e.getResultCode();
+        String message = e.getMessage();
         if (null == resultCode) {
             if (businessLog) {
-                log.error("businessException :{}", e.getMessage(), e);
+                log.error("businessException :{}", message, e);
             }
-            return ResResult.failure(ResultCode.FAILED, e.getMessage());
+            return ResResult.failure(ResultCode.FAILED, message);
         } else {
             if (businessLog) {
                 log.error("businessException :{}", resultCode.getBizMessage(), e);
             }
-            //返回传入的枚举
+            // 有异常msg取异常的，没有取code的编码和msg
+            if (StrUtil.isNotBlank(message)) {
+                return ResResult.failure(resultCode, message);
+            }
             return ResResult.failure(resultCode);
         }
     }
